@@ -1,0 +1,45 @@
+@media (max-width: 768px) {
+    /* ====================
+        Tesitmonial slider css
+    ==================== */
+
+    .swiper-slide-active {
+    transform: scaleX(1.30) !important;
+    }
+
+    .testimonial-slider-content img {
+        height: 190px !important;
+    }
+
+    .slider-nav-arrow {
+        width: 32px;
+        height: 32px;
+        padding: 3px 9px 3px 9px;
+    }
+
+    .slider-nav-wrapper {
+        top: -60px;
+    }
+
+    
+}
+
+@media (max-width: 480px) {
+    .slider-nav-wrapper {
+        top: auto;
+        bottom: -58px;
+        left: 50%;
+        transform: translateX(-50%);
+        justify-content: center;
+    }
+
+    .swiper-slide-active {
+        transform: scaleX(1) !important;
+    }
+
+    .slider-nav-arrow {
+        width: 40px;
+        height: 40px;
+        padding: 3px 9px 3px 9px;
+    }
+}

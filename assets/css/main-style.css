@@ -1,0 +1,57 @@
+/*------------------------------
+    >>>Css Indexing
+    ------------------
+    01.Global Css
+*/
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Primary Style */
+.primary-btn{
+    padding: 10px 24px;
+    background: #fff;
+    border-radius: 100px;
+    display: inline-flex;
+    gap: 7px;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.3s ease-in-out;
+    color: rgba(13, 22, 35, 1);
+    letter-spacing: 1px;
+}
+
+.primary-btn svg path {
+    fill: rgba(13, 22, 35, 1);
+}
+
+.primary-btn:hover{
+    background: #000;
+    color: #fff;
+}
+.primary-btn:hover svg path {
+    fill: #fff;
+}
+
+
+/* Primary btn bg black */
+.primary-btn.bg-black{
+    background: rgba(13, 22, 35, 1);
+    color: #fff;
+}
+
+.primary-btn.bg-black svg path {
+    fill: #fff;
+}
+
+.primary-btn.bg-black:hover{
+    background: #fff;
+    color: rgba(13, 22, 35, 1);
+}
+.primary-btn.bg-black:hover svg path {
+    fill: rgba(13, 22, 35, 1);
+}
