@@ -100,46 +100,43 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $repeater->add_control(
             'background_image',
             [
-                'label' => esc_html__('Background Image', 'highit-core'),
+                'label' => esc_html__('Image', 'highit-core'),
                 'type' => Controls_Manager::MEDIA,
+                'description' => esc_html__('Upload image for slider', 'highit-core'),
             ]
         );
 
         $repeater->add_control(
-            'title',
+            'enable_video',
             [
-                'label' => esc_html__('Title', 'highit-core'),
-                'type' => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('What We Do', 'highit-core'),
+                'label' => esc_html__('Enable Video', 'highit-core'),
+                'type' => Controls_Manager::SWITCHER,
+                'description' => esc_html__('Toggle to add video instead of image', 'highit-core'),
             ]
         );
 
         $repeater->add_control(
-            'description',
+            'video',
             [
-                'label' => esc_html__('Description', 'highit-core'),
-                'type' => Controls_Manager::TEXTAREA,
-                'description' => esc_html__('enter  description.', 'highit-core'),
-                'default' => esc_html__('Top Packages', 'highit-core'),
-            ]
-        );
-        $repeater->add_control(
-            'button_text',
-            [
-                'label' => esc_html__('Button Text', 'highit-core'),
-                'type' => Controls_Manager::TEXTAREA,
-                'description' => esc_html__('enter  button text.', 'highit-core'),
-                'default' => esc_html__('Get Started', 'highit-core'),
+                'label' => esc_html__('Video', 'highit-core'),
+                'type' => Controls_Manager::MEDIA,
+                'media_type' => ['video'],
+                'description' => esc_html__('Upload video file from media library', 'highit-core'),
+                'condition' => [
+                    'enable_video' => 'yes',
+                ],
             ]
         );
 
         $repeater->add_control(
-            'button_url',
+            'video_thumbnail',
             [
-                'label' => esc_html__('Button URL', 'highit-core'),
-                'type' => Controls_Manager::TEXTAREA,
-                'description' => esc_html__('enter  button url.', 'highit-core'),
-                'default' => esc_html__('#', 'highit-core'),
+                'label' => esc_html__('Video Thumbnail', 'highit-core'),
+                'type' => Controls_Manager::MEDIA,
+                'description' => esc_html__('Thumbnail image for video', 'highit-core'),
+                'condition' => [
+                    'enable_video' => 'yes',
+                ],
             ]
         );  
 
@@ -207,6 +204,272 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         );
       
         $this->end_controls_section();
+
+        // Slider Container Styles
+        $this->start_controls_section(
+            'slider_container_style',
+            [
+                'label' => esc_html__('Slider Area', 'highit-core'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slider_height',
+            [
+                'label' => esc_html__('Height', 'highit-core'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 200,
+                        'max' => 1000,
+                        'step' => 10,
+                    ]
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 600,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .hero-slider' => 'height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slider_margin',
+            [
+                'label' => esc_html__('Margin', 'highit-core'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .hero-slider-area' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slider_padding',
+            [
+                'label' => esc_html__('Padding', 'highit-core'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .hero-slider' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'slider_border_radius',
+            [
+                'label' => esc_html__('Border Radius', 'highit-core'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .hero-slider' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Slide Item Styles
+        $this->start_controls_section(
+            'slide_item_style',
+            [
+                'label' => esc_html__('Slide Item', 'highit-core'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slide_image_width',
+            [
+                'label' => esc_html__('Image Width', 'highit-core'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 2000,
+                    ],
+                    '%' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ]
+                ],
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-slide img' => 'width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .swiper-slide video' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slide_image_height',
+            [
+                'label' => esc_html__('Image Height', 'highit-core'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 2000,
+                    ],
+                    '%' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ]
+                ],
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-slide img' => 'height: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .swiper-slide video' => 'height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'slide_image_object_fit',
+            [
+                'label' => esc_html__('Object Fit', 'highit-core'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'cover' => esc_html__('Cover', 'highit-core'),
+                    'contain' => esc_html__('Contain', 'highit-core'),
+                    'fill' => esc_html__('Fill', 'highit-core'),
+                    'scale-down' => esc_html__('Scale Down', 'highit-core'),
+                ],
+                'default' => 'cover',
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-slide img' => 'object-fit: {{VALUE}};',
+                    '{{WRAPPER}} .swiper-slide video' => 'object-fit: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slide_padding',
+            [
+                'label' => esc_html__('Padding', 'highit-core'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-slide' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+       
+
+        // Thumbnail Item Styles
+        $this->start_controls_section(
+            'thumbnail_item_style',
+            [
+                'label' => esc_html__('Thumbnail Item', 'highit-core'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'thumb_width',
+            [
+                'label' => esc_html__('Width', 'highit-core'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 50,
+                        'max' => 300,
+                    ]
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 120,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .hero-slider-thumb .swiper-slide' => 'width: {{SIZE}}{{UNIT}} !important; min-width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'thumb_height',
+            [
+                'label' => esc_html__('Height', 'highit-core'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 50,
+                        'max' => 300,
+                    ]
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 120,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .hero-slider-thumb .swiper-slide' => 'height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Active Thumbnail Styles
+        $this->start_controls_section(
+            'active_thumbnail_style',
+            [
+                'label' => esc_html__('Active Thumbnail', 'highit-core'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'active_thumb_border_color',
+            [
+                'label' => esc_html__('Border Color', 'highit-core'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#000',
+                'selectors' => [
+                    '{{WRAPPER}} .hero-slider-btn-wrap span' => 'border-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Video Controls Styles
+        $this->start_controls_section(
+            'video_controls_style',
+            [
+                'label' => esc_html__('Video Controls', 'highit-core'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'video_control_color',
+            [
+                'label' => esc_html__('Control Color', 'highit-core'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} video' => 'filter: hue-rotate(0deg) saturate(1);',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'video_control_bg',
+            [
+                'label' => esc_html__('Control Background', 'highit-core'),
+                'type' => Controls_Manager::COLOR,
+                'default' => 'rgba(0, 0, 0, 0.7)',
+            ]
+        );
+
+        $this->end_controls_section();
     }
 
     /**
@@ -237,17 +500,14 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
             <div class="swiper hero-slider" data-settings='<?php echo json_encode($slider_settings); ?>'>
                 <div class="swiper-wrapper">
                     <?php foreach ($all_hero_slider_items as $item): ?>
-                        <div class="swiper-slide" style="background-image:url(<?php echo $item['background_image']['url'] ?>)">
-                            <div class="hero-overlay"></div>
-                            <div class="container">
-                                <div class="hero-slider-content">
-                                    <div class="slider-left-content">
-                                        <p class="hero-slide-description"><?php echo $item['description'] ?></p>
-                                        <h2 class="hero-slide-title"><?php echo $item['title'] ?></h2>
-                                        <a href="<?php echo $item['button_url'] ?>" class="primary-btn"><?php echo $item['button_text'] ?> <?php echo highit_get_svg_icon('right_arrow') ?></a>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="swiper-slide">
+                            <?php if ($item['enable_video'] === 'yes' && !empty($item['video']['url'])): ?>
+                                <video width="100%" height="100%" controls>
+                                    <source src="<?php echo esc_url($item['video']['url']); ?>" type="video/mp4">
+                                </video>
+                            <?php elseif (!empty($item['background_image']['url'])): ?>
+                                <img src="<?php echo $item['background_image']['url'] ?>" class="hero-slider-img" />
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -257,17 +517,23 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
                     <div class="swiper-wrapper">
                         <?php foreach ($all_hero_slider_items as $item): ?>
                             <div class="swiper-slide">
-                                <img src="<?php echo $item['background_image']['url']; ?>" alt="">
+                                <?php if ($item['enable_video'] === 'yes' && !empty($item['video']['url']) && !empty($item['video_thumbnail']['url'])): ?>
+                                    <img src="<?php echo $item['video_thumbnail']['url']; ?>" alt="">
+                                <?php elseif (!empty($item['background_image']['url'])): ?>
+                                    <img src="<?php echo $item['background_image']['url']; ?>" alt="">
+                                <?php endif; ?>
+                                <div class="hero-slider-btn-wrap">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
                             </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
-                                        
             </div>
         </div>
-
-
-
 <?php
     }
 }

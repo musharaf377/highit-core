@@ -4,8 +4,6 @@
 
   $(document).ready(function () {
 
-
-
     /* =====================
         Hero Slider area
      ======================= */
@@ -36,6 +34,22 @@
       },
     });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
     /* =====================
         Testimonial Slider area

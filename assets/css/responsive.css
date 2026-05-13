@@ -3,9 +3,6 @@
         Tesitmonial slider css
     ==================== */
 
-    .swiper-slide-active {
-    transform: scaleX(1.30) !important;
-    }
 
     .testimonial-slider-content img {
         height: 190px !important;
@@ -20,8 +17,6 @@
     .slider-nav-wrapper {
         top: -60px;
     }
-
-    
 }
 
 @media (max-width: 480px) {
