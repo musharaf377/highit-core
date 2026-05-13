@@ -362,7 +362,83 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
 
         $this->end_controls_section();
 
-       
+        // Thumbnail Container Styles
+        $this->start_controls_section(
+            'thumbnail_container_style',
+            [
+                'label' => esc_html__('Thumbnail Container', 'highit-core'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'thumb_alignment',
+            [
+                'label' => esc_html__('Alignment', 'highit-core'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'flex-start' => [
+                        'title' => esc_html__('Left', 'highit-core'),
+                        'icon' => 'eicon-h-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'highit-core'),
+                        'icon' => 'eicon-h-align-center',
+                    ],
+                    'flex-end' => [
+                        'title' => esc_html__('Right', 'highit-core'),
+                        'icon' => 'eicon-h-align-right',
+                    ],
+                ],
+                'default' => 'flex-start',
+                'selectors' => [
+                    '{{WRAPPER}} .hero-slider-thumb .swiper-wrapper' => 'justify-content: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'thumb_gap',
+            [
+                'label' => esc_html__('Gap Between Thumbnails', 'highit-core'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 50,
+                    ]
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .hero-slider-thumb .swiper-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'thumb_wrapper_margin',
+            [
+                'label' => esc_html__('Margin', 'highit-core'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .hero-slider-thumb-wrapper' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'thumb_wrapper_padding',
+            [
+                'label' => esc_html__('Padding', 'highit-core'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .hero-slider-thumb-wrapper' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
 
         // Thumbnail Item Styles
         $this->start_controls_section(
