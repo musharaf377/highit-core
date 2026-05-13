@@ -35,7 +35,6 @@
       });
     }
 
-
     /* =====================
         Vertical Slider area (GSAP)
      ======================= */
@@ -43,10 +42,10 @@
 
     if ($vertSlider.length) {
       var vsSettings  = JSON.parse($vertSlider.attr('data-settings'));
-      var vsDuration  = (parseInt(vsSettings.speed) || 900) / 1000;
+      var vsDuration  = (parseInt(vsSettings.speed) || 1800) / 1000;
       var vsLoop      = vsSettings.loop === true;
       var vsAutoplay  = vsSettings.autoplay === true;
-      var vsDelay     = Math.max(parseInt(vsSettings.speed) || 3000, 1000);
+      var vsDelay     = Math.max(parseInt(vsSettings.speed) || 4000, 1000);
 
       var vsEl      = $vertSlider[0];
       var vsAreaEl  = vsEl.closest('.vertical-slider-area') || vsEl.parentElement;
@@ -139,13 +138,13 @@
 
         function vsResetPositions(idx) {
           vsSlides.forEach(function(s, i) {
-            gsap.set(s, { zIndex: i + 1, yPercent: i <= idx ? 0 : 100 });
+            gsap.set(s, { zIndex: i + 1, yPercent: i <= idx ? 0 : 100, scale: 1 });
           });
         }
 
         // Initial stack: slide 0 visible, rest waiting below
         vsSlides.forEach(function(s, i) {
-          gsap.set(s, { yPercent: i === 0 ? 0 : 100, zIndex: i + 1 });
+          gsap.set(s, { yPercent: i === 0 ? 0 : 100, scale: 1, zIndex: i + 1 });
         });
 
         // ── Navigation ──────────────────────────────────────────────────────
@@ -166,42 +165,43 @@
             vsCurrent = next;
             vsResetPositions(vsCurrent);
             vsBusy = false;
-            // Immediately release the gesture lock so the slider is never frozen
-            // after the animation finishes. A 200 ms guard below absorbs the
-            // immediate momentum tail before accepting the next gesture.
             vsGestureActive = false;
             vsLastAnimEnd   = Date.now();
             vsSync(vsCurrent);
           }
 
           if (direction === 'forward') {
-            // New slide rises from below and settles over the active one
+            // Incoming slide rises from below, zooming out as it settles (parallax depth)
             gsap.fromTo(
               toSlide,
-              { yPercent: 100, zIndex: vsTotal + 1 },
-              { yPercent: 0, duration: vsDuration, ease: 'power4.inOut', onComplete: onDone }
+              { yPercent: 100, scale: 1.07, zIndex: vsTotal + 1 },
+              { yPercent: 0, scale: 1, duration: vsDuration, ease: 'expo.inOut', onComplete: onDone }
             );
+            // Outgoing slide drifts backward (upward parallax — like a deeper layer receding)
+            gsap.to(fromSlide, {
+              yPercent: -8,
+              duration: vsDuration,
+              ease: 'expo.inOut'
+            });
           } else {
-            // Active slide exits downward, revealing the slide below
+            // Outgoing slide exits downward
             gsap.set(fromSlide, { zIndex: vsTotal + 1 });
             gsap.set(toSlide,   { yPercent: 0, zIndex: vsTotal });
             gsap.to(fromSlide, {
               yPercent: 100,
               duration: vsDuration,
-              ease: 'power4.inOut',
+              ease: 'expo.inOut',
               onComplete: onDone
             });
+            // Revealed slide zooms out from slight oversize — mirrors the forward parallax
+            gsap.fromTo(toSlide,
+              { scale: 1.07 },
+              { scale: 1, duration: vsDuration, ease: 'expo.inOut' }
+            );
           }
         }
 
         // ── Wheel handler ────────────────────────────────────────────────────
-        // Gates:
-        //   vsGestureActive — true from first event of a gesture until 700 ms after
-        //                     events stop OR until the animation finishes (onDone
-        //                     clears it early so the slider is never permanently frozen).
-        //   vsBusy          — true while a GSAP animation is running.
-        //   vsLastAnimEnd   — timestamp set in onDone; 200 ms guard absorbs the
-        //                     immediate momentum burst right after animation ends.
         var vsGestureActive = false;
         var vsGestureTimer;
         var vsLastAnimEnd   = 0;
@@ -222,7 +222,7 @@
           //   • not mid-animation (vsBusy)
           //   • not within the same gesture (vsGestureActive)
           //   • at least 200 ms have passed since the last animation ended
-          if (!vsGestureActive && !vsBusy && (now - vsLastAnimEnd) >= 200) {
+          if (!vsGestureActive && !vsBusy && (now - vsLastAnimEnd) >= 600) {
             vsGestureActive = true;
             vsNavigate(goForward ? 'forward' : 'backward');
           }
