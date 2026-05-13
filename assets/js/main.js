@@ -59,6 +59,13 @@
         pagination: {
           el: ".vertical-pagination",
           clickable: true,
+          renderBullet: function (index, className) {
+            return '<span class="' + className + '">' +
+              '<span class="vertical-slider-btn-wrap">' +
+                '<span></span><span></span><span></span><span></span>' +
+              '</span>' +
+            '</span>';
+          },
         },
       });
     }

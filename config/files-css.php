@@ -3,46 +3,46 @@
 $css_files = array(
     
     array(
-        'handle' => 'highit-swiper-css',
-        'src' => HIGHIT_CORE_CSS . '/swiper.min.css',
+        'handle' => 'highlt-swiper-css',
+        'src' => HIGHLT_CORE_CSS . '/swiper.min.css',
         'deps' => array(),
     ),
 
     array(
-        'handle' => 'highit-core-main-style',
-        'src' => HIGHIT_CORE_CSS . '/main-style.css',
+        'handle' => 'highlt-core-main-style',
+        'src' => HIGHLT_CORE_CSS . '/main-style.css',
         'deps' => array(),
     ),
 
     array(
-        'handle' => 'highit-ele-widgets',
-        'src' => HIGHIT_CORE_CSS . '/ele-widgets.css',
+        'handle' => 'highlt-ele-widgets',
+        'src' => HIGHLT_CORE_CSS . '/ele-widgets.css',
         'deps' => array(),
     ),
     array(
-        'handle' => 'highit-ele-responsive',
-        'src' => HIGHIT_CORE_CSS . '/responsive.css',
+        'handle' => 'highlt-ele-responsive',
+        'src' => HIGHLT_CORE_CSS . '/responsive.css',
         'deps' => array(),
     ),
 
 
 );
 
-if (!highit_core()->is_highit_active()) {
+if (!highlt_core()->is_highlt_active()) {
     $css_files[] = array(
         'handle' => 'bootstrap',
-        'src' => HIGHIT_CORE_CSS . '/bootstrap.min.css',
+        'src' => HIGHLT_CORE_CSS . '/bootstrap.min.css',
         'deps' => array(),
     );
 
     $css_files[] = array(
         'handle' => 'main-style',
-        'src' => HIGHIT_CORE_CSS . '/main-style.css',
+        'src' => HIGHLT_CORE_CSS . '/main-style.css',
         'deps' => array(),
     );
     $css_files[] = array(
         'handle' => 'responsive',
-        'src' => HIGHIT_CORE_CSS . '/responsive.css',
+        'src' => HIGHLT_CORE_CSS . '/responsive.css',
         'deps' => array(),
     );
 }

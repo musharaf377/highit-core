@@ -2,13 +2,13 @@
 
 /**
  * Elementor Widget
- * @package Highit
+ * @package Highlt
  * @since 1.0.0
  */
 
 namespace Elementor;
 
-class Highit_Hero_Slider_Item_Widget extends Widget_Base
+class Highlt_Hero_Slider_Item_Widget extends Widget_Base
 {
 
     /**
@@ -23,7 +23,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
      */
     public function get_name()
     {
-        return 'highit-hero-single-item-widget';
+        return 'highlt-hero-single-item-widget';
     }
 
     /**
@@ -38,12 +38,12 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
      */
     public function get_title()
     {
-        return esc_html__('Hero Slider', 'highit-core');
+        return esc_html__('Hero Slider', 'highlt-core');
     }
 
     public function get_keywords()
     {
-        return ['highit Hero Slider', 'slider'];
+        return ['highlt Hero Slider', 'slider'];
     }
 
     /**
@@ -73,7 +73,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
      */
     public function get_categories()
     {
-        return ['highit_widgets'];
+        return ['highlt_widgets'];
     }
 
     /**
@@ -91,7 +91,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->start_controls_section(
             'settings_section',
             [
-                'label' => esc_html__('General Settings', 'highit-core'),
+                'label' => esc_html__('General Settings', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -100,28 +100,28 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $repeater->add_control(
             'background_image',
             [
-                'label' => esc_html__('Image', 'highit-core'),
+                'label' => esc_html__('Image', 'highlt-core'),
                 'type' => Controls_Manager::MEDIA,
-                'description' => esc_html__('Upload image for slider', 'highit-core'),
+                'description' => esc_html__('Upload image for slider', 'highlt-core'),
             ]
         );
 
         $repeater->add_control(
             'enable_video',
             [
-                'label' => esc_html__('Enable Video', 'highit-core'),
+                'label' => esc_html__('Enable Video', 'highlt-core'),
                 'type' => Controls_Manager::SWITCHER,
-                'description' => esc_html__('Toggle to add video instead of image', 'highit-core'),
+                'description' => esc_html__('Toggle to add video instead of image', 'highlt-core'),
             ]
         );
 
         $repeater->add_control(
             'video',
             [
-                'label' => esc_html__('Video', 'highit-core'),
+                'label' => esc_html__('Video', 'highlt-core'),
                 'type' => Controls_Manager::MEDIA,
                 'media_type' => ['video'],
-                'description' => esc_html__('Upload video file from media library', 'highit-core'),
+                'description' => esc_html__('Upload video file from media library', 'highlt-core'),
                 'condition' => [
                     'enable_video' => 'yes',
                 ],
@@ -131,9 +131,9 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $repeater->add_control(
             'video_thumbnail',
             [
-                'label' => esc_html__('Video Thumbnail', 'highit-core'),
+                'label' => esc_html__('Video Thumbnail', 'highlt-core'),
                 'type' => Controls_Manager::MEDIA,
-                'description' => esc_html__('Thumbnail image for video', 'highit-core'),
+                'description' => esc_html__('Thumbnail image for video', 'highlt-core'),
                 'condition' => [
                     'enable_video' => 'yes',
                 ],
@@ -141,7 +141,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         );  
 
         $this->add_control('hero_slider_items', [
-            'label' => esc_html__('Hero Slider Item', 'highit-core'),
+            'label' => esc_html__('Hero Slider Item', 'highlt-core'),
             'type' => Controls_Manager::REPEATER,
             'fields' => $repeater->get_controls(),
 
@@ -153,16 +153,16 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->start_controls_section(
             'slider_settings_section',
             [
-                'label' => esc_html__('Slider Settings', 'highit-core'),
+                'label' => esc_html__('Slider Settings', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
         $this->add_control(
             'items',
             [
-                'label' => esc_html__('slidesToShow', 'highit-core'),
+                'label' => esc_html__('slidesToShow', 'highlt-core'),
                 'type' => Controls_Manager::NUMBER,
-                'description' => esc_html__('you can set how many item show in slider', 'highit-core'),
+                'description' => esc_html__('you can set how many item show in slider', 'highlt-core'),
                 'default' => '3',
             ]
         );
@@ -170,24 +170,24 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'loop',
             [
-                'label' => esc_html__('Loop', 'highit-core'),
+                'label' => esc_html__('Loop', 'highlt-core'),
                 'type' => Controls_Manager::SWITCHER,
-                'description' => esc_html__('you can set yes/no to enable/disable', 'highit-core'),
+                'description' => esc_html__('you can set yes/no to enable/disable', 'highlt-core'),
             ]
         );
         $this->add_control(
             'autoplay',
             [
-                'label' => esc_html__('Autoplay', 'highit-core'),
+                'label' => esc_html__('Autoplay', 'highlt-core'),
                 'type' => Controls_Manager::SWITCHER,
-                'description' => esc_html__('you can set yes/no to enable/disable', 'highit-core'),
+                'description' => esc_html__('you can set yes/no to enable/disable', 'highlt-core'),
             ]
         );
        
         $this->add_control(
             'speed',
             [
-                'label' => esc_html__('Speed', 'highit-core'),
+                'label' => esc_html__('Speed', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -209,7 +209,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->start_controls_section(
             'slider_container_style',
             [
-                'label' => esc_html__('Slider Area', 'highit-core'),
+                'label' => esc_html__('Slider Area', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -217,7 +217,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slider_height',
             [
-                'label' => esc_html__('Height', 'highit-core'),
+                'label' => esc_html__('Height', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -239,7 +239,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slider_margin',
             [
-                'label' => esc_html__('Margin', 'highit-core'),
+                'label' => esc_html__('Margin', 'highlt-core'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
@@ -251,7 +251,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slider_padding',
             [
-                'label' => esc_html__('Padding', 'highit-core'),
+                'label' => esc_html__('Padding', 'highlt-core'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
@@ -263,7 +263,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'slider_border_radius',
             [
-                'label' => esc_html__('Border Radius', 'highit-core'),
+                'label' => esc_html__('Border Radius', 'highlt-core'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
@@ -278,7 +278,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->start_controls_section(
             'slide_item_style',
             [
-                'label' => esc_html__('Slide Item', 'highit-core'),
+                'label' => esc_html__('Slide Item', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -286,7 +286,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slide_image_width',
             [
-                'label' => esc_html__('Image Width', 'highit-core'),
+                'label' => esc_html__('Image Width', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -309,7 +309,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slide_image_height',
             [
-                'label' => esc_html__('Image Height', 'highit-core'),
+                'label' => esc_html__('Image Height', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -332,13 +332,13 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'slide_image_object_fit',
             [
-                'label' => esc_html__('Object Fit', 'highit-core'),
+                'label' => esc_html__('Object Fit', 'highlt-core'),
                 'type' => Controls_Manager::SELECT,
                 'options' => [
-                    'cover' => esc_html__('Cover', 'highit-core'),
-                    'contain' => esc_html__('Contain', 'highit-core'),
-                    'fill' => esc_html__('Fill', 'highit-core'),
-                    'scale-down' => esc_html__('Scale Down', 'highit-core'),
+                    'cover' => esc_html__('Cover', 'highlt-core'),
+                    'contain' => esc_html__('Contain', 'highlt-core'),
+                    'fill' => esc_html__('Fill', 'highlt-core'),
+                    'scale-down' => esc_html__('Scale Down', 'highlt-core'),
                 ],
                 'default' => 'cover',
                 'selectors' => [
@@ -351,7 +351,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slide_padding',
             [
-                'label' => esc_html__('Padding', 'highit-core'),
+                'label' => esc_html__('Padding', 'highlt-core'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
@@ -366,7 +366,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->start_controls_section(
             'thumbnail_container_style',
             [
-                'label' => esc_html__('Thumbnail Container', 'highit-core'),
+                'label' => esc_html__('Thumbnail Container', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -374,19 +374,19 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'thumb_alignment',
             [
-                'label' => esc_html__('Alignment', 'highit-core'),
+                'label' => esc_html__('Alignment', 'highlt-core'),
                 'type' => Controls_Manager::CHOOSE,
                 'options' => [
                     'flex-start' => [
-                        'title' => esc_html__('Left', 'highit-core'),
+                        'title' => esc_html__('Left', 'highlt-core'),
                         'icon' => 'eicon-h-align-left',
                     ],
                     'center' => [
-                        'title' => esc_html__('Center', 'highit-core'),
+                        'title' => esc_html__('Center', 'highlt-core'),
                         'icon' => 'eicon-h-align-center',
                     ],
                     'flex-end' => [
-                        'title' => esc_html__('Right', 'highit-core'),
+                        'title' => esc_html__('Right', 'highlt-core'),
                         'icon' => 'eicon-h-align-right',
                     ],
                 ],
@@ -400,7 +400,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'thumb_gap',
             [
-                'label' => esc_html__('Gap Between Thumbnails', 'highit-core'),
+                'label' => esc_html__('Gap Between Thumbnails', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -417,7 +417,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'thumb_wrapper_margin',
             [
-                'label' => esc_html__('Margin', 'highit-core'),
+                'label' => esc_html__('Margin', 'highlt-core'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
@@ -429,7 +429,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'thumb_wrapper_padding',
             [
-                'label' => esc_html__('Padding', 'highit-core'),
+                'label' => esc_html__('Padding', 'highlt-core'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
@@ -444,7 +444,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->start_controls_section(
             'thumbnail_item_style',
             [
-                'label' => esc_html__('Thumbnail Item', 'highit-core'),
+                'label' => esc_html__('Thumbnail Item', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -452,7 +452,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'thumb_width',
             [
-                'label' => esc_html__('Width', 'highit-core'),
+                'label' => esc_html__('Width', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -473,7 +473,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'thumb_height',
             [
-                'label' => esc_html__('Height', 'highit-core'),
+                'label' => esc_html__('Height', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -497,7 +497,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->start_controls_section(
             'active_thumbnail_style',
             [
-                'label' => esc_html__('Active Thumbnail', 'highit-core'),
+                'label' => esc_html__('Active Thumbnail', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -505,7 +505,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'active_thumb_border_color',
             [
-                'label' => esc_html__('Border Color', 'highit-core'),
+                'label' => esc_html__('Border Color', 'highlt-core'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '#000',
                 'selectors' => [
@@ -520,7 +520,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->start_controls_section(
             'video_controls_style',
             [
-                'label' => esc_html__('Video Controls', 'highit-core'),
+                'label' => esc_html__('Video Controls', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -528,7 +528,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'video_control_color',
             [
-                'label' => esc_html__('Control Color', 'highit-core'),
+                'label' => esc_html__('Control Color', 'highlt-core'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} video' => 'filter: hue-rotate(0deg) saturate(1);',
@@ -539,7 +539,7 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'video_control_bg',
             [
-                'label' => esc_html__('Control Background', 'highit-core'),
+                'label' => esc_html__('Control Background', 'highlt-core'),
                 'type' => Controls_Manager::COLOR,
                 'default' => 'rgba(0, 0, 0, 0.7)',
             ]
@@ -614,4 +614,4 @@ class Highit_Hero_Slider_Item_Widget extends Widget_Base
     }
 }
 
-Plugin::instance()->widgets_manager->register_widget_type(new Highit_Hero_Slider_Item_Widget());
+Plugin::instance()->widgets_manager->register_widget_type(new Highlt_Hero_Slider_Item_Widget());

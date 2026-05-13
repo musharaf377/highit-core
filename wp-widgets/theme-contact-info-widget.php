@@ -2,7 +2,7 @@
 
 /**
  * Theme Contact Info Widget
- * @package Highit
+ * @package Highlt
  * @since 1.0.0
  */
 
@@ -10,15 +10,15 @@ if (!defined('ABSPATH')) {
 	exit(); //exit if access directly
 }
 
-class Highit_Contact_Info_Widget extends WP_Widget
+class Highlt_Contact_Info_Widget extends WP_Widget
 {
 
 	public function __construct()
 	{
 		parent::__construct(
-			'highit_contact_info',
-			esc_html__('Highit: Contact Info', 'highit-core'),
-			array('description' => esc_html__('Display contact info widget', 'highit-core'))
+			'highlt_contact_info',
+			esc_html__('Highlt: Contact Info', 'highlt-core'),
+			array('description' => esc_html__('Display contact info widget', 'highlt-core'))
 		);
 	}
 
@@ -37,18 +37,18 @@ class Highit_Contact_Info_Widget extends WP_Widget
 		}
 ?>
 		<p>
-			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php esc_html_e('Title:', 'highit-core'); ?></label>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php esc_html_e('Title:', 'highlt-core'); ?></label>
 			<input type="text" class="widefat" id="<?php echo esc_attr($this->get_field_id('title')) ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" value="<?php echo esc_attr($title) ?>">
 		</p>
 		<?php foreach ($contact_info as $ci) : ?>
 			<p>
-				<label for="<?php echo esc_attr($this->get_field_id($ci)); ?>"><?php echo esc_html(ucfirst($ci) . " " . esc_html__('Info', 'highit-core')); ?>
+				<label for="<?php echo esc_attr($this->get_field_id($ci)); ?>"><?php echo esc_html(ucfirst($ci) . " " . esc_html__('Info', 'highlt-core')); ?>
 					: </label>
 				<br />
 				<input class="widefat" type="text" id="<?php echo esc_attr($this->get_field_id($ci)); ?>"
 					name="<?php echo esc_attr($this->get_field_name($ci)); ?>"
 					value="<?php echo esc_attr($instance[$ci]); ?>" />
-				<small><?php echo esc_html__('Leave it blank if you don\'t want to show this info', 'highit-core') ?></small>
+				<small><?php echo esc_html__('Leave it blank if you don\'t want to show this info', 'highlt-core') ?></small>
 			</p>
 
 		<?php endforeach;
@@ -116,10 +116,10 @@ class Highit_Contact_Info_Widget extends WP_Widget
 	}
 }
 
-if (!function_exists('Highit_Contact_Info_Widget')) {
-	function Highit_Contact_Info_Widget()
+if (!function_exists('Highlt_Contact_Info_Widget')) {
+	function Highlt_Contact_Info_Widget()
 	{
-		register_widget('Highit_Contact_Info_Widget');
+		register_widget('Highlt_Contact_Info_Widget');
 	}
-	add_action('widgets_init', 'Highit_Contact_Info_Widget');
+	add_action('widgets_init', 'Highlt_Contact_Info_Widget');
 }

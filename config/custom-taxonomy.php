@@ -6,11 +6,11 @@ return array(
         'object_type' => 'case_study',
         'args' => array(
             "labels" => array(
-                "name" => esc_html__("Case Study Category", 'highit-core'),
-                "singular_name" => esc_html__("Case Study Category", 'highit-core'),
-                "menu_name" => esc_html__("Case Study Category", 'highit-core'),
-                "all_items" => esc_html__("All Case Study Category", 'highit-core'),
-                "add_new_item" => esc_html__("Add New Case Study Category", 'highit-core')
+                "name" => esc_html__("Case Study Category", 'highlt-core'),
+                "singular_name" => esc_html__("Case Study Category", 'highlt-core'),
+                "menu_name" => esc_html__("Case Study Category", 'highlt-core'),
+                "all_items" => esc_html__("All Case Study Category", 'highlt-core'),
+                "add_new_item" => esc_html__("Add New Case Study Category", 'highlt-core')
             ),
             "public" => true,
             "hierarchical" => true,

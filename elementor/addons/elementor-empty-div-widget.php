@@ -2,7 +2,7 @@
 
 /**
  * Elementor Widget
- * @package Highit
+ * @package Highlt
  * @since 1.0.0
  */
 
@@ -23,7 +23,7 @@ class Empty_Div_One extends Widget_Base
      */
     public function get_name()
     {
-        return 'highit-empty-dib-widget';
+        return 'highlt-empty-dib-widget';
     }
 
     /**
@@ -38,12 +38,12 @@ class Empty_Div_One extends Widget_Base
      */
     public function get_title()
     {
-        return esc_html__('Empty Div', 'highit-core');
+        return esc_html__('Empty Div', 'highlt-core');
     }
 
     public function get_keywords()
     {
-        return ['Animation', 'Circle', 'Effect', "ThemeIM", 'Highit'];
+        return ['Animation', 'Circle', 'Effect', "ThemeIM", 'Highlt'];
     }
 
     /**
@@ -73,7 +73,7 @@ class Empty_Div_One extends Widget_Base
      */
     public function get_categories()
     {
-        return ['highit_widgets'];
+        return ['highlt_widgets'];
     }
 
     /**
@@ -90,7 +90,7 @@ class Empty_Div_One extends Widget_Base
         $this->start_controls_section(
             'settings_section',
             [
-                'label' => esc_html__('General Settings', 'highit-core'),
+                'label' => esc_html__('General Settings', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -98,7 +98,7 @@ class Empty_Div_One extends Widget_Base
             Group_Control_Background::get_type(),
             [
                 'name' => 'shape_bg_color',
-                'label' => esc_html__('Background', 'highit-core'),
+                'label' => esc_html__('Background', 'highlt-core'),
                 'types' => ['classic', 'gradient', 'video'],
                 'selector' => "{{WRAPPER}} .shape"
             ]
@@ -106,7 +106,7 @@ class Empty_Div_One extends Widget_Base
         $this->add_control(
             'shape-radius',
             [
-                'label' => esc_html__('Shape Radius', 'highit-core'),
+                'label' => esc_html__('Shape Radius', 'highlt-core'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%', 'em'],
                 'selectors' => [
@@ -118,14 +118,14 @@ class Empty_Div_One extends Widget_Base
             Group_Control_Border::get_type(),
             [
                 'name' => 'shape_border',
-                'label' => esc_html__('Shape Border', 'highit-core'),
+                'label' => esc_html__('Shape Border', 'highlt-core'),
                 'selector' => '{{WRAPPER}} .shape',
             ]
         );
         $this->add_control(
             'shape_height',
             [
-                'label' => esc_html__('Shape Height', 'highit-core'),
+                'label' => esc_html__('Shape Height', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
                 'range' => [
@@ -151,7 +151,7 @@ class Empty_Div_One extends Widget_Base
         $this->add_control(
             'shape_width',
             [
-                'label' => esc_html__('Shape Width', 'highit-core'),
+                'label' => esc_html__('Shape Width', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
                 'range' => [
@@ -177,19 +177,19 @@ class Empty_Div_One extends Widget_Base
         $this->add_control(
             'alignment',
             [
-                'label' => esc_html__('Alignment', 'highit-core'),
+                'label' => esc_html__('Alignment', 'highlt-core'),
                 'type' => Controls_Manager::CHOOSE,
                 'options' => [
                     'left' => [
-                        'title' => esc_html__('Left', 'highit-core'),
+                        'title' => esc_html__('Left', 'highlt-core'),
                         'icon' => 'fa fa-align-left',
                     ],
                     'center' => [
-                        'title' => esc_html__('Center', 'highit-core'),
+                        'title' => esc_html__('Center', 'highlt-core'),
                         'icon' => 'fa fa-align-center',
                     ],
                     'right' => [
-                        'title' => esc_html__('Right', 'highit-core'),
+                        'title' => esc_html__('Right', 'highlt-core'),
                         'icon' => 'fa fa-align-right',
                     ],
                 ],

@@ -2,13 +2,13 @@
 
 /**
  * Elementor Widget
- * @package Highit
+ * @package Highlt
  * @since 1.0.0
  */
 
 namespace Elementor;
 
-class Highit_Read_More_Widget extends Widget_Base
+class Highlt_Read_More_Widget extends Widget_Base
 {
 
     /**
@@ -23,7 +23,7 @@ class Highit_Read_More_Widget extends Widget_Base
      */
     public function get_name()
     {
-        return 'highit-read-more-widget';
+        return 'highlt-read-more-widget';
     }
 
     /**
@@ -38,7 +38,7 @@ class Highit_Read_More_Widget extends Widget_Base
      */
     public function get_title()
     {
-        return esc_html__('Read More Item', 'highit-core');
+        return esc_html__('Read More Item', 'highlt-core');
     }
 
     /**
@@ -68,7 +68,7 @@ class Highit_Read_More_Widget extends Widget_Base
      */
     public function get_categories()
     {
-        return ['highit_widgets'];
+        return ['highlt_widgets'];
     }
 
     /**
@@ -85,17 +85,17 @@ class Highit_Read_More_Widget extends Widget_Base
         $this->start_controls_section(
             'settings_section',
             [
-                'label' => esc_html__('General Settings', 'highit-core'),
+                'label' => esc_html__('General Settings', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
         $this->add_control(
             'description',
             [
-                'label' => esc_html__('Description', 'highit-core'),
+                'label' => esc_html__('Description', 'highlt-core'),
                 'type' => Controls_Manager::TEXTAREA,
-                'description' => esc_html__('enter  description.', 'highit-core'),
-                'default' => esc_html__('Top Packages', 'highit-core'),
+                'description' => esc_html__('enter  description.', 'highlt-core'),
+                'default' => esc_html__('Top Packages', 'highlt-core'),
             ]
         );
     }
@@ -125,4 +125,4 @@ class Highit_Read_More_Widget extends Widget_Base
     }
 }
 
-Plugin::instance()->widgets_manager->register_widget_type(new Highit_Read_More_Widget());
+Plugin::instance()->widgets_manager->register_widget_type(new Highlt_Read_More_Widget());

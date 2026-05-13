@@ -2,7 +2,7 @@
 
 /**
  * Theme Taxonomy Options
- * @package Highit
+ * @package Highlt
  * @since 1.0.0
  */
 
@@ -12,13 +12,13 @@ if (!defined('ABSPATH')) {
 
 if (class_exists('CSF')) {
 
-    $allowed_html = highit_core()->kses_allowed_html(array('mark'));
+    $allowed_html = highlt_core()->kses_allowed_html(array('mark'));
 
-    $prefix = 'highit';
+    $prefix = 'highlt';
 
     /**
      * Service Category Options
-     * @package highit
+     * @package highlt
      * @since 1.0.0
      */
 
@@ -33,7 +33,7 @@ if (class_exists('CSF')) {
             array(
                 'id'    => 'icon',
                 'type'  => 'icon',
-                'title' => esc_html__('Icon', 'highit'),
+                'title' => esc_html__('Icon', 'highlt'),
                 'default' => 'flaticon-businessman'
             ),
         )
@@ -42,7 +42,7 @@ if (class_exists('CSF')) {
 
     /**
      * Packages Category Options
-     * @package highit
+     * @package highlt
      * @since 1.0.0
      */
     CSF::createTaxonomyOptions($prefix . '_packages_category', array(
@@ -56,7 +56,7 @@ if (class_exists('CSF')) {
             array(
                 'id'    => 'icon',
                 'type'  => 'icon',
-                'title' => esc_html__('Icon', 'highit'),
+                'title' => esc_html__('Icon', 'highlt'),
                 'default' => 'flaticon-statistics'
             ),
         )
@@ -65,7 +65,7 @@ if (class_exists('CSF')) {
 
     /**
      * training Category Options
-     * @package highit
+     * @package highlt
      * @since 1.0.0
      */
     CSF::createTaxonomyOptions($prefix . '_training_category', array(
@@ -79,7 +79,7 @@ if (class_exists('CSF')) {
             array(
                 'id'    => 'icon',
                 'type'  => 'icon',
-                'title' => esc_html__('Icon', 'highit'),
+                'title' => esc_html__('Icon', 'highlt'),
                 'default' => 'flaticon-suitcase'
             ),
         )
@@ -87,7 +87,7 @@ if (class_exists('CSF')) {
 
     /**
      * Team Category Options
-     * @package highit
+     * @package highlt
      * @since 1.0.0
      */
     CSF::createTaxonomyOptions($prefix . '_team_category', array(
@@ -101,7 +101,7 @@ if (class_exists('CSF')) {
             array(
                 'id'    => 'icon',
                 'type'  => 'icon',
-                'title' => esc_html__('Icon', 'highit'),
+                'title' => esc_html__('Icon', 'highlt'),
                 'default' => 'flaticon-suitcase'
             ),
         )

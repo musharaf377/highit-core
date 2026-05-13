@@ -2,7 +2,7 @@
 
 /**
  * Theme Core Helper Functions
- * @package highit
+ * @package highlt
  * @since 1.0.0
  */
 
@@ -10,9 +10,9 @@ if (!defined("ABSPATH")) {
     exit(); //exit if access directly
 }
 
-if (!class_exists('Highit_Core_Helper_Functions')) {
+if (!class_exists('Highlt_Core_Helper_Functions')) {
 
-    class Highit_Core_Helper_Functions
+    class Highlt_Core_Helper_Functions
     {
         /**
          * $instance
@@ -23,7 +23,7 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
         public function __construct()
         {
             add_filter('upload_mimes', array($this, 'theme_mime_types'));
-            add_filter('wp_check_filetype_and_ext', array($this, 'highit_disable_real_mime_check'), 10, 4);
+            add_filter('wp_check_filetype_and_ext', array($this, 'highlt_disable_real_mime_check'), 10, 4);
         }
 
         /**
@@ -53,11 +53,11 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
 
             if (is_singular()) :
 ?>
-                <?php the_post_thumbnail('highit_classic'); ?>
+                <?php the_post_thumbnail('highlt_classic'); ?>
             <?php else : ?>
                 <a href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
                     <?php
-                    the_post_thumbnail('highit_classic', array(
+                    the_post_thumbnail('highlt_classic', array(
                         'alt' => the_title_attribute(array(
                             'echo' => false,
                         )),
@@ -150,7 +150,7 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
          * Disable real MIME check for file uploads
          * @since 1.0.0
          */
-        function highit_disable_real_mime_check($data, $file, $filename, $mimes)
+        function highlt_disable_real_mime_check($data, $file, $filename, $mimes)
         {
             $wp_filetype = wp_check_filetype($filename, $mimes);
 
@@ -163,7 +163,7 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
 
         /**
          * SVG Support
-         * highit_mime_types()
+         * highlt_mime_types()
          * @since 1.0.0
          */
         public function theme_mime_types($mimes)
@@ -192,7 +192,7 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
         {
 
             $defaults = array(
-                'before' => '<div class="wp-link-pages"><span>' . esc_html__('Pages:', 'highit') . '</span>',
+                'before' => '<div class="wp-link-pages"><span>' . esc_html__('Pages:', 'highlt') . '</span>',
                 'after' => '</div>',
                 'link_before' => '',
                 'link_after' => '',
@@ -211,7 +211,7 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
         public function post_pagination($nav_query = NULL)
         {
             global $wp_query;
-            $allowed_html = highit()->kses_allowed_html('all');
+            $allowed_html = highlt()->kses_allowed_html('all');
             $big = 12345678;
             if (NULL == $nav_query) {
                 $page_format = paginate_links(array(
@@ -226,7 +226,7 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
                 if (is_array($page_format)) {
                     $paged = (get_query_var('paged') == 0) ? 1 : get_query_var('paged');
                     echo '<div class="blog-pagination margin-top-60"><ul>';
-                    echo '<li><span>' . esc_html($paged) . esc_html__(' of ', 'highit') . esc_html($wp_query->max_num_pages) . '</span></li>';
+                    echo '<li><span>' . esc_html($paged) . esc_html__(' of ', 'highlt') . esc_html($wp_query->max_num_pages) . '</span></li>';
                     foreach ($page_format as $page) {
                         echo "<li>" . wp_kses($page, $allowed_html) . "</li>";
                     }
@@ -247,7 +247,7 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
                 if (is_array($page_format)) {
                     $paged = (get_query_var('paged') == 0) ? 1 : get_query_var('paged');
                     echo '<div class="blog-pagination margin-top-60"><ul>';
-                    echo '<li><span>' . esc_html($paged) . esc_html__(' of ', 'highit') . esc_html($nav_query->max_num_pages) . '</span></li>';
+                    echo '<li><span>' . esc_html($paged) . esc_html__(' of ', 'highlt') . esc_html($nav_query->max_num_pages) . '</span></li>';
                     foreach ($page_format as $page) {
                         echo "<li>" . wp_kses($page, $allowed_html) . "</li>";
                     }
@@ -270,7 +270,7 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
 
             $posted_on = sprintf(
                 /* translators: %s: post date. */
-                esc_html_x(' %s', 'post date', 'highit'),
+                esc_html_x(' %s', 'post date', 'highlt'),
                 '<a href="' . esc_url(get_permalink()) . '" rel="bookmark"><i class="fas fa-calendar-alt"></i> ' . $time_string . '</a>'
             );
 
@@ -285,8 +285,8 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
         {
             $byline = sprintf(
                 /* translators: %s: post author. */
-                esc_html_x(' %s', 'post author', 'highit'),
-                '<span class="author vcard"><a class="url fn n" href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'))) . '"><i class="fas fa-user"></i> ' . esc_html__('By ', 'highit') . esc_html(get_the_author()) . '</a></span>'
+                esc_html_x(' %s', 'post author', 'highlt'),
+                '<span class="author vcard"><a class="url fn n" href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'))) . '"><i class="fas fa-user"></i> ' . esc_html__('By ', 'highlt') . esc_html(get_the_author()) . '</a></span>'
             );
 
             echo '<span class="byline"> ' . $byline . '</span>'; // WPCS: XSS OK.
@@ -300,10 +300,10 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
         public function posted_tag()
         {
             /* translators: used between list items, there is a space after the comma */
-            $tags_list = get_the_tag_list('', esc_html_x(' ', 'list item separator', 'highit'));
+            $tags_list = get_the_tag_list('', esc_html_x(' ', 'list item separator', 'highlt'));
             if ($tags_list) {
                 /* translators: 1: list of tags. */
-                printf('<ul class="tags"><li class="title">' . esc_html__('Tags: ', 'highit') . '</li><li>' . ' %1$s' . '</li></ul>', $tags_list); // WPCS: XSS OK.
+                printf('<ul class="tags"><li class="title">' . esc_html__('Tags: ', 'highlt') . '</li><li>' . ' %1$s' . '</li></ul>', $tags_list); // WPCS: XSS OK.
             }
         }
 
@@ -314,10 +314,10 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
         public function post_navigation()
         {
             the_post_navigation(array(
-                'prev_text' => '<i class="fas fa-angle-double-left"></i>&nbsp;' . esc_html__('Prev Post', 'highit'),
-                'next_text' => esc_html__('Next Post', 'highit') . '&nbsp;<i class="fas fa-angle-double-right"></i>',
+                'prev_text' => '<i class="fas fa-angle-double-left"></i>&nbsp;' . esc_html__('Prev Post', 'highlt'),
+                'next_text' => esc_html__('Next Post', 'highlt') . '&nbsp;<i class="fas fa-angle-double-right"></i>',
             ));
-            echo wp_kses('<div class="clearfix"></div>', highit()->kses_allowed_html('all'));
+            echo wp_kses('<div class="clearfix"></div>', highlt()->kses_allowed_html('all'));
         }
 
         /**
@@ -501,31 +501,31 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
                     $forms_list[$form->ID] = $form->post_title;
                 }
             } else {
-                $forms_list[esc_html__('No contact form found', 'highit-core')] = 0;
+                $forms_list[esc_html__('No contact form found', 'highlt-core')] = 0;
             }
             return $forms_list;
         }
 
 
         /**
-         * Is highit active
+         * Is highlt active
          * @since 1.0.0
          */
-        public function is_highit_active()
+        public function is_highlt_active()
         {
-            $theme_name_array = array('Highit', 'Highit Child');
+            $theme_name_array = array('Highlt', 'Highlt Child');
             $current_theme = wp_get_theme();
             $current_theme_name = $current_theme->get('Name');
             return in_array($current_theme_name, $theme_name_array) ? true : false;
         }
 
         /**
-         * Is highit core active
+         * Is highlt core active
          * @since 1.0.0
          */
-        public function is_highit_core_active()
+        public function is_highlt_core_active()
         {
-            return defined('HIGHIT_CORE_SELF_PATH') ? true : false;
+            return defined('HIGHLT_CORE_SELF_PATH') ? true : false;
         }
 
         /**
@@ -539,9 +539,9 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
             if ($count == '') {
                 delete_post_meta($postID, $count_key);
                 add_post_meta($postID, $count_key, '0');
-                printf(' 0 %s', esc_html__('Views', 'highit'));
+                printf(' 0 %s', esc_html__('Views', 'highlt'));
             }
-            printf($count . ' %s ', esc_html__('Views', 'highit'));
+            printf($count . ' %s ', esc_html__('Views', 'highlt'));
         }
 
         // Post views count
@@ -598,11 +598,11 @@ if (!class_exists('Highit_Core_Helper_Functions')) {
         public function render_elementor_icons($settings, $attr = [])
         {
             $attr['aria-hidden'] = 'true';
-            return \Highit\Highit_elementor_icon_manager::render_icon($settings, $attr);
+            return \Highlt\Highlt_elementor_icon_manager::render_icon($settings, $attr);
         }
     } //end class
 
-    if (class_exists('Highit_Core_Helper_Functions')) {
-        Highit_Core_Helper_Functions::getInstance();
+    if (class_exists('Highlt_Core_Helper_Functions')) {
+        Highlt_Core_Helper_Functions::getInstance();
     }
 }

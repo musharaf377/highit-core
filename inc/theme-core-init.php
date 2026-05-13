@@ -2,7 +2,7 @@
 
 /**
  * Theme Core Init
- * @package highit
+ * @package highlt
  * @since 1.0.0
  */
 
@@ -10,9 +10,9 @@ if (!defined("ABSPATH")) {
     exit(); //exit if access directly
 }
 
-if (!class_exists('Highit_Core_Init')) {
+if (!class_exists('Highlt_Core_Init')) {
 
-    class Highit_Core_Init
+    class Highlt_Core_Init
     {
         /**
          * $instance
@@ -50,7 +50,7 @@ if (!class_exists('Highit_Core_Init')) {
          */
         public function load_textdomain()
         {
-            load_plugin_textdomain('highit-core', false, HIGHIT_CORE_ROOT_PATH . '/languages');
+            load_plugin_textdomain('highlt-core', false, HIGHLT_CORE_ROOT_PATH . '/languages');
         }
 
         /**
@@ -59,7 +59,7 @@ if (!class_exists('Highit_Core_Init')) {
          */
         public function load_plugin_dependency_files()
         {
-            $includes_files = require_once HIGHIT_CORE_CONFIG . '/files-php.php';
+            $includes_files = require_once HIGHLT_CORE_CONFIG . '/files-php.php';
         
             if (is_array($includes_files) && !empty($includes_files)) {
                 foreach ($includes_files as $file) {
@@ -86,11 +86,11 @@ if (!class_exists('Highit_Core_Init')) {
          */
         public function load_plugin_css_files()
         {
-            $plugin_version = HIGHIT_CORE_VERSION;
+            $plugin_version = HIGHLT_CORE_VERSION;
 
-            $all_css_files = require_once HIGHIT_CORE_CONFIG . '/files-css.php';
+            $all_css_files = require_once HIGHLT_CORE_CONFIG . '/files-css.php';
 
-            $all_css_files = apply_filters('highit_core_css', $all_css_files);
+            $all_css_files = apply_filters('highlt_core_css', $all_css_files);
 
             if (is_array($all_css_files) && !empty($all_css_files)) {
                 foreach ($all_css_files as $css) {
@@ -107,11 +107,11 @@ if (!class_exists('Highit_Core_Init')) {
          */
         public function load_plugin_js_files()
         {
-            $plugin_version = HIGHIT_CORE_VERSION;
+            $plugin_version = HIGHLT_CORE_VERSION;
 
-            $all_js_files = require_once HIGHIT_CORE_CONFIG . '/files-js.php';
+            $all_js_files = require_once HIGHLT_CORE_CONFIG . '/files-js.php';
 
-            $all_js_files = apply_filters('highit_core_frontend_script_enqueue', $all_js_files);
+            $all_js_files = apply_filters('highlt_core_frontend_script_enqueue', $all_js_files);
 
             if (is_array($all_js_files) && !empty($all_js_files)) {
                 foreach ($all_js_files as $js) {
@@ -142,18 +142,18 @@ if (!class_exists('Highit_Core_Init')) {
          */
         public function load_admin_css_files()
         {
-            $plugin_version = HIGHIT_CORE_VERSION;
+            $plugin_version = HIGHLT_CORE_VERSION;
             $all_css_files = array(
                 array(
-                    'handle' => 'highit-core-admin-style',
-                    'src' => HIGHIT_CORE_ADMIN_ASSETS . '/css/admin.css',
+                    'handle' => 'highlt-core-admin-style',
+                    'src' => HIGHLT_CORE_ADMIN_ASSETS . '/css/admin.css',
                     'deps' => array(),
                     'ver' => $plugin_version,
                     'media' => 'all'
                 ),
             );
 
-            $all_css_files = apply_filters('highit_admin_css', $all_css_files);
+            $all_css_files = apply_filters('highlt_admin_css', $all_css_files);
             if (is_array($all_css_files) && !empty($all_css_files)) {
                 foreach ($all_css_files as $css) {
                     call_user_func_array('wp_enqueue_style', $css);
@@ -167,17 +167,17 @@ if (!class_exists('Highit_Core_Init')) {
          */
         public function load_admin_js_files()
         {
-            $plugin_version = HIGHIT_CORE_VERSION;
+            $plugin_version = HIGHLT_CORE_VERSION;
             $all_js_files = array(
                 array(
-                    'handle' => 'highit-core-widget',
-                    'src' => HIGHIT_CORE_ADMIN_ASSETS . '/js/widget.js',
+                    'handle' => 'highlt-core-widget',
+                    'src' => HIGHLT_CORE_ADMIN_ASSETS . '/js/widget.js',
                     'deps' => array('jquery'),
                     'ver' => $plugin_version,
                 ),
             );
 
-            $all_js_files = apply_filters('highit_admin_js', $all_js_files);
+            $all_js_files = apply_filters('highlt_admin_js', $all_js_files);
             if (is_array($all_js_files) && !empty($all_js_files)) {
                 foreach ($all_js_files as $js) {
                     call_user_func_array('wp_enqueue_script', $js);
@@ -185,7 +185,7 @@ if (!class_exists('Highit_Core_Init')) {
             }
         }
     } //end class
-    if (class_exists('Highit_Core_Init')) {
-        Highit_Core_Init::getInstance();
+    if (class_exists('Highlt_Core_Init')) {
+        Highlt_Core_Init::getInstance();
     }
 }

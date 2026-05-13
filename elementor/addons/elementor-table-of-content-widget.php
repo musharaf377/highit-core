@@ -2,13 +2,13 @@
 
 /**
  * Elementor Widget
- * @package Highit
+ * @package Highlt
  * @since 1.0.0
  */
 
 namespace Elementor;
 
-class Highit_Table_Of_Content_Widget extends Widget_Base
+class Highlt_Table_Of_Content_Widget extends Widget_Base
 {
 
     /**
@@ -23,7 +23,7 @@ class Highit_Table_Of_Content_Widget extends Widget_Base
      */
     public function get_name()
     {
-        return 'highit-table-of-content-widget';
+        return 'highlt-table-of-content-widget';
     }
 
     /**
@@ -38,12 +38,12 @@ class Highit_Table_Of_Content_Widget extends Widget_Base
      */
     public function get_title()
     {
-        return esc_html__('Table Of Content', 'highit-core');
+        return esc_html__('Table Of Content', 'highlt-core');
     }
 
     public function get_keywords()
     {
-        return ['ir-tech', 'highit', 'image box'];
+        return ['ir-tech', 'highlt', 'image box'];
     }
 
     /**
@@ -73,7 +73,7 @@ class Highit_Table_Of_Content_Widget extends Widget_Base
      */
     public function get_categories()
     {
-        return ['highit_widgets'];
+        return ['highlt_widgets'];
     }
 
     /**
@@ -90,39 +90,39 @@ class Highit_Table_Of_Content_Widget extends Widget_Base
         $this->start_controls_section(
             'settings_section',
             [
-                'label' => esc_html__('General Settings', 'highit-core'),
+                'label' => esc_html__('General Settings', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
         $this->add_control(
             'is_arabic',
             [
-                'label' => esc_html__('Select Arabic Version', 'highit-core'),
+                'label' => esc_html__('Select Arabic Version', 'highlt-core'),
                 'type' => Controls_Manager::SWITCHER,
-                'description' => esc_html__('you can set yes to show arabic.', 'highit-core'),
+                'description' => esc_html__('you can set yes to show arabic.', 'highlt-core'),
                 'default' => 'no'
             ]
         );
         $this->add_control('topic_title', [
-            'label' => esc_html__('Topic Title', 'highit-core'),
+            'label' => esc_html__('Topic Title', 'highlt-core'),
             'type' => Controls_Manager::TEXTAREA,
-            'default' => esc_html__('List of topic', 'highit-core')
+            'default' => esc_html__('List of topic', 'highlt-core')
         ]);
         $this->add_control('cash_title', [
-            'label' => esc_html__('Title', 'highit-core'),
+            'label' => esc_html__('Title', 'highlt-core'),
             'type' => Controls_Manager::TEXTAREA,
-            'default' => esc_html__('Acceptance of Terms', 'highit-core')
+            'default' => esc_html__('Acceptance of Terms', 'highlt-core')
         ]);
         $repeater = new Repeater();
         $repeater->add_control('description', [
-            'label' => esc_html__('Description', 'highit-core'),
+            'label' => esc_html__('Description', 'highlt-core'),
             'type' => Controls_Manager::TEXTAREA,
-            'default' => esc_html__('By using the Services, you agree to be bound by these Terms, as well as any additional terms and conditions that may apply to specific features or services provided by Quranuna Inc.. These Terms constitute a legally binding agreement between you and Quranuna Inc..', 'highit-core')
+            'default' => esc_html__('By using the Services, you agree to be bound by these Terms, as well as any additional terms and conditions that may apply to specific features or services provided by Quranuna Inc.. These Terms constitute a legally binding agreement between you and Quranuna Inc..', 'highlt-core')
         ]);
         $this->add_control(
             'case-study-list',
             [
-                'label' => esc_html__('Case Study List', 'highit-core'),
+                'label' => esc_html__('Case Study List', 'highlt-core'),
                 'type' => Controls_Manager::REPEATER,
                 'fields' => $repeater->get_controls(),
                 'title_field' => '{{{ title }}}',
@@ -134,7 +134,7 @@ class Highit_Table_Of_Content_Widget extends Widget_Base
         $this->start_controls_section(
             'slider_navigation_styling_settings_section',
             [
-                'label' => esc_html__('Slider Nav Styling Settings', 'highit-core'),
+                'label' => esc_html__('Slider Nav Styling Settings', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -145,11 +145,11 @@ class Highit_Table_Of_Content_Widget extends Widget_Base
         $this->start_controls_tab(
             'active_hover_style_normal_tab',
             [
-                'label' => esc_html__('Active and Hover Style', 'highit-core'),
+                'label' => esc_html__('Active and Hover Style', 'highlt-core'),
             ]
         );
         $this->add_control('case_menu_title_hover_color', [
-            'label' => esc_html__('Menu Title Color', 'highit-core'),
+            'label' => esc_html__('Menu Title Color', 'highlt-core'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
                 "{{WRAPPER}} .table-of-contents-wrap .toc-navigation .nav-item a.active" => "color: {{VALUE}}",
@@ -161,11 +161,11 @@ class Highit_Table_Of_Content_Widget extends Widget_Base
         $this->start_controls_tab(
             'slider_navigation_style_hover_tab',
             [
-                'label' => esc_html__('Normal', 'highit-core'),
+                'label' => esc_html__('Normal', 'highlt-core'),
             ]
         );
         $this->add_control('case_menu_title_hover_color', [
-            'label' => esc_html__('Menu Title Color', 'highit-core'),
+            'label' => esc_html__('Menu Title Color', 'highlt-core'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
                 "{{WRAPPER}} .table-of-contents-wrap .toc-navigation .nav-item" => "color: {{VALUE}}",
@@ -173,14 +173,14 @@ class Highit_Table_Of_Content_Widget extends Widget_Base
             ]
         ]);
         $this->add_control('case_description_color', [
-            'label' => esc_html__('Description Color', 'highit-core'),
+            'label' => esc_html__('Description Color', 'highlt-core'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
                 "{{WRAPPER}} .table-of-contents-wrap .table-of-contents .table-of-content p" => "color: {{VALUE}}"
             ]
         ]);
         $this->add_control('case_content_border_color', [
-            'label' => esc_html__('Content Border Color', 'highit-core'),
+            'label' => esc_html__('Content Border Color', 'highlt-core'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
                 "{{WRAPPER}} .case-study-tabs .tab-inner" => "border-color: {{VALUE}}"
@@ -198,14 +198,14 @@ class Highit_Table_Of_Content_Widget extends Widget_Base
         $this->start_controls_section(
             'typography_section',
             [
-                'label' => esc_html__('Typography Settings', 'highit-core'),
+                'label' => esc_html__('Typography Settings', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_group_control(Group_Control_Typography::get_type(), [
             'name' => 'title_typography',
-            'label' => esc_html__('Title Typography', 'highit-core'),
+            'label' => esc_html__('Title Typography', 'highlt-core'),
             'selectors' => [
                 "{{WRAPPER}} .table-of-contents-wrap .toc-navigation .nav-item",
                 "{{WRAPPER}} .table-of-contents-wrap .table-of-contents .table-of-content .title"
@@ -213,7 +213,7 @@ class Highit_Table_Of_Content_Widget extends Widget_Base
         ]);
         $this->add_group_control(Group_Control_Typography::get_type(), [
             'name' => 'description_typography',
-            'label' => esc_html__('Description Typography', 'highit-core'),
+            'label' => esc_html__('Description Typography', 'highlt-core'),
             'selector' => "{{WRAPPER}} .table-of-contents-wrap .table-of-contents .table-of-content p"
         ]);
         $this->end_controls_section();
@@ -274,4 +274,4 @@ class Highit_Table_Of_Content_Widget extends Widget_Base
     }
 }
 
-Plugin::instance()->widgets_manager->register_widget_type(new Highit_Table_Of_Content_Widget());
+Plugin::instance()->widgets_manager->register_widget_type(new Highlt_Table_Of_Content_Widget());

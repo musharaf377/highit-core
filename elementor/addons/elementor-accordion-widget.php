@@ -8,7 +8,7 @@
 
 namespace Elementor;
 
-class Highit_Accordion_One extends Widget_Base
+class Highlt_Accordion_One extends Widget_Base
 {
 
     /**
@@ -23,7 +23,7 @@ class Highit_Accordion_One extends Widget_Base
      */
     public function get_name()
     {
-        return 'highit-accordion-one-widget';
+        return 'highlt-accordion-one-widget';
     }
 
     /**
@@ -39,7 +39,7 @@ class Highit_Accordion_One extends Widget_Base
 
     public function get_keywords()
     {
-        return ['ir-tech', 'highit', 'accordion'];
+        return ['ir-tech', 'highlt', 'accordion'];
     }
 
     /**
@@ -54,7 +54,7 @@ class Highit_Accordion_One extends Widget_Base
      */
     public function get_title()
     {
-        return esc_html__('Accordion 01', 'highit-core');
+        return esc_html__('Accordion 01', 'highlt-core');
     }
 
     /**
@@ -84,7 +84,7 @@ class Highit_Accordion_One extends Widget_Base
      */
     public function get_categories()
     {
-        return ['highit_widgets'];
+        return ['highlt_widgets'];
     }
 
     /**
@@ -101,30 +101,30 @@ class Highit_Accordion_One extends Widget_Base
         $this->start_controls_section(
             'settings_section',
             [
-                'label' => esc_html__('General Settings', 'highit-core'),
+                'label' => esc_html__('General Settings', 'highlt-core'),
                 'tab'   => Controls_Manager::TAB_CONTENT,
             ]
         );
         $repeater = new Repeater();
 
         $repeater->add_control('title', [
-            'label'       => esc_html__('Title', 'highit-core'),
+            'label'       => esc_html__('Title', 'highlt-core'),
             'type'        => Controls_Manager::TEXT,
-            'description' => esc_html__('Enter title', 'highit-core')
+            'description' => esc_html__('Enter title', 'highlt-core')
         ]);
         $repeater->add_control('description', [
-            'label'       => esc_html__('Description', 'highit-core'),
+            'label'       => esc_html__('Description', 'highlt-core'),
             'type'        => Controls_Manager::TEXTAREA,
-            'description' => esc_html__('Enter description', 'highit-core')
+            'description' => esc_html__('Enter description', 'highlt-core')
         ]);
 
         $this->add_control('accordion_items', [
-            'label'       => esc_html__('Accordion Item', 'highit-core'),
+            'label'       => esc_html__('Accordion Item', 'highlt-core'),
             'type'        => Controls_Manager::REPEATER,
             'default'     => [
                 [
-                    'title'        => esc_html__('How can I get started with Highit Advisors? How do I know if I qualify for your services?', 'highit-core'),
-                    'description' => esc_html__("All investment decisions at Highit Advisors are made in-house. As an independent investment advisor, we have the flexibility to select the opportunities from the broader investment universe across public equities, private shares, real estate, and mutual funds. Our investment philosophy emphasizes ethical investing, and that our clients' investments align with their values. We carefully screen for and seek to avoid industries such as alcohol, gambling, pornography, tobacco, and war-making.", 'highit-core'),
+                    'title'        => esc_html__('How can I get started with Highlt Advisors? How do I know if I qualify for your services?', 'highlt-core'),
+                    'description' => esc_html__("All investment decisions at Highlt Advisors are made in-house. As an independent investment advisor, we have the flexibility to select the opportunities from the broader investment universe across public equities, private shares, real estate, and mutual funds. Our investment philosophy emphasizes ethical investing, and that our clients' investments align with their values. We carefully screen for and seek to avoid industries such as alcohol, gambling, pornography, tobacco, and war-making.", 'highlt-core'),
                 ]
             ],
             'fields'      => $repeater->get_controls()
@@ -179,4 +179,4 @@ class Highit_Accordion_One extends Widget_Base
     }
 }
 
-Plugin::instance()->widgets_manager->register_widget_type(new Highit_Accordion_One());
+Plugin::instance()->widgets_manager->register_widget_type(new Highlt_Accordion_One());

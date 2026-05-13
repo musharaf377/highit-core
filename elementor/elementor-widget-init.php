@@ -2,7 +2,7 @@
 
 /**
  * Elementor Addons Init
- * @package highit
+ * @package highlt
  * @since 1.0.0
  */
 
@@ -11,9 +11,9 @@ if (! defined('ABSPATH')) {
 }
 
 
-if (! class_exists('Highit_Elementor_Widget_Init')) {
+if (! class_exists('Highlt_Elementor_Widget_Init')) {
 
-	class Highit_Elementor_Widget_Init
+	class Highlt_Elementor_Widget_Init
 	{
 		/**
 		 * $instance
@@ -54,9 +54,9 @@ if (! class_exists('Highit_Elementor_Widget_Init')) {
 		public function _widget_categories($elements_manager)
 		{
 			$elements_manager->add_category(
-				'highit_widgets',
+				'highlt_widgets',
 				[
-					'title' => esc_html__('Highit Widgets', 'highit-core'),
+					'title' => esc_html__('Highlt Widgets', 'highlt-core'),
 					'icon'  => 'fas fa-plug',
 				]
 			);
@@ -72,14 +72,14 @@ if (! class_exists('Highit_Elementor_Widget_Init')) {
 				return;
 			}
 
-			$elementor_widgets = require_once HIGHIT_CORE_ROOT_PATH . '/config/elementor-widgets.php';
+			$elementor_widgets = require_once HIGHLT_CORE_ROOT_PATH . '/config/elementor-widgets.php';
 
-			$elementor_widgets = apply_filters('highit_elementor_widget', $elementor_widgets);
+			$elementor_widgets = apply_filters('highlt_elementor_widget', $elementor_widgets);
 			ksort($elementor_widgets);
 			if (is_array($elementor_widgets) && ! empty($elementor_widgets)) {
 				foreach ($elementor_widgets as $widget) {
-					if (file_exists(HIGHIT_CORE_ELEMENTOR . '/addons/elementor-' . $widget . '-widget.php')) {
-						require_once HIGHIT_CORE_ELEMENTOR . '/addons/elementor-' . $widget . '-widget.php';
+					if (file_exists(HIGHLT_CORE_ELEMENTOR . '/addons/elementor-' . $widget . '-widget.php')) {
+						require_once HIGHLT_CORE_ELEMENTOR . '/addons/elementor-' . $widget . '-widget.php';
 					}
 				}
 			}
@@ -92,12 +92,12 @@ if (! class_exists('Highit_Elementor_Widget_Init')) {
 		 */
 		public function load_assets_for_elementor()
 		{
-			wp_enqueue_style('flaticon', HIGHIT_CORE_CSS . '/flaticon.css');
-			wp_enqueue_style('highit-core-elementor-style', HIGHIT_CORE_ADMIN_ASSETS . '/css/elementor-editor.css');
+			wp_enqueue_style('flaticon', HIGHLT_CORE_CSS . '/flaticon.css');
+			wp_enqueue_style('highlt-core-elementor-style', HIGHLT_CORE_ADMIN_ASSETS . '/css/elementor-editor.css');
 		}
 	}
 
-	if (class_exists('Highit_Elementor_Widget_Init')) {
-		Highit_Elementor_Widget_Init::getInstance();
+	if (class_exists('Highlt_Elementor_Widget_Init')) {
+		Highlt_Elementor_Widget_Init::getInstance();
 	}
 }//end if

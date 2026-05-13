@@ -2,7 +2,7 @@
 
 /**
  * Theme Core Shortcodes Function
- * @package highit
+ * @package highlt
  * @since 1.0.0
  */
 
@@ -11,9 +11,9 @@ if (!defined('ABSPATH')) {
 }
 
 
-if (!class_exists('Highit_Core_shortcodes')) {
+if (!class_exists('Highlt_Core_shortcodes')) {
 
-    class Highit_Core_shortcodes
+    class Highlt_Core_shortcodes
     {
 
         /**
@@ -29,20 +29,20 @@ if (!class_exists('Highit_Core_shortcodes')) {
         public function __construct()
         {
             //social post share
-            add_shortcode('highit_post_share', array($this, 'post_share'));
+            add_shortcode('highlt_post_share', array($this, 'post_share'));
             //social icon
-            add_shortcode('highit_social_icon_wrap', array(__CLASS__, 'social_icon_wrap'));
-            add_shortcode('highit_social_icon', array(__CLASS__, 'social_icons'));
+            add_shortcode('highlt_social_icon_wrap', array(__CLASS__, 'social_icon_wrap'));
+            add_shortcode('highlt_social_icon', array(__CLASS__, 'social_icons'));
             //top menu
-            add_shortcode('highit_top_menu_wrap', array(__CLASS__, 'top_menu_wrap'));
-            add_shortcode('highit_top_menu', array(__CLASS__, 'top_menu'));
+            add_shortcode('highlt_top_menu_wrap', array(__CLASS__, 'top_menu_wrap'));
+            add_shortcode('highlt_top_menu', array(__CLASS__, 'top_menu'));
             //top menu
-            add_shortcode('highit_top_menu_wrap_02', array(__CLASS__, 'top_menu_wrap_02'));
-            add_shortcode('highit_top_menu_02', array(__CLASS__, 'top_menu_02'));
+            add_shortcode('highlt_top_menu_wrap_02', array(__CLASS__, 'top_menu_wrap_02'));
+            add_shortcode('highlt_top_menu_02', array(__CLASS__, 'top_menu_02'));
             //info_item
-            add_shortcode('highit_info_item_wrap', array(__CLASS__, 'info_item_wrap'));
-            add_shortcode('highit_info_link', array(__CLASS__, 'info_link'));
-            add_shortcode('highit_info_inline_text', array(__CLASS__, 'info_inline_text'));
+            add_shortcode('highlt_info_item_wrap', array(__CLASS__, 'info_item_wrap'));
+            add_shortcode('highlt_info_link', array(__CLASS__, 'info_link'));
+            add_shortcode('highlt_info_inline_text', array(__CLASS__, 'info_inline_text'));
         }
 
 
@@ -75,18 +75,18 @@ if (!class_exists('Highit_Core_shortcodes')) {
             if (is_singular() || is_home()) {
 
                 //get current page url
-                $highit_url = urlencode_deep(get_permalink());
+                $highlt_url = urlencode_deep(get_permalink());
                 //get current page title
-                $highit_title = str_replace(' ', '%20', get_the_title($post->ID));
+                $highlt_title = str_replace(' ', '%20', get_the_title($post->ID));
                 //get post thumbnail for pinterest
-                $highit_thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full');
-                $highit_thumbnail = !empty($highit_thumbnail) ? $highit_thumbnail[0] : '';
+                $highlt_thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full');
+                $highlt_thumbnail = !empty($highlt_thumbnail) ? $highlt_thumbnail[0] : '';
 
                 //all social share link generate
-                $facebook_share_link = 'https://www.facebook.com/sharer/sharer.php?u=' . $highit_url;
-                $twitter_share_link = 'https://twitter.com/intent/tweet?text=' . $highit_title . '&amp;url=' . $highit_url . '&amp;via=' . get_bloginfo('url');
-                $linkedin_share_link = 'https://www.linkedin.com/shareArticle?mini=true&url=' . $highit_url . '&amp;title=' . $highit_title;
-                $pinterest_share_link = 'https://pinterest.com/pin/create/button/?url=' . $highit_url . '&amp;media=' . $highit_thumbnail . '&amp;description=' . $highit_title;
+                $facebook_share_link = 'https://www.facebook.com/sharer/sharer.php?u=' . $highlt_url;
+                $twitter_share_link = 'https://twitter.com/intent/tweet?text=' . $highlt_title . '&amp;url=' . $highlt_url . '&amp;via=' . get_bloginfo('url');
+                $linkedin_share_link = 'https://www.linkedin.com/shareArticle?mini=true&url=' . $highlt_url . '&amp;title=' . $highlt_title;
+                $pinterest_share_link = 'https://pinterest.com/pin/create/button/?url=' . $highlt_url . '&amp;media=' . $highlt_thumbnail . '&amp;description=' . $highlt_title;
 
                 $output .= '<ul class="social-icon">';
                 $output .= '<li><a class="facebook" href="' . esc_url($facebook_share_link) . '"><i class="fab fa-facebook-f"></i></a></li>';
@@ -318,7 +318,7 @@ if (!class_exists('Highit_Core_shortcodes')) {
         }
     } //end class
 
-    if (class_exists('Highit_Core_shortcodes')) {
-        Highit_Core_shortcodes::getInstance();
+    if (class_exists('Highlt_Core_shortcodes')) {
+        Highlt_Core_shortcodes::getInstance();
     }
 }//end if

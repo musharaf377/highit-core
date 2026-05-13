@@ -2,23 +2,23 @@
 
 /**
  * Elementor Widget
- * @package Highit
+ * @package Highlt
  * @since 1.0.0
  */
 
 namespace Elementor;
 
-class Highit_horizontal_Slider_Item_Widget extends Widget_Base
+class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
 {
 
     public function get_name()
     {
-        return 'highit-horizontal-slider-widget';
+        return 'highlt-vertical-slider-widget';
     }
 
     public function get_title()
     {
-        return esc_html__('Vertical Slider', 'highit-core');
+        return esc_html__('Vertical Slider', 'highlt-core');
     }
 
     public function get_keywords()
@@ -33,7 +33,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
 
     public function get_categories()
     {
-        return ['highit_widgets'];
+        return ['highlt_widgets'];
     }
 
     protected function register_controls()
@@ -42,7 +42,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->start_controls_section(
             'settings_section',
             [
-                'label' => esc_html__('General Settings', 'highit-core'),
+                'label' => esc_html__('General Settings', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -51,13 +51,13 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $repeater->add_control(
             'slider_image',
             [
-                'label' => esc_html__('Slider Image', 'highit-core'),
+                'label' => esc_html__('Slider Image', 'highlt-core'),
                 'type' => Controls_Manager::MEDIA,
             ]
         );
 
         $this->add_control('hero_slider_items', [
-            'label' => esc_html__('Vertical Slider Item', 'highit-core'),
+            'label' => esc_html__('Vertical Slider Item', 'highlt-core'),
             'type' => Controls_Manager::REPEATER,
             'fields' => $repeater->get_controls(),
         ]);
@@ -68,7 +68,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->start_controls_section(
             'slider_settings_section',
             [
-                'label' => esc_html__('Slider Settings', 'highit-core'),
+                'label' => esc_html__('Slider Settings', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -76,7 +76,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'items',
             [
-                'label' => esc_html__('Slides To Show', 'highit-core'),
+                'label' => esc_html__('Slides To Show', 'highlt-core'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => '3',
             ]
@@ -85,7 +85,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'loop',
             [
-                'label' => esc_html__('Loop', 'highit-core'),
+                'label' => esc_html__('Loop', 'highlt-core'),
                 'type' => Controls_Manager::SWITCHER,
             ]
         );
@@ -93,7 +93,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'autoplay',
             [
-                'label' => esc_html__('Autoplay', 'highit-core'),
+                'label' => esc_html__('Autoplay', 'highlt-core'),
                 'type' => Controls_Manager::SWITCHER,
             ]
         );
@@ -101,7 +101,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'speed',
             [
-                'label' => esc_html__('Speed', 'highit-core'),
+                'label' => esc_html__('Speed', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -123,7 +123,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->start_controls_section(
             'slider_container_style',
             [
-                'label' => esc_html__('Slider Container', 'highit-core'),
+                'label' => esc_html__('Slider Container', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -131,7 +131,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slider_height',
             [
-                'label' => esc_html__('Height', 'highit-core'),
+                'label' => esc_html__('Height', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'size_units' => ['px', 'vh'],
                 'range' => [
@@ -148,7 +148,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slider_margin',
             [
-                'label' => esc_html__('Margin', 'highit-core'),
+                'label' => esc_html__('Margin', 'highlt-core'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
@@ -160,7 +160,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slider_padding',
             [
-                'label' => esc_html__('Padding', 'highit-core'),
+                'label' => esc_html__('Padding', 'highlt-core'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
@@ -172,7 +172,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'slider_border_radius',
             [
-                'label' => esc_html__('Border Radius', 'highit-core'),
+                'label' => esc_html__('Border Radius', 'highlt-core'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
@@ -187,7 +187,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->start_controls_section(
             'slide_item_style',
             [
-                'label' => esc_html__('Slide Item', 'highit-core'),
+                'label' => esc_html__('Slide Item', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -195,7 +195,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slide_image_width',
             [
-                'label' => esc_html__('Image Width', 'highit-core'),
+                'label' => esc_html__('Image Width', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
                 'range' => [
@@ -211,7 +211,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slide_image_height',
             [
-                'label' => esc_html__('Image Height', 'highit-core'),
+                'label' => esc_html__('Image Height', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
                 'range' => [
@@ -227,13 +227,13 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'slide_image_object_fit',
             [
-                'label' => esc_html__('Object Fit', 'highit-core'),
+                'label' => esc_html__('Object Fit', 'highlt-core'),
                 'type' => Controls_Manager::SELECT,
                 'options' => [
-                    'cover'      => esc_html__('Cover', 'highit-core'),
-                    'contain'    => esc_html__('Contain', 'highit-core'),
-                    'fill'       => esc_html__('Fill', 'highit-core'),
-                    'scale-down' => esc_html__('Scale Down', 'highit-core'),
+                    'cover'      => esc_html__('Cover', 'highlt-core'),
+                    'contain'    => esc_html__('Contain', 'highlt-core'),
+                    'fill'       => esc_html__('Fill', 'highlt-core'),
+                    'scale-down' => esc_html__('Scale Down', 'highlt-core'),
                 ],
                 'default' => 'cover',
                 'selectors' => [
@@ -245,7 +245,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'slide_bg_color',
             [
-                'label' => esc_html__('Background Color', 'highit-core'),
+                'label' => esc_html__('Background Color', 'highlt-core'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .vertical-slider .swiper-slide' => 'background-color: {{VALUE}};',
@@ -256,7 +256,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'slide_border_radius',
             [
-                'label' => esc_html__('Border Radius', 'highit-core'),
+                'label' => esc_html__('Border Radius', 'highlt-core'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
@@ -268,7 +268,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slide_spacing',
             [
-                'label' => esc_html__('Space Between Slides', 'highit-core'),
+                'label' => esc_html__('Space Between Slides', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [ 'min' => 0, 'max' => 100 ],
@@ -285,7 +285,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->start_controls_section(
             'pagination_style',
             [
-                'label' => esc_html__('Pagination', 'highit-core'),
+                'label' => esc_html__('Pagination', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -293,7 +293,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'pagination_color',
             [
-                'label' => esc_html__('Bullet Color', 'highit-core'),
+                'label' => esc_html__('Bullet Color', 'highlt-core'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .vertical-pagination .swiper-pagination-bullet' => 'background: {{VALUE}};',
@@ -304,7 +304,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'pagination_active_color',
             [
-                'label' => esc_html__('Active Bullet Color', 'highit-core'),
+                'label' => esc_html__('Active Bullet Color', 'highlt-core'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .vertical-pagination .swiper-pagination-bullet-active' => 'background: {{VALUE}};',
@@ -315,7 +315,7 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'pagination_size',
             [
-                'label' => esc_html__('Bullet Size', 'highit-core'),
+                'label' => esc_html__('Bullet Size', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [ 'min' => 4, 'max' => 30 ],
@@ -352,18 +352,11 @@ class Highit_horizontal_Slider_Item_Widget extends Widget_Base
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <div class="vertical-pagination">
-                    <div class="hero-slider-btn-wrap">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
+                <div class="vertical-pagination"></div>
             </div>
         </div>
 <?php
     }
 }
 
-Plugin::instance()->widgets_manager->register_widget_type(new Highit_horizontal_Slider_Item_Widget());
+Plugin::instance()->widgets_manager->register_widget_type(new Highlt_Vertical_Slider_Item_Widget());

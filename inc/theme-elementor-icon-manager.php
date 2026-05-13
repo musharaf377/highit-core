@@ -1,11 +1,11 @@
 <?php
 
-namespace Highit;
+namespace Highlt;
 
 use Elementor\Core\Files\Assets\Svg\Svg_Handler;
 use Elementor\Utils;
 
-class Highit_elementor_icon_manager extends \Elementor\Icons_Manager
+class Highlt_elementor_icon_manager extends \Elementor\Icons_Manager
 {
 
     private static function render_icon_html($icon, $attributes = [], $tag = 'i')

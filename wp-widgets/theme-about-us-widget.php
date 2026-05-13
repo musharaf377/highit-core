@@ -2,7 +2,7 @@
 
 /**
  * Theme About Us Widget
- * @package Highit
+ * @package Highlt
  * @since 1.0.0
  */
 
@@ -14,37 +14,37 @@ if (class_exists('CSF')) {
 
 
     // Create a About Widget
-    CSF::createWidget('highit_about_widget', array(
-        'title' => esc_html__('Highit: About Us', 'highit-core'),
-        'classname' => 'highit-widget-about',
-        'description' => esc_html__('Display about us widget', 'highit-core'),
+    CSF::createWidget('highlt_about_widget', array(
+        'title' => esc_html__('Highlt: About Us', 'highlt-core'),
+        'classname' => 'highlt-widget-about',
+        'description' => esc_html__('Display about us widget', 'highlt-core'),
         'fields' => array(
             array(
                 'id' => 'logo-area',
                 'type' => 'media',
-                'title' => esc_html__('Upload Your Photo', 'highit-core'),
+                'title' => esc_html__('Upload Your Photo', 'highlt-core'),
             ),
             array(
                 'id' => 'description',
                 'type' => 'textarea',
-                'title' => esc_html__('Description', 'Highit-core'),
-                'default' => esc_html__('Find Us on', 'highit-core')
+                'title' => esc_html__('Description', 'Highlt-core'),
+                'default' => esc_html__('Find Us on', 'highlt-core')
             ),
             array(
-                'id' => 'highit-footer-download-image-repeater',
+                'id' => 'highlt-footer-download-image-repeater',
                 'type' => 'repeater',
-                'title' => esc_html__('Download Image', 'highit-core'),
+                'title' => esc_html__('Download Image', 'highlt-core'),
                 'fields' => array(
                     array(
-                        'id' => 'highit-footer-download',
+                        'id' => 'highlt-footer-download',
                         'type' => 'media',
-                        'title' => esc_html__('Upload Your Download Photo', 'highit-core'),
+                        'title' => esc_html__('Upload Your Download Photo', 'highlt-core'),
                     ),
                     array(
-                        'id' => 'highit-footer-download-url',
+                        'id' => 'highlt-footer-download-url',
                         'type' => 'text',
-                        'title' => esc_html__('Enter Your Url', 'highit-core'),
-                        'default' => esc_html__('#', 'highit-core')
+                        'title' => esc_html__('Enter Your Url', 'highlt-core'),
+                        'default' => esc_html__('#', 'highlt-core')
                     ),
 
                 ),
@@ -53,8 +53,8 @@ if (class_exists('CSF')) {
     ));
 
 
-    if (!function_exists('highit_about_widget')) {
-        function highit_about_widget($args, $instance)
+    if (!function_exists('highlt_about_widget')) {
+        function highlt_about_widget($args, $instance)
         {
 
             echo $args['before_widget'];
@@ -64,7 +64,7 @@ if (class_exists('CSF')) {
             $img_print = $img_id ? wp_get_attachment_image_src($img_id, 'full')[0] : '';
             $alt_text = get_post_meta($img_id, '_wp_attachment_image_alt', true);
             $paragraph = $instance['description'] ?? '';
-            $socialIcon = is_array($instance['highit-footer-download-image-repeater']) && !empty($instance['highit-footer-download-image-repeater']) ? $instance['highit-footer-download-image-repeater'] : [];
+            $socialIcon = is_array($instance['highlt-footer-download-image-repeater']) && !empty($instance['highlt-footer-download-image-repeater']) ? $instance['highlt-footer-download-image-repeater'] : [];
 
 
 ?>
@@ -80,8 +80,8 @@ if (class_exists('CSF')) {
                         <?php
                         foreach ($socialIcon as $icon) {
 
-                            echo '<li class="single-info-item"><a href="' . $icon['highit-footer-download-url'] . '">
-                              <img src="' . $icon['highit-footer-download']['url'] . '" alt="' . $icon['highit-footer-download']['alt'] . '">
+                            echo '<li class="single-info-item"><a href="' . $icon['highlt-footer-download-url'] . '">
+                              <img src="' . $icon['highlt-footer-download']['url'] . '" alt="' . $icon['highlt-footer-download']['alt'] . '">
                         </li>';
                         };
                         ?>

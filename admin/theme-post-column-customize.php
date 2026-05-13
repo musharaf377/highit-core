@@ -2,7 +2,7 @@
 
 /**
  * Post Column Customize Custom Function
- * @package Highit
+ * @package Highlt
  * @since 1.0.0
  */
 
@@ -10,8 +10,8 @@ if (!defined('ABSPATH')) {
 	exit(); //exit if access directly
 }
 
-if (!class_exists('highit_Post_Column_Customize')) {
-	class highit_Post_Column_Customize
+if (!class_exists('highlt_Post_Column_Customize')) {
+	class highlt_Post_Column_Customize
 	{
 		//$instance variable
 		private static $instance;
@@ -50,10 +50,10 @@ if (!class_exists('highit_Post_Column_Customize')) {
 			$cat_title = $columns['taxonomy-ar_post_cat'];
 			unset($columns);
 			$columns['cb'] = '<input type="checkbox" />';
-			$columns['title'] = esc_html__('Title', 'highit-core');
-			$columns['thumbnail'] = '<a href="edit.php?post_type=service&orderby=title&order=' . urlencode($order) . '">' . esc_html__('Thumbnail', 'highit-core') . '</a>';
+			$columns['title'] = esc_html__('Title', 'highlt-core');
+			$columns['thumbnail'] = '<a href="edit.php?post_type=service&orderby=title&order=' . urlencode($order) . '">' . esc_html__('Thumbnail', 'highlt-core') . '</a>';
 			$columns['taxonomy-ar_post_cat'] = '<a href="edit.php?post_type=service&orderby=taxonomy&order=' . urlencode($order) . '">' . $cat_title . '<span class="sorting-indicator"></span></a>';
-			$columns['date'] = esc_html__('Date', 'highit-core');
+			$columns['date'] = esc_html__('Date', 'highlt-core');
 			return $columns;
 		}
 
@@ -78,7 +78,7 @@ if (!class_exists('highit_Post_Column_Customize')) {
 		 */
 		public function edit_service_cat_columns($columns)
 		{
-			$columns['icon'] = esc_html__('Icon', 'highit-core');
+			$columns['icon'] = esc_html__('Icon', 'highlt-core');
 			return $columns;
 		}
 
@@ -88,7 +88,7 @@ if (!class_exists('highit_Post_Column_Customize')) {
 		 */
 		public function add_service_category_columns($string, $columns, $post_id)
 		{
-			$post_term_meta = get_term_meta($post_id, 'highit_service_category', true);
+			$post_term_meta = get_term_meta($post_id, 'highlt_service_category', true);
 			$icon = isset($post_term_meta['icon']) ? $post_term_meta['icon'] : '';
 			switch ($columns) {
 				case 'icon':
@@ -99,7 +99,7 @@ if (!class_exists('highit_Post_Column_Customize')) {
 			}
 		}
 	} //end class
-	if (class_exists('highit_Post_Column_Customize')) {
-		highit_Post_Column_Customize::getInstance();
+	if (class_exists('highlt_Post_Column_Customize')) {
+		highlt_Post_Column_Customize::getInstance();
 	}
 }

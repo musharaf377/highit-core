@@ -2,7 +2,7 @@
 
 /**
  * Theme About Me Widget
- * @package Highit
+ * @package Highlt
  * @since 1.0.0
  */
 
@@ -12,19 +12,19 @@ if (!defined('ABSPATH')) {
 // Control core classes for avoid errors
 if (class_exists('CSF')) {
     // Create a About Widget
-    CSF::createWidget('highit_about_me_widget', array(
-        'title' => esc_html__('Highit: About Me', 'highit-core'),
-        'classname' => 'highit-about-me-widget',
-        'description' => esc_html__('Display About Me widget', 'highit-core'),
+    CSF::createWidget('highlt_about_me_widget', array(
+        'title' => esc_html__('Highlt: About Me', 'highlt-core'),
+        'classname' => 'highlt-about-me-widget',
+        'description' => esc_html__('Display About Me widget', 'highlt-core'),
     ));
 
     // Create a About Widget
 
-    if (!function_exists('highit_about_me_widget')) {
-        function highit_about_me_widget($args, $instance)
+    if (!function_exists('highlt_about_me_widget')) {
+        function highlt_about_me_widget($args, $instance)
         {
             echo $args['before_widget'];
-            $highit = highit();
+            $highlt = highlt();
             $author_id = get_the_author_meta('ID');
 
 
@@ -34,7 +34,7 @@ if (class_exists('CSF')) {
                     alt="">
                 <h3 class="author-title"><?php echo get_the_author_meta('display_name', $author_id); ?></h3>
                 <?php
-                $highit->posted_on();
+                $highlt->posted_on();
                 ?>
             </div>
 <?php

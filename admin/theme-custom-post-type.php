@@ -2,7 +2,7 @@
 
 /**
  * Theme Custom Post Type(CPTs)
- * @package Highit
+ * @package Highlt
  * @since 1.0.0
  */
 
@@ -10,8 +10,8 @@ if (!defined('ABSPATH')) {
     exit(); //exit if access directly
 }
 
-if (!class_exists('Highit_Custom_Post_Type')) {
-    class Highit_Custom_Post_Type
+if (!class_exists('Highlt_Custom_Post_Type')) {
+    class Highlt_Custom_Post_Type
     {
 
         //$instance variable
@@ -46,7 +46,7 @@ if (!class_exists('Highit_Custom_Post_Type')) {
                 return;
             }
 
-            $all_post_type = require_once HIGHIT_CORE_ROOT_PATH . '/config/cpt.php';
+            $all_post_type = require_once HIGHLT_CORE_ROOT_PATH . '/config/cpt.php';
 
             if (!empty($all_post_type) && is_array($all_post_type)) {
                 foreach ($all_post_type as $post_type) {
@@ -60,7 +60,7 @@ if (!class_exists('Highit_Custom_Post_Type')) {
              * @since 1.0.0
              */
 
-            $all_custom_taxonmy = require_once HIGHIT_CORE_ROOT_PATH . '/config/custom-taxonomy.php';
+            $all_custom_taxonmy = require_once HIGHLT_CORE_ROOT_PATH . '/config/custom-taxonomy.php';
 
             if (is_array($all_custom_taxonmy) && !empty($all_custom_taxonmy)) {
                 foreach ($all_custom_taxonmy as $taxonomy) {
@@ -72,7 +72,7 @@ if (!class_exists('Highit_Custom_Post_Type')) {
         }
     } //end class
 
-    if (class_exists('Highit_Custom_Post_Type')) {
-        Highit_Custom_Post_Type::getInstance();
+    if (class_exists('Highlt_Custom_Post_Type')) {
+        Highlt_Custom_Post_Type::getInstance();
     }
 }

@@ -2,13 +2,13 @@
 
 /**
  * Elementor Widget
- * @package Highit
+ * @package Highlt
  * @since 1.0.0
  */
 
 namespace Elementor;
 
-class Highit_Section_Title_One_Widget extends Widget_Base
+class Highlt_Section_Title_One_Widget extends Widget_Base
 {
     /**
      * Get widget name.
@@ -22,7 +22,7 @@ class Highit_Section_Title_One_Widget extends Widget_Base
      */
     public function get_name()
     {
-        return 'highit-theme-heading-title-one-widget';
+        return 'highlt-theme-heading-title-one-widget';
     }
 
     /**
@@ -37,12 +37,12 @@ class Highit_Section_Title_One_Widget extends Widget_Base
      */
     public function get_title()
     {
-        return esc_html__('Heading Title: 01', 'highit-core');
+        return esc_html__('Heading Title: 01', 'highlt-core');
     }
 
     public function get_keywords()
     {
-        return ['Section', 'Heading', 'Title', "ThemeIM", 'Highit'];
+        return ['Section', 'Heading', 'Title', "ThemeIM", 'Highlt'];
     }
 
     /**
@@ -72,7 +72,7 @@ class Highit_Section_Title_One_Widget extends Widget_Base
      */
     public function get_categories()
     {
-        return ['highit_widgets'];
+        return ['highlt_widgets'];
     }
 
     /**
@@ -89,73 +89,73 @@ class Highit_Section_Title_One_Widget extends Widget_Base
         $this->start_controls_section(
             'settings_section',
             [
-                'label' => esc_html__('General Settings', 'highit-core'),
+                'label' => esc_html__('General Settings', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
         $this->add_control(
             'white_section_title',
             [
-                'label' => esc_html__('Subtitle Plane Animation', 'highit-core'),
+                'label' => esc_html__('Subtitle Plane Animation', 'highlt-core'),
                 'type' => Controls_Manager::SELECT,
                 'default' => '',
                 'options' => [
-                    'white' => esc_html__('White Style', 'highit-core'),
-                    '' => esc_html__('Default Style', 'highit-core'),
+                    'white' => esc_html__('White Style', 'highlt-core'),
+                    '' => esc_html__('Default Style', 'highlt-core'),
                 ],
             ]
         );
         $this->add_control(
             'subtitle',
             [
-                'label' => esc_html__('Sub Title', 'highit-core'),
+                'label' => esc_html__('Sub Title', 'highlt-core'),
                 'type' => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('About Highit', 'highit-core'),
-                'description' => esc_html__('enter title. use {c} color text {/c} for color text', 'highit-core'),
+                'default' => esc_html__('About Highlt', 'highlt-core'),
+                'description' => esc_html__('enter title. use {c} color text {/c} for color text', 'highlt-core'),
             ]
         );
         $this->add_control(
             'title',
             [
-                'label' => esc_html__('Title', 'highit-core'),
+                'label' => esc_html__('Title', 'highlt-core'),
                 'type' => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('What We Do', 'highit-core'),
+                'default' => esc_html__('What We Do', 'highlt-core'),
             ]
         );
         $this->add_control(
             'description_status',
             [
-                'label' => esc_html__('Description Show/Hide', 'highit-core'),
+                'label' => esc_html__('Description Show/Hide', 'highlt-core'),
                 'type' => Controls_Manager::SWITCHER,
-                'description' => esc_html__('show/hide description', 'highit-core'),
+                'description' => esc_html__('show/hide description', 'highlt-core'),
             ]
         );
         $this->add_control(
             'description',
             [
-                'label' => esc_html__('Description', 'highit-core'),
+                'label' => esc_html__('Description', 'highlt-core'),
                 'type' => Controls_Manager::TEXTAREA,
-                'description' => esc_html__('enter  description.', 'highit-core'),
-                'default' => esc_html__('Top Packages', 'highit-core'),
+                'description' => esc_html__('enter  description.', 'highlt-core'),
+                'default' => esc_html__('Top Packages', 'highlt-core'),
                 'condition' => ['description_status' => 'yes']
             ]
         );
         $this->add_responsive_control(
             'text_align',
             [
-                'label' => esc_html__('Alignment', 'highit-core'),
+                'label' => esc_html__('Alignment', 'highlt-core'),
                 'type' => Controls_Manager::CHOOSE,
                 'options' => [
                     'left' => [
-                        'title' => esc_html__('Left', 'highit-core'),
+                        'title' => esc_html__('Left', 'highlt-core'),
                         'icon' => 'fa fa-align-left',
                     ],
                     'center' => [
-                        'title' => esc_html__('Center', 'highit-core'),
+                        'title' => esc_html__('Center', 'highlt-core'),
                         'icon' => 'fa fa-align-center',
                     ],
                     'right' => [
-                        'title' => esc_html__('Right', 'highit-core'),
+                        'title' => esc_html__('Right', 'highlt-core'),
                         'icon' => 'fa fa-align-right',
                     ],
                 ],
@@ -169,14 +169,14 @@ class Highit_Section_Title_One_Widget extends Widget_Base
         $this->start_controls_section(
             'styling_section',
             [
-                'label' => esc_html__('Styling Settings', 'highit-core'),
+                'label' => esc_html__('Styling Settings', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
         $this->add_control(
             'shape_top_space',
             [
-                'label' => esc_html__('Sub Title Margin Bottom', 'highit-core'),
+                'label' => esc_html__('Sub Title Margin Bottom', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
                 'range' => [
@@ -198,7 +198,7 @@ class Highit_Section_Title_One_Widget extends Widget_Base
         $this->add_control(
             'title_bottom_space',
             [
-                'label' => esc_html__('Title Bottom Space', 'highit-core'),
+                'label' => esc_html__('Title Bottom Space', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
                 'range' => [
@@ -218,14 +218,14 @@ class Highit_Section_Title_One_Widget extends Widget_Base
             ]
         );
         $this->add_control('subtitle_color', [
-            'label' => esc_html__('Sub Title Color', 'highit-core'),
+            'label' => esc_html__('Sub Title Color', 'highlt-core'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
                 "{{WRAPPER}} .theme-heading-title .subtitle" => "color: {{VALUE}}"
             ]
         ]);
         $this->add_control('subtitle_bg_color', [
-            'label' => esc_html__('Sub Title Background Color', 'highit-core'),
+            'label' => esc_html__('Sub Title Background Color', 'highlt-core'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
                 "{{WRAPPER}} .theme-heading-title .subtitle" => "background-color: {{VALUE}}"
@@ -235,14 +235,14 @@ class Highit_Section_Title_One_Widget extends Widget_Base
             Group_Control_Border::get_type(),
             [
                 'name' => 'border',
-                'label' => esc_html__('Border', 'highit-core'),
+                'label' => esc_html__('Border', 'highlt-core'),
                 'selector' => '{{WRAPPER}} .theme-heading-title .subtitle',
             ]
         );
         $this->add_control(
             'background_border_radius',
             [
-                'label' => esc_html__('Box Border Radius', 'highit-core'),
+                'label' => esc_html__('Box Border Radius', 'highlt-core'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
@@ -251,14 +251,14 @@ class Highit_Section_Title_One_Widget extends Widget_Base
             ]
         );
         $this->add_control('subtitle_extra_color', [
-            'label' => esc_html__('Sub Title Extra Color', 'highit-core'),
+            'label' => esc_html__('Sub Title Extra Color', 'highlt-core'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
                 "{{WRAPPER}} .theme-heading-title .subtitle span" => "color: {{VALUE}}"
             ]
         ]);
         $this->add_control('description_color', [
-            'label' => esc_html__('Description Color', 'highit-core'),
+            'label' => esc_html__('Description Color', 'highlt-core'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
                 "{{WRAPPER}} .theme-heading-title p" => "color: {{VALUE}}"
@@ -266,14 +266,14 @@ class Highit_Section_Title_One_Widget extends Widget_Base
         ]);
 
         $this->add_control('title_color', [
-            'label' => esc_html__('Title Color', 'highit-core'),
+            'label' => esc_html__('Title Color', 'highlt-core'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
                 "{{WRAPPER}} .theme-heading-title .title" => "color: {{VALUE}}"
             ]
         ]);
         $this->add_control('title_extra_color', [
-            'label' => esc_html__('Title Extra Color', 'highit-core'),
+            'label' => esc_html__('Title Extra Color', 'highlt-core'),
             'type' => Controls_Manager::COLOR,
             'selectors' => [
                 "{{WRAPPER}} .theme-heading-title .title span" => "color: {{VALUE}}"
@@ -284,28 +284,28 @@ class Highit_Section_Title_One_Widget extends Widget_Base
         $this->start_controls_section(
             'styling_typogrpahy_section',
             [
-                'label' => esc_html__('Typography Settings', 'highit-core'),
+                'label' => esc_html__('Typography Settings', 'highlt-core'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
         $this->add_group_control(Group_Control_Typography::get_type(), [
             'name' => 'sub_title_typography',
-            'label' => esc_html__('Sub Title Typography', 'highit-core'),
+            'label' => esc_html__('Sub Title Typography', 'highlt-core'),
             'selector' => "{{WRAPPER}} .theme-heading-title .subtitle"
         ]);
         $this->add_group_control(Group_Control_Typography::get_type(), [
             'name' => 'title_typography',
-            'label' => esc_html__('Title Typography', 'highit-core'),
+            'label' => esc_html__('Title Typography', 'highlt-core'),
             'selector' => "{{WRAPPER}} .theme-heading-title .title"
         ]);
         $this->add_group_control(Group_Control_Typography::get_type(), [
             'name' => 'title_extra_typography',
-            'label' => esc_html__('Title Extra Typography', 'highit-core'),
+            'label' => esc_html__('Title Extra Typography', 'highlt-core'),
             'selector' => "{{WRAPPER}} .theme-heading-title .title span"
         ]);
         $this->add_group_control(Group_Control_Typography::get_type(), [
             'name' => 'description_typography',
-            'label' => esc_html__('Description Typography', 'highit-core'),
+            'label' => esc_html__('Description Typography', 'highlt-core'),
             'selector' => "{{WRAPPER}} .theme-heading-title p"
         ]);
         $this->end_controls_section();
@@ -329,14 +329,14 @@ class Highit_Section_Title_One_Widget extends Widget_Base
                 <div class="subtitle">
                     <?php
                     $subtitle = str_replace(['{c}', '{/c}'], ['<span>', '</span>'], $settings['subtitle']);
-                    print wp_kses($subtitle, highit_core()->kses_allowed_html('all'));
+                    print wp_kses($subtitle, highlt_core()->kses_allowed_html('all'));
                     ?>
                 </div>
             <?php endif; ?>
             <h3 class="title">
                 <?php
                 $title = str_replace(['{c}', '{/c}'], ['<span>', '</span>'], $settings['title']);
-                print wp_kses($title, highit_core()->kses_allowed_html('all'));
+                print wp_kses($title, highlt_core()->kses_allowed_html('all'));
                 ?>
             </h3>
             <?php
@@ -349,4 +349,4 @@ class Highit_Section_Title_One_Widget extends Widget_Base
     }
 }
 
-Plugin::instance()->widgets_manager->register_widget_type(new Highit_Section_Title_One_Widget());
+Plugin::instance()->widgets_manager->register_widget_type(new Highlt_Section_Title_One_Widget());
