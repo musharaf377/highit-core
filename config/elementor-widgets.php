@@ -2,6 +2,6 @@
 
 return array(
     'hero-slider',
-    'testimonial-slider',
+    'horizontal-slider',
     'highit-button',
 );

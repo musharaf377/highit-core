@@ -9,89 +9,59 @@
      ======================= */
     let heroSliderWrapper = $('.hero-slider');
 
-    let heroSliderSetting = heroSliderWrapper.attr('data-settings');
-    let sliderSettings = JSON.parse(heroSliderSetting);
+    if (heroSliderWrapper.length) {
+      let sliderSettings = JSON.parse(heroSliderWrapper.attr('data-settings'));
 
-    let loop = sliderSettings.loop;
-    let autoplay = sliderSettings.autoplay;
-    let speed = sliderSettings.speed;
+      let loop = sliderSettings.loop === 'yes';
+      let speed = parseInt(sliderSettings.speed) || 500;
+      let autoplay = sliderSettings.autoplay === 'yes' ? { delay: speed } : false;
 
-    var thumb = new Swiper(".hero-slider-thumb", {
-      loop: loop,
-      spaceBetween: 10,
-      slidesPerView: 2,
-      freeMode: true,
-      watchSlidesProgress: true,
-    });
+      var thumb = new Swiper(".hero-slider-thumb", {
+        loop: loop,
+        spaceBetween: 10,
+        slidesPerView: 2,
+        freeMode: true,
+        watchSlidesProgress: true,
+      });
 
-    var heroSlider = new Swiper(".hero-slider", {
-      loop: loop,
-      spaceBetween: 10,
-      autoplay: autoplay,
-      speed: speed,
-      thumbs: {
-        swiper: thumb,
-      },
-    });
+      var heroSlider = new Swiper(".hero-slider", {
+        loop: loop,
+        spaceBetween: 10,
+        autoplay: autoplay,
+        speed: speed,
+        thumbs: {
+          swiper: thumb,
+        },
+      });
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 
     /* =====================
-        Testimonial Slider area
+        Vertical Slider area
      ======================= */
-    let testimonialSliderWrapper = $('.testimonial-slider');
+    let verticalSliderWrapper = $('.vertical-slider');
 
-    let testimonialSliderSetting = testimonialSliderWrapper.attr('data-settings');
-    let testimonialSliderSettings = JSON.parse(testimonialSliderSetting);
+    if (verticalSliderWrapper.length) {
+      let verticalSettings = JSON.parse(verticalSliderWrapper.attr('data-settings'));
 
-    let testimonialLoop = testimonialSliderSettings.loop;
-    let testimonialAutoplay = testimonialSliderSettings.autoplay;
-    let testimonialSpeed = testimonialSliderSettings.speed;
+      let verticalLoop = verticalSettings.loop === true;
+      let verticalSpeed = parseInt(verticalSettings.speed) || 500;
+      let verticalItems = parseInt(verticalSettings.items) || 3;
+      let verticalAutoplay = verticalSettings.autoplay === true ? { delay: verticalSpeed } : false;
 
-    var testimonialSlider = new Swiper(".testimonial-slider", {
-      loop: testimonialLoop,
-      spaceBetween: 40,
-      slidesPerView: 1,
-      autoplay: testimonialAutoplay,
-      speed: testimonialSpeed,
-      navigation: {
-        nextEl: ".nav-next",
-        prevEl: ".nav-prev",
-      },
-      breakpoints: {
-        0: {
-          slidesPerView: 1,
-          spaceBetween: 50,
+      var verticalSlider = new Swiper(".vertical-slider", {
+        direction: "vertical",
+        loop: verticalLoop,
+        slidesPerView: verticalItems,
+        spaceBetween: 10,
+        autoplay: verticalAutoplay,
+        speed: verticalSpeed,
+        pagination: {
+          el: ".vertical-pagination",
+          clickable: true,
         },
-        768: {
-          slidesPerView: 2,
-          spaceBetween: 60,
-        },
-        1200: {
-          slidesPerView: 3,
-          spaceBetween: 70,
-          centeredSlides: true,
-          initialSlide: 1,
-        },
-      },
-
-    });
-
+      });
+    }
 
 
   })
