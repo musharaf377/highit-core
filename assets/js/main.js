@@ -37,37 +37,217 @@
 
 
     /* =====================
-        Vertical Slider area
+        Vertical Slider area (GSAP)
      ======================= */
-    let verticalSliderWrapper = $('.vertical-slider');
+    var $vertSlider = $('.vertical-slider');
 
-    if (verticalSliderWrapper.length) {
-      let verticalSettings = JSON.parse(verticalSliderWrapper.attr('data-settings'));
+    if ($vertSlider.length) {
+      var vsSettings  = JSON.parse($vertSlider.attr('data-settings'));
+      var vsDuration  = (parseInt(vsSettings.speed) || 900) / 1000;
+      var vsLoop      = vsSettings.loop === true;
+      var vsAutoplay  = vsSettings.autoplay === true;
+      var vsDelay     = Math.max(parseInt(vsSettings.speed) || 3000, 1000);
 
-      let verticalLoop = verticalSettings.loop === true;
-      let verticalSpeed = parseInt(verticalSettings.speed) || 500;
-      let verticalItems = parseInt(verticalSettings.items) || 3;
-      let verticalAutoplay = verticalSettings.autoplay === true ? { delay: verticalSpeed } : false;
+      var vsEl      = $vertSlider[0];
+      var vsAreaEl  = vsEl.closest('.vertical-slider-area') || vsEl.parentElement;
+      var vsSlides  = Array.from(vsEl.querySelectorAll('.swiper-wrapper .swiper-slide'));
+      var vsTotal   = vsSlides.length;
+      var vsCurrent = 0;
+      var vsBusy    = false;
 
-      var verticalSlider = new Swiper(".vertical-slider", {
-        direction: "vertical",
-        loop: verticalLoop,
-        slidesPerView: verticalItems,
-        spaceBetween: 10,
-        autoplay: verticalAutoplay,
-        speed: verticalSpeed,
-        pagination: {
-          el: ".vertical-pagination",
-          clickable: true,
-          renderBullet: function (index, className) {
-            return '<span class="' + className + '">' +
-              '<span class="vertical-slider-btn-wrap">' +
-                '<span></span><span></span><span></span><span></span>' +
-              '</span>' +
-            '</span>';
-          },
-        },
-      });
+      if (vsTotal >= 2) {
+
+        // ── Scroll-lock helpers ──────────────────────────────────────────────
+        var vsLocked     = false;
+        var vsCooldown   = false;
+        var vsScrollbarW = window.innerWidth - document.documentElement.clientWidth;
+
+        function vsLock() {
+          if (vsLocked || vsCooldown) return;
+          vsLocked = true;
+          document.documentElement.style.overflow     = 'hidden';
+          if (vsScrollbarW > 0) {
+            document.documentElement.style.paddingRight = vsScrollbarW + 'px';
+          }
+        }
+
+        function vsUnlock() {
+          if (!vsLocked) return;
+          vsLocked = false;
+          document.documentElement.style.overflow     = '';
+          document.documentElement.style.paddingRight = '';
+          // 2 s cooldown so the page scrolls fully clear before re-activation is allowed
+          vsCooldown = true;
+          setTimeout(function() { vsCooldown = false; }, 2000);
+        }
+
+        // ── Scroll-activation detector ───────────────────────────────────────
+        // Tracks direction so the slider resets to the correct end on re-entry.
+        var vsPrevScrollY = window.pageYOffset;
+
+        window.addEventListener('scroll', function() {
+          var curY       = window.pageYOffset;
+          var goingDown  = curY >= vsPrevScrollY;
+          vsPrevScrollY  = curY;
+
+          if (vsLocked || vsCooldown) return;
+
+          var rect = vsAreaEl.getBoundingClientRect();
+
+          // ±100 px tolerance catches fast-scroll frames that jump over the exact top.
+          if (rect.top <= 0 && rect.top > -100 && rect.bottom > 80) {
+
+            // Snap scroll so the slider top aligns exactly with the viewport top.
+            // Do this BEFORE locking so the programmatic scroll isn't blocked.
+            if (rect.top !== 0) { window.scrollBy(0, rect.top); }
+
+            // Reset slide state to match the direction the user is approaching from.
+            if (goingDown && vsCurrent !== 0) {
+              vsCurrent = 0;
+              vsResetPositions(0);
+              vsSync(0);
+            } else if (!goingDown && vsCurrent !== vsTotal - 1) {
+              vsCurrent = vsTotal - 1;
+              vsResetPositions(vsTotal - 1);
+              vsSync(vsTotal - 1);
+            }
+
+            vsLock();
+          }
+        }, { passive: true });
+
+        // ── Pagination ──────────────────────────────────────────────────────
+        var vsPagEl = vsEl.querySelector('.vertical-pagination');
+        if (vsPagEl) {
+          vsSlides.forEach(function(_, i) {
+            var b = document.createElement('span');
+            b.className = 'swiper-pagination-bullet' + (i === 0 ? ' swiper-pagination-bullet-active' : '');
+            b.innerHTML = '<span class="vertical-slider-btn-wrap"><span></span><span></span><span></span><span></span></span>';
+            b.addEventListener('click', function() {
+              vsNavigate(i > vsCurrent ? 'forward' : 'backward', i);
+            });
+            vsPagEl.appendChild(b);
+          });
+        }
+
+        function vsSync(idx) {
+          if (!vsPagEl) return;
+          vsPagEl.querySelectorAll('.swiper-pagination-bullet').forEach(function(b, i) {
+            b.classList.toggle('swiper-pagination-bullet-active', i === idx);
+          });
+        }
+
+        function vsResetPositions(idx) {
+          vsSlides.forEach(function(s, i) {
+            gsap.set(s, { zIndex: i + 1, yPercent: i <= idx ? 0 : 100 });
+          });
+        }
+
+        // Initial stack: slide 0 visible, rest waiting below
+        vsSlides.forEach(function(s, i) {
+          gsap.set(s, { yPercent: i === 0 ? 0 : 100, zIndex: i + 1 });
+        });
+
+        // ── Navigation ──────────────────────────────────────────────────────
+        function vsNavigate(direction, targetIndex) {
+          var next = (targetIndex !== undefined)
+            ? targetIndex
+            : (direction === 'forward' ? vsCurrent + 1 : vsCurrent - 1);
+
+          if (next >= vsTotal) next = vsLoop ? 0          : vsTotal - 1;
+          if (next < 0)        next = vsLoop ? vsTotal - 1 : 0;
+          if (next === vsCurrent || vsBusy) return;
+
+          vsBusy = true;
+          var fromSlide = vsSlides[vsCurrent];
+          var toSlide   = vsSlides[next];
+
+          function onDone() {
+            vsCurrent = next;
+            vsResetPositions(vsCurrent);
+            vsBusy = false;
+            // Immediately release the gesture lock so the slider is never frozen
+            // after the animation finishes. A 200 ms guard below absorbs the
+            // immediate momentum tail before accepting the next gesture.
+            vsGestureActive = false;
+            vsLastAnimEnd   = Date.now();
+            vsSync(vsCurrent);
+          }
+
+          if (direction === 'forward') {
+            // New slide rises from below and settles over the active one
+            gsap.fromTo(
+              toSlide,
+              { yPercent: 100, zIndex: vsTotal + 1 },
+              { yPercent: 0, duration: vsDuration, ease: 'power4.inOut', onComplete: onDone }
+            );
+          } else {
+            // Active slide exits downward, revealing the slide below
+            gsap.set(fromSlide, { zIndex: vsTotal + 1 });
+            gsap.set(toSlide,   { yPercent: 0, zIndex: vsTotal });
+            gsap.to(fromSlide, {
+              yPercent: 100,
+              duration: vsDuration,
+              ease: 'power4.inOut',
+              onComplete: onDone
+            });
+          }
+        }
+
+        // ── Wheel handler ────────────────────────────────────────────────────
+        // Gates:
+        //   vsGestureActive — true from first event of a gesture until 700 ms after
+        //                     events stop OR until the animation finishes (onDone
+        //                     clears it early so the slider is never permanently frozen).
+        //   vsBusy          — true while a GSAP animation is running.
+        //   vsLastAnimEnd   — timestamp set in onDone; 200 ms guard absorbs the
+        //                     immediate momentum burst right after animation ends.
+        var vsGestureActive = false;
+        var vsGestureTimer;
+        var vsLastAnimEnd   = 0;
+
+        document.addEventListener('wheel', function(e) {
+          if (!vsLocked) return;
+
+          var goForward = e.deltaY > 0;
+
+          // At the boundary with no loop → release lock and let page scroll
+          if (goForward  && vsCurrent === vsTotal - 1 && !vsLoop) { vsUnlock(); return; }
+          if (!goForward && vsCurrent === 0           && !vsLoop) { vsUnlock(); return; }
+
+          e.preventDefault();
+
+          var now = Date.now();
+          // Allow navigation only when:
+          //   • not mid-animation (vsBusy)
+          //   • not within the same gesture (vsGestureActive)
+          //   • at least 200 ms have passed since the last animation ended
+          if (!vsGestureActive && !vsBusy && (now - vsLastAnimEnd) >= 200) {
+            vsGestureActive = true;
+            vsNavigate(goForward ? 'forward' : 'backward');
+          }
+
+          // Reset gesture gate 700 ms after events stop (end of trackpad momentum)
+          clearTimeout(vsGestureTimer);
+          vsGestureTimer = setTimeout(function() {
+            vsGestureActive = false;
+          }, 700);
+
+        }, { passive: false });
+
+        // ── Autoplay ─────────────────────────────────────────────────────────
+        if (vsAutoplay) {
+          var vsTimer;
+          var vsStartAuto = function() {
+            vsTimer = setInterval(function() { vsNavigate('forward'); }, vsDelay);
+          };
+          vsStartAuto();
+          vsEl.addEventListener('mouseenter', function() { clearInterval(vsTimer); });
+          vsEl.addEventListener('mouseleave', vsStartAuto);
+        }
+
+        vsSync(0);
+      }
     }
 
 

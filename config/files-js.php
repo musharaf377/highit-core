@@ -1,7 +1,7 @@
 <?php
 
 $js_files = array(
-    
+
     array(
         'handle' => 'swiper-js',
         'src' => HIGHLT_CORE_JS . '/swiper.min.js',
@@ -10,9 +10,16 @@ $js_files = array(
     ),
 
     array(
+        'handle' => 'gsap',
+        'src' => 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+        'deps' => array(),
+        'in_footer' => true
+    ),
+
+    array(
         'handle' => 'main',
         'src' => HIGHLT_CORE_JS . '/main.js',
-        'deps' => array('jquery'),
+        'deps' => array('jquery', 'gsap'),
         'in_footer' => true
     ),
 );
