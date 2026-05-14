@@ -103,7 +103,221 @@ class Highlt_Portfolio_Tab_Widget extends Widget_Base
         );
 
         $this->end_controls_section();
+
+        // Style controls
+        $this->start_controls_section(
+            'style_section',
+            [
+                'label' => esc_html__('Style', 'highlt-core'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'tabs_spacing',
+            [
+                'label'     => esc_html__('Tabs Padding', 'highlt-core'),
+                'type'      => Controls_Manager::DIMENSIONS,
+                'size_units'=> ['px', '%'],
+                'default'   => [
+                    'top'    => 0,
+                    'right'  => 0,
+                    'bottom' => 15,
+                    'left'   => 0,
+                    'unit'   => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-tab-area .tabs-nav' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'tab_button_font_size',
+            [
+                'label' => esc_html__('Tab Font Size (px)', 'highlt-core'),
+                'type' => Controls_Manager::NUMBER,
+                'default' => 14,
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-tab-area .tab-btn' => 'font-size: {{VALUE}}px;',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'tab_button_font_weight',
+            [
+                'label' => esc_html__('Tab Font Weight', 'highlt-core'),
+                'type' => Controls_Manager::SELECT,
+                'default' => '400',
+                'options' => [
+                    '300' => esc_html__('Light (300)', 'highlt-core'),
+                    '400' => esc_html__('Normal (400)', 'highlt-core'),
+                    '500' => esc_html__('Medium (500)', 'highlt-core'),
+                    '600' => esc_html__('Semi Bold (600)', 'highlt-core'),
+                    '700' => esc_html__('Bold (700)', 'highlt-core'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-tab-area .tab-btn' => 'font-weight: {{VALUE}};',
+                ],
+            ]
+        );
+
+
+        $this->add_control(
+            'tab_button_border_style',
+
+            [
+                'label' => esc_html__('Tab Border Style', 'highlt-core'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'solid',
+                'options' => [
+                    'solid' => esc_html__('Solid', 'highlt-core'),
+                    'dashed' => esc_html__('Dashed', 'highlt-core'),
+                    'dotted' => esc_html__('Dotted', 'highlt-core'),
+                    'double' => esc_html__('Double', 'highlt-core'),
+                    'none' => esc_html__('None', 'highlt-core'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-tab-area .tab-btn' => 'border-style: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+
+            'tab_button_bg',
+            [
+                'label' => esc_html__('Tab Background', 'highlt-core'),
+                'type'  => Controls_Manager::COLOR,
+                'default' => '#f5f5f5',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-tab-area .tab-btn' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'tab_button_color',
+            [
+                'label' => esc_html__('Tab Text Color', 'highlt-core'),
+                'type'  => Controls_Manager::COLOR,
+                'default' => '#222222',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-tab-area .tab-btn' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'tab_button_border_color',
+            [
+                'label' => esc_html__('Tab Border Color', 'highlt-core'),
+                'type'  => Controls_Manager::COLOR,
+                'default' => '#e5e5e5',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-tab-area .tab-btn' => 'border-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'tab_button_active_bg',
+            [
+                'label' => esc_html__('Active Tab Background', 'highlt-core'),
+                'type'  => Controls_Manager::COLOR,
+                'default' => '#000000',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-tab-area .tab-btn.active' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'tab_button_active_color',
+            [
+                'label' => esc_html__('Active Tab Text Color', 'highlt-core'),
+                'type'  => Controls_Manager::COLOR,
+                'default' => '#ffffff',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-tab-area .tab-btn.active' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'tab_button_active_border_color',
+            [
+                'label' => esc_html__('Active Tab Border Color', 'highlt-core'),
+                'type'  => Controls_Manager::COLOR,
+                'default' => '#000000',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-tab-area .tab-btn.active' => 'border-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'tab_button_radius',
+            [
+                'label'      => esc_html__('Tab Radius', 'highlt-core'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'default'    => [
+                    'top'    => 4,
+                    'right'  => 4,
+                    'bottom' => 4,
+                    'left'   => 4,
+                    'unit'   => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-tab-area .tab-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'tab_button_border_width',
+            [
+                'label' => esc_html__('Tab Border Width', 'highlt-core'),
+                'type'  => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px'],
+                'default' => [
+                    'top' => 1,
+                    'right' => 1,
+                    'bottom' => 1,
+                    'left' => 1,
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-tab-area .tab-btn' => 'border-width: {{TOP}}px {{RIGHT}}px {{BOTTOM}}px {{LEFT}}px; border-style: solid;',
+                ],
+            ]
+
+        );
+
+        $this->add_control(
+            'content_padding',
+            [
+                'label'      => esc_html__('Content Padding', 'highlt-core'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'default'    => [
+                    'top' => 0,
+                    'right' => 0,
+                    'bottom' => 0,
+                    'left' => 0,
+                    'unit' => 'px',
+                ],
+                'selectors'  => [
+                    '{{WRAPPER}} .portfolio-tab-area .tab-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
     }
+
 
     /**
      * Render the widget shell. Items are loaded via AJAX from the
