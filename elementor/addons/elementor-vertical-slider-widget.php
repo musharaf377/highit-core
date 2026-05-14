@@ -38,47 +38,49 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
 
     protected function register_controls()
     {
-        // General Settings
+        // ── General Settings ─────────────────────────────────────────────────
         $this->start_controls_section(
             'settings_section',
             [
                 'label' => esc_html__('General Settings', 'highlt-core'),
-                'tab' => Controls_Manager::TAB_CONTENT,
+                'tab'   => Controls_Manager::TAB_CONTENT,
             ]
         );
 
         $repeater = new Repeater();
+
         $repeater->add_control(
             'slider_image',
             [
-                'label' => esc_html__('Slider Image', 'highlt-core'),
-                'type' => Controls_Manager::MEDIA,
+                'label' => esc_html__('Image', 'highlt-core'),
+                'type'  => Controls_Manager::MEDIA,
+            ]
+        );
+
+        $repeater->add_control(
+            'slider_link',
+            [
+                'label'       => esc_html__('Link', 'highlt-core'),
+                'type'        => Controls_Manager::URL,
+                'placeholder' => esc_html__('https://your-link.com', 'highlt-core'),
+                'default'     => [ 'url' => '' ],
             ]
         );
 
         $this->add_control('hero_slider_items', [
-            'label' => esc_html__('Vertical Slider Item', 'highlt-core'),
-            'type' => Controls_Manager::REPEATER,
+            'label'  => esc_html__('Slides', 'highlt-core'),
+            'type'   => Controls_Manager::REPEATER,
             'fields' => $repeater->get_controls(),
         ]);
 
         $this->end_controls_section();
 
-        // Slider Settings
+        // ── Slider Settings ──────────────────────────────────────────────────
         $this->start_controls_section(
             'slider_settings_section',
             [
                 'label' => esc_html__('Slider Settings', 'highlt-core'),
-                'tab' => Controls_Manager::TAB_CONTENT,
-            ]
-        );
-
-        $this->add_control(
-            'items',
-            [
-                'label' => esc_html__('Slides To Show', 'highlt-core'),
-                'type' => Controls_Manager::NUMBER,
-                'default' => '3',
+                'tab'   => Controls_Manager::TAB_CONTENT,
             ]
         );
 
@@ -86,7 +88,7 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
             'loop',
             [
                 'label' => esc_html__('Loop', 'highlt-core'),
-                'type' => Controls_Manager::SWITCHER,
+                'type'  => Controls_Manager::SWITCHER,
             ]
         );
 
@@ -94,52 +96,45 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
             'autoplay',
             [
                 'label' => esc_html__('Autoplay', 'highlt-core'),
-                'type' => Controls_Manager::SWITCHER,
+                'type'  => Controls_Manager::SWITCHER,
             ]
         );
 
         $this->add_control(
             'speed',
             [
-                'label' => esc_html__('Speed', 'highlt-core'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 10000,
-                        'step' => 500,
-                    ]
+                'label'   => esc_html__('Transition Speed (ms)', 'highlt-core'),
+                'type'    => Controls_Manager::SLIDER,
+                'range'   => [
+                    'px' => [ 'min' => 500, 'max' => 5000, 'step' => 100 ],
                 ],
-                'default' => [
-                    'unit' => 'px',
-                    'size' => 3000,
-                ],
+                'default' => [ 'unit' => 'px', 'size' => 1800 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Slider Container Style
+        // ── Slider Container Style ────────────────────────────────────────────
         $this->start_controls_section(
             'slider_container_style',
             [
                 'label' => esc_html__('Slider Container', 'highlt-core'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
             'slider_height',
             [
-                'label' => esc_html__('Height', 'highlt-core'),
-                'type' => Controls_Manager::SLIDER,
+                'label'      => esc_html__('Height', 'highlt-core'),
+                'type'       => Controls_Manager::SLIDER,
                 'size_units' => ['px', 'vh'],
-                'range' => [
+                'range'      => [
                     'px' => [ 'min' => 100, 'max' => 1200, 'step' => 10 ],
-                    'vh' => [ 'min' => 10, 'max' => 100 ],
+                    'vh' => [ 'min' => 10,  'max' => 100 ],
                 ],
-                'default' => [ 'unit' => 'px', 'size' => 500 ],
-                'selectors' => [
+                'default'    => [ 'unit' => 'px', 'size' => 500 ],
+                'selectors'  => [
                     '{{WRAPPER}} .vertical-slider' => 'height: {{SIZE}}{{UNIT}};',
                 ],
             ]
@@ -148,10 +143,10 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slider_margin',
             [
-                'label' => esc_html__('Margin', 'highlt-core'),
-                'type' => Controls_Manager::DIMENSIONS,
+                'label'      => esc_html__('Margin', 'highlt-core'),
+                'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
-                'selectors' => [
+                'selectors'  => [
                     '{{WRAPPER}} .vertical-slider-area' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
@@ -160,10 +155,10 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slider_padding',
             [
-                'label' => esc_html__('Padding', 'highlt-core'),
-                'type' => Controls_Manager::DIMENSIONS,
+                'label'      => esc_html__('Padding', 'highlt-core'),
+                'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
-                'selectors' => [
+                'selectors'  => [
                     '{{WRAPPER}} .vertical-slider-area' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
@@ -172,10 +167,10 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'slider_border_radius',
             [
-                'label' => esc_html__('Border Radius', 'highlt-core'),
-                'type' => Controls_Manager::DIMENSIONS,
+                'label'      => esc_html__('Border Radius', 'highlt-core'),
+                'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
-                'selectors' => [
+                'selectors'  => [
                     '{{WRAPPER}} .vertical-slider' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
@@ -183,27 +178,27 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
 
         $this->end_controls_section();
 
-        // Slide Item Style
+        // ── Slide Item Style ──────────────────────────────────────────────────
         $this->start_controls_section(
             'slide_item_style',
             [
                 'label' => esc_html__('Slide Item', 'highlt-core'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
             'slide_image_width',
             [
-                'label' => esc_html__('Image Width', 'highlt-core'),
-                'type' => Controls_Manager::SLIDER,
+                'label'      => esc_html__('Image Width', 'highlt-core'),
+                'type'       => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
-                'range' => [
+                'range'      => [
                     'px' => [ 'min' => 0, 'max' => 2000 ],
                     '%'  => [ 'min' => 0, 'max' => 100 ],
                 ],
-                'selectors' => [
-                    '{{WRAPPER}} .vertical-slider .swiper-slide img' => 'width: {{SIZE}}{{UNIT}};',
+                'selectors'  => [
+                    '{{WRAPPER}} .vertical-slider .vs-slide img' => 'width: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -211,15 +206,15 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'slide_image_height',
             [
-                'label' => esc_html__('Image Height', 'highlt-core'),
-                'type' => Controls_Manager::SLIDER,
+                'label'      => esc_html__('Image Height', 'highlt-core'),
+                'type'       => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
-                'range' => [
+                'range'      => [
                     'px' => [ 'min' => 0, 'max' => 1200 ],
-                    '%' => [ 'min' => 0, 'max' => 100 ],
+                    '%'  => [ 'min' => 0, 'max' => 100 ],
                 ],
-                'selectors' => [
-                    '{{WRAPPER}} .vertical-slider .swiper-slide img' => 'height: {{SIZE}}{{UNIT}};',
+                'selectors'  => [
+                    '{{WRAPPER}} .vertical-slider .vs-slide img' => 'height: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -227,17 +222,17 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'slide_image_object_fit',
             [
-                'label' => esc_html__('Object Fit', 'highlt-core'),
-                'type' => Controls_Manager::SELECT,
-                'options' => [
+                'label'     => esc_html__('Object Fit', 'highlt-core'),
+                'type'      => Controls_Manager::SELECT,
+                'options'   => [
                     'cover'      => esc_html__('Cover', 'highlt-core'),
                     'contain'    => esc_html__('Contain', 'highlt-core'),
                     'fill'       => esc_html__('Fill', 'highlt-core'),
                     'scale-down' => esc_html__('Scale Down', 'highlt-core'),
                 ],
-                'default' => 'cover',
+                'default'   => 'cover',
                 'selectors' => [
-                    '{{WRAPPER}} .vertical-slider .swiper-slide img' => 'object-fit: {{VALUE}};',
+                    '{{WRAPPER}} .vertical-slider .vs-slide img' => 'object-fit: {{VALUE}};',
                 ],
             ]
         );
@@ -245,10 +240,10 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'slide_bg_color',
             [
-                'label' => esc_html__('Background Color', 'highlt-core'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Background Color', 'highlt-core'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .vertical-slider .swiper-slide' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .vertical-slider .vs-slide' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
@@ -256,45 +251,31 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'slide_border_radius',
             [
-                'label' => esc_html__('Border Radius', 'highlt-core'),
-                'type' => Controls_Manager::DIMENSIONS,
+                'label'      => esc_html__('Border Radius', 'highlt-core'),
+                'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .vertical-slider .swiper-slide' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'slide_spacing',
-            [
-                'label' => esc_html__('Space Between Slides', 'highlt-core'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [ 'min' => 0, 'max' => 100 ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .vertical-slider .swiper-slide' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                'selectors'  => [
+                    '{{WRAPPER}} .vertical-slider .vs-slide' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Pagination Style
+        // ── Pagination Style ──────────────────────────────────────────────────
         $this->start_controls_section(
             'pagination_style',
             [
                 'label' => esc_html__('Pagination', 'highlt-core'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
             'pagination_color',
             [
-                'label' => esc_html__('Bullet Color', 'highlt-core'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Bullet Color', 'highlt-core'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .vertical-pagination .swiper-pagination-bullet' => 'background: {{VALUE}};',
                 ],
@@ -304,8 +285,8 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
         $this->add_control(
             'pagination_active_color',
             [
-                'label' => esc_html__('Active Bullet Color', 'highlt-core'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Active Bullet Color', 'highlt-core'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .vertical-pagination .swiper-pagination-bullet-active' => 'background: {{VALUE}};',
                 ],
@@ -315,9 +296,9 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
         $this->add_responsive_control(
             'pagination_size',
             [
-                'label' => esc_html__('Bullet Size', 'highlt-core'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
+                'label'     => esc_html__('Bullet Size', 'highlt-core'),
+                'type'      => Controls_Manager::SLIDER,
+                'range'     => [
                     'px' => [ 'min' => 4, 'max' => 30 ],
                 ],
                 'selectors' => [
@@ -331,23 +312,32 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
 
     protected function render()
     {
-        $settings = $this->get_settings_for_display();
+        $settings         = $this->get_settings_for_display();
         $all_slider_items = $settings['hero_slider_items'];
 
         $slider_settings = [
-            'items'    => $settings['items'],
-            'loop'     => $settings['loop'] === 'yes' ? true : false,
-            'autoplay' => $settings['autoplay'] === 'yes' ? true : false,
+            'loop'     => $settings['loop'] === 'yes',
+            'autoplay' => $settings['autoplay'] === 'yes',
             'speed'    => $settings['speed']['size'],
         ];
 ?>
         <div class="vertical-slider-area">
-            <div class="swiper vertical-slider" data-settings='<?php echo json_encode($slider_settings); ?>'>
-                <div class="swiper-wrapper">
-                    <?php foreach ($all_slider_items as $item): ?>
-                        <div class="swiper-slide">
+            <div class="vertical-slider" data-settings='<?php echo json_encode($slider_settings); ?>'>
+                <div class="vs-track">
+                    <?php foreach ($all_slider_items as $item) :
+                        $url      = !empty($item['slider_link']['url']) ? esc_url($item['slider_link']['url']) : '';
+                        $target   = !empty($item['slider_link']['is_external']) ? ' target="_blank"' : '';
+                        $nofollow = !empty($item['slider_link']['nofollow']) ? ' rel="nofollow"' : '';
+                    ?>
+                        <div class="vs-slide">
                             <div class="vertical-slider-content">
-                                <img src="<?php echo esc_url($item['slider_image']['url']); ?>" alt="">
+                                <?php if ($url) : ?>
+                                    <a href="<?php echo $url; ?>"<?php echo $target . $nofollow; ?>>
+                                        <img src="<?php echo esc_url($item['slider_image']['url']); ?>" alt="">
+                                    </a>
+                                <?php else : ?>
+                                    <img src="<?php echo esc_url($item['slider_image']['url']); ?>" alt="">
+                                <?php endif; ?>
                             </div>
                         </div>
                     <?php endforeach; ?>

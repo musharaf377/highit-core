@@ -19,7 +19,7 @@
       var thumb = new Swiper(".hero-slider-thumb", {
         loop: loop,
         spaceBetween: 10,
-        slidesPerView: 2,
+        slidesPerView: 'auto',
         freeMode: true,
         watchSlidesProgress: true,
       });
@@ -42,14 +42,14 @@
 
     if ($vertSlider.length) {
       var vsSettings  = JSON.parse($vertSlider.attr('data-settings'));
-      var vsDuration  = (parseInt(vsSettings.speed) || 1800) / 1000;
+      var vsDuration  = (parseInt(vsSettings.speed) || 900) / 1000;
       var vsLoop      = vsSettings.loop === true;
       var vsAutoplay  = vsSettings.autoplay === true;
       var vsDelay     = Math.max(parseInt(vsSettings.speed) || 4000, 1000);
 
       var vsEl      = $vertSlider[0];
       var vsAreaEl  = vsEl.closest('.vertical-slider-area') || vsEl.parentElement;
-      var vsSlides  = Array.from(vsEl.querySelectorAll('.swiper-wrapper .swiper-slide'));
+      var vsSlides  = Array.from(vsEl.querySelectorAll('.vs-track .vs-slide'));
       var vsTotal   = vsSlides.length;
       var vsCurrent = 0;
       var vsBusy    = false;
