@@ -124,6 +124,20 @@ if (!class_exists('Highlt_Core_Init')) {
                     );
                 }
             }
+
+            // Pass PHP data to the plugin's main JS (ajax url, nonce, i18n, etc.)
+            wp_localize_script(
+                'main',
+                'highltCore',
+                apply_filters('highlt_core_js_data', array(
+                    'ajax_url' => admin_url('admin-ajax.php'),
+                    'nonce'    => wp_create_nonce('highlt_core_nonce'),
+                    'i18n'     => array(
+                        'loading' => esc_html__('Loading…', 'highlt-core'),
+                        'error'   => esc_html__('Failed to load. Please try again.', 'highlt-core'),
+                    ),
+                ))
+            );
         }
 
         /**

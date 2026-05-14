@@ -26,6 +26,10 @@ $php_files = array(
         'folder-name' => HIGHLT_CORE_INC
     ),
     array(
+        'file-name' => 'portfolio-tab-ajax',
+        'folder-name' => HIGHLT_CORE_INC
+    ),
+    array(
         'file-name' => 'elementor-widget-init',
         'folder-name' => HIGHLT_CORE_ELEMENTOR
     ),

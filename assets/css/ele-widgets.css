@@ -255,6 +255,51 @@
   border-color: #FCFA13;
 }
 
+/* Tab Panes (only the .active pane is visible) */
+.content-area .tab-content {
+    display: none;
+}
+
+.content-area .tab-content.active {
+    display: block;
+}
+
+/* AJAX states */
+.portfolio-tab-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 60px 0;
+    color: #fff;
+    font-size: 16px;
+}
+
+.portfolio-tab-spinner {
+    width: 22px;
+    height: 22px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #FCFA13;
+    border-radius: 50%;
+    animation: highlt-spin 0.8s linear infinite;
+}
+
+@keyframes highlt-spin {
+    to { transform: rotate(360deg); }
+}
+
+.portfolio-error,
+.portfolio-empty {
+    text-align: center;
+    color: #fff;
+    padding: 40px 0;
+    font-size: 16px;
+}
+
+.portfolio-error {
+    color: #ff6b6b;
+}
+
 /* Content Area */
 .tab-single-section{
     margin-bottom: 120px;

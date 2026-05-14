@@ -305,7 +305,116 @@
       }
     }
 
-    
+    /* =====================
+        Portfolio Tab Widget (AJAX)
+     ======================= */
+    var hltCfg = window.highltCore || {};
+    var hltI18n = hltCfg.i18n || {};
+    var loadingLabel = hltI18n.loading || "Loading…";
+    var errorLabel   = hltI18n.error   || "Failed to load. Please try again.";
+
+    function hltLoadingMarkup() {
+      return (
+        '<div class="portfolio-tab-loading" role="status" aria-live="polite">' +
+          '<span class="portfolio-tab-spinner" aria-hidden="true"></span>' +
+          '<span class="portfolio-tab-loading-text">' + loadingLabel + "</span>" +
+        "</div>"
+      );
+    }
+
+    function hltErrorMarkup(msg) {
+      return '<p class="portfolio-error" role="alert">' + (msg || errorLabel) + "</p>";
+    }
+
+    function hltLoadTab($area, $pane, settings) {
+      // Cache: skip the request if this pane has already loaded successfully.
+      if ($pane.data("hltLoaded")) {
+        return;
+      }
+
+      var tab = $pane.data("tab");
+      if (!tab || !hltCfg.ajax_url || !hltCfg.nonce) {
+        $pane.html(hltErrorMarkup());
+        return;
+      }
+
+      // Abort any in-flight request for this pane to avoid stale injections.
+      var prev = $pane.data("hltXhr");
+      if (prev && prev.readyState !== 4) {
+        prev.abort();
+      }
+
+      $pane.html(hltLoadingMarkup());
+
+      var payload = $.extend({
+        action: "highlt_portfolio_tab",
+        nonce:  hltCfg.nonce,
+        tab:    tab,
+      }, settings || {});
+
+      var xhr = $.ajax({
+        url:      hltCfg.ajax_url,
+        method:   "POST",
+        dataType: "json",
+        data:     payload,
+      })
+        .done(function (response) {
+          if (response && response.success && response.data && typeof response.data.html === "string") {
+            $pane.html(response.data.html);
+            $pane.data("hltLoaded", true);
+          } else {
+            var msg = response && response.data && response.data.message ? response.data.message : null;
+            $pane.html(hltErrorMarkup(msg));
+          }
+        })
+        .fail(function (jqXHR, textStatus) {
+          if (textStatus === "abort") return;
+          $pane.html(hltErrorMarkup());
+        });
+
+      $pane.data("hltXhr", xhr);
+    }
+
+    $(".portfolio-tab-area").each(function () {
+      var $area    = $(this);
+      var $buttons = $area.find(".tabs-nav .tab-btn");
+      var $panes   = $area.find(".content-area .tab-content");
+
+      if (!$buttons.length || !$panes.length) return;
+
+      var settings = {};
+      var rawSettings = $area.attr("data-settings");
+      if (rawSettings) {
+        try { settings = JSON.parse(rawSettings); } catch (err) { settings = {}; }
+      }
+
+      // Initial load for the active tab.
+      var $activePane = $panes.filter(".active").first();
+      if ($activePane.length) {
+        hltLoadTab($area, $activePane, settings);
+      }
+
+      $buttons.on("click", function (e) {
+        e.preventDefault();
+
+        var target = $(this).data("target");
+        if (!target) return;
+
+        $buttons.removeClass("active");
+        $(this).addClass("active");
+
+        // Pause any playing videos before switching panes.
+        $panes.find("video").each(function () {
+          if (!this.paused) this.pause();
+        });
+
+        $panes.removeClass("active");
+        var $next = $area.find("#" + target);
+        $next.addClass("active");
+
+        hltLoadTab($area, $next, settings);
+      });
+    });
 
 
     
