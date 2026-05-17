@@ -88,9 +88,10 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
                         $payload = array('id' => $post_id);
                     } else {
                         if (!self::meta_flag_is_on($meta, 'option_video', 'video')) continue;
-                        $url = !empty($meta['portfolio_video_url']) ? trim($meta['portfolio_video_url']) : '';
+                        $url   = !empty($meta['portfolio_video_url'])   ? trim($meta['portfolio_video_url'])   : '';
                         if ($url === '') continue;
-                        $payload = array('id' => $post_id, 'url' => $url);
+                        $title = !empty($meta['portfolio_video_title']) ? trim($meta['portfolio_video_title']) : '';
+                        $payload = array('id' => $post_id, 'url' => $url, 'title' => $title);
                     }
 
                     $terms = get_the_terms($post_id, 'portfolio_cat');
@@ -144,10 +145,23 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
                         <div class="portfolio-video-item-wrap">
                             <?php foreach ($bucket['items'] as $item) : ?>
                                 <div class="portfolio-item">
-                                    <video controls muted playsinline preload="metadata">
-                                        <source src="<?php echo esc_url($item['url']); ?>" type="<?php echo esc_attr(self::guess_video_mime($item['url'])); ?>">
-                                        <?php esc_html_e('Your browser does not support the video tag.', 'highlt-core'); ?>
-                                    </video>
+                                    <?php if (self::is_youtube_url($item['url'])) : ?>
+                                        <iframe
+                                            src="<?php echo esc_url(self::get_youtube_embed_url($item['url'])); ?>"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowfullscreen
+                                            loading="lazy"
+                                        ></iframe>
+                                    <?php else : ?>
+                                        <video controls muted playsinline preload="metadata">
+                                            <source src="<?php echo esc_url($item['url']); ?>" type="<?php echo esc_attr(self::guess_video_mime($item['url'])); ?>">
+                                            <?php esc_html_e('Your browser does not support the video tag.', 'highlt-core'); ?>
+                                        </video>
+                                    <?php endif; ?>
+                                    <?php if (!empty($item['title'])) : ?>
+                                        <h3 class="portfolio-video-title"><?php echo esc_html($item['title']); ?></h3>
+                                    <?php endif; ?>
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -163,6 +177,17 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
                 return false;
             }
             return in_array($option_key, (array) $meta[$field_id], true);
+        }
+
+        private static function is_youtube_url($url) {
+            return (bool) preg_match('#(?:youtube\.com/(?:watch\?(?:.*&)?v=|embed/)|youtu\.be/)([A-Za-z0-9_-]{11})#', $url);
+        }
+
+        private static function get_youtube_embed_url($url) {
+            if (preg_match('#(?:youtube\.com/(?:watch\?(?:.*&)?v=|embed/)|youtu\.be/)([A-Za-z0-9_-]{11})#', $url, $m)) {
+                return 'https://www.youtube.com/embed/' . $m[1];
+            }
+            return '';
         }
 
         private static function guess_video_mime($url)
