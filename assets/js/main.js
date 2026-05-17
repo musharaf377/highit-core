@@ -41,7 +41,7 @@
 
     if ($vertSlider.length) {
       var vsSettings = JSON.parse($vertSlider.attr("data-settings"));
-      var vsDuration = (parseInt(vsSettings.speed) || 1200) / 1000;
+      var vsDuration = (parseInt(vsSettings.speed) || 1200) / 1000 * 0.3;
       var vsLoop = vsSettings.loop === true;
       var vsAutoplay = vsSettings.autoplay === true;
       var vsDelay = Math.max(parseInt(vsSettings.speed) || 4000, 1000);
@@ -196,13 +196,14 @@
           var fromSlide = vsSlides[vsCurrent];
           var toSlide = vsSlides[next];
 
+          vsSync(next);
+
           function onDone() {
             vsCurrent = next;
             vsResetPositions(vsCurrent);
             vsBusy = false;
             vsGestureActive = false;
             vsLastAnimEnd = Date.now();
-            vsSync(vsCurrent);
           }
 
           if (direction === "forward") {
@@ -214,7 +215,7 @@
                 yPercent: 0,
                 scale: 1,
                 duration: vsDuration,
-                ease: "expo.inOut",
+                ease: "power2.out",
                 onComplete: onDone,
               },
             );
@@ -222,7 +223,7 @@
             gsap.to(fromSlide, {
               yPercent: -8,
               duration: vsDuration,
-              ease: "expo.inOut",
+              ease: "power2.out",
             });
           } else {
             // Outgoing slide exits downward
@@ -231,14 +232,14 @@
             gsap.to(fromSlide, {
               yPercent: 100,
               duration: vsDuration,
-              ease: "expo.inOut",
+              ease: "power2.out",
               onComplete: onDone,
             });
             // Revealed slide zooms out from slight oversize — mirrors the forward parallax
             gsap.fromTo(
               toSlide,
               { scale: 1.07 },
-              { scale: 1, duration: vsDuration, ease: "expo.inOut" },
+              { scale: 1, duration: vsDuration, ease: "power2.out" },
             );
           }
         }
