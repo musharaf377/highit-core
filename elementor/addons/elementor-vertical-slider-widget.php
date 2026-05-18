@@ -85,30 +85,14 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
         );
 
         $this->add_control(
-            'loop',
-            [
-                'label' => esc_html__('Loop', 'highlt-core'),
-                'type'  => Controls_Manager::SWITCHER,
-            ]
-        );
-
-        $this->add_control(
-            'autoplay',
-            [
-                'label' => esc_html__('Autoplay', 'highlt-core'),
-                'type'  => Controls_Manager::SWITCHER,
-            ]
-        );
-
-        $this->add_control(
             'speed',
             [
-                'label'   => esc_html__('Transition Speed (ms)', 'highlt-core'),
+                'label'   => esc_html__('Animation Duration (ms)', 'highlt-core'),
                 'type'    => Controls_Manager::SLIDER,
                 'range'   => [
-                    'px' => [ 'min' => 500, 'max' => 5000, 'step' => 100 ],
+                    'px' => [ 'min' => 200, 'max' => 2000, 'step' => 50 ],
                 ],
-                'default' => [ 'unit' => 'px', 'size' => 1800 ],
+                'default' => [ 'unit' => 'px', 'size' => 800 ],
             ]
         );
 
@@ -140,30 +124,6 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
             ]
         );
 
-        $this->add_responsive_control(
-            'slider_margin',
-            [
-                'label'      => esc_html__('Margin', 'highlt-core'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%'],
-                'selectors'  => [
-                    '{{WRAPPER}} .vertical-slider-area' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'slider_padding',
-            [
-                'label'      => esc_html__('Padding', 'highlt-core'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%'],
-                'selectors'  => [
-                    '{{WRAPPER}} .vertical-slider-area' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
         $this->add_control(
             'slider_border_radius',
             [
@@ -184,38 +144,6 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
             [
                 'label' => esc_html__('Slide Item', 'highlt-core'),
                 'tab'   => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'slide_image_width',
-            [
-                'label'      => esc_html__('Image Width', 'highlt-core'),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range'      => [
-                    'px' => [ 'min' => 0, 'max' => 2000 ],
-                    '%'  => [ 'min' => 0, 'max' => 100 ],
-                ],
-                'selectors'  => [
-                    '{{WRAPPER}} .vertical-slider .vs-slide img' => 'width: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'slide_image_height',
-            [
-                'label'      => esc_html__('Image Height', 'highlt-core'),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range'      => [
-                    'px' => [ 'min' => 0, 'max' => 1200 ],
-                    '%'  => [ 'min' => 0, 'max' => 100 ],
-                ],
-                'selectors'  => [
-                    '{{WRAPPER}} .vertical-slider .vs-slide img' => 'height: {{SIZE}}{{UNIT}};',
-                ],
             ]
         );
 
@@ -316,9 +244,7 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
         $all_slider_items = $settings['hero_slider_items'];
 
         $slider_settings = [
-            'loop'     => $settings['loop'] === 'yes',
-            'autoplay' => $settings['autoplay'] === 'yes',
-            'speed'    => $settings['speed']['size'],
+            'speed' => $settings['speed']['size'],
         ];
 ?>
         <div class="vertical-slider-area">
