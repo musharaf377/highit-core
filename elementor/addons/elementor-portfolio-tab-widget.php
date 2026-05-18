@@ -339,7 +339,7 @@ class Highlt_Portfolio_Tab_Widget extends Widget_Base
 ?>
         <div class="portfolio-tab-area" data-settings="<?php echo esc_attr(wp_json_encode($data_settings)); ?>">
             <div class="section-header">
-                <nav class="tabs-nav">
+                <nav class="tabs-nav highlt-fade-animation">
                     <button type="button" class="tab-btn active" data-target="images-tab" data-tab="image"><?php echo esc_html($image_tab_label); ?></button>
                     <button type="button" class="tab-btn" data-target="videos-tab" data-tab="video"><?php echo esc_html($video_tab_label); ?></button>
                 </nav>

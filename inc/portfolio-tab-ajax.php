@@ -130,9 +130,9 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
                 $term = $bucket['term'];
                 ?>
                 <div class="tab-single-section" data-category="<?php echo esc_attr($term->term_id); ?>">
-                    <h2 class="section-title"><?php echo esc_html($term->name); ?></h2>
+                    <h2 class="section-title highlt-fade-animation"><?php echo esc_html($term->name); ?></h2>
                     <?php if ($tab === 'image') : ?>
-                        <div class="portfolio-image-item-wrap">
+                        <div class="portfolio-image-item-wrap highlt-gallery-fade">
                             <?php foreach ($bucket['items'] as $item) : ?>
                                 <div class="portfolio-item">
                                     <div>

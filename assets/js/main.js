@@ -43,12 +43,12 @@
       var vsSettings = JSON.parse($vertSlider.attr("data-settings"));
       var vsDuration = (parseInt(vsSettings.speed) || 800) / 1000;
 
-      var vsEl     = $vertSlider[0];
+      var vsEl = $vertSlider[0];
       var vsAreaEl = vsEl.closest(".vertical-slider-area") || vsEl.parentElement;
       var vsSlides = Array.from(vsEl.querySelectorAll(".vs-track .vs-slide"));
-      var vsTotal  = vsSlides.length;
+      var vsTotal = vsSlides.length;
       var vsCurrent = 0;
-      var vsBusy    = false;
+      var vsBusy = false;
 
       if (vsTotal >= 2) {
         var vsPagEl = vsEl.querySelector(".vertical-pagination");
@@ -79,12 +79,12 @@
             : direction === "forward" ? vsCurrent + 1 : vsCurrent - 1;
 
           if (next >= vsTotal) next = vsTotal - 1;
-          if (next < 0)        next = 0;
+          if (next < 0) next = 0;
           if (next === vsCurrent || vsBusy) return;
 
           vsBusy = true;
           var fromSlide = vsSlides[vsCurrent];
-          var toSlide   = vsSlides[next];
+          var toSlide = vsSlides[next];
 
           vsSync(next);
 
@@ -102,8 +102,8 @@
             gsap.to(fromSlide, { yPercent: -8, duration: vsDuration, ease: "power2.out" });
           } else {
             gsap.set(fromSlide, { zIndex: vsTotal + 1 });
-            gsap.set(toSlide,   { yPercent: 0, zIndex: vsTotal });
-            gsap.to(fromSlide,  { yPercent: 100, duration: vsDuration, ease: "power2.out", onComplete: onDone });
+            gsap.set(toSlide, { yPercent: 0, zIndex: vsTotal });
+            gsap.to(fromSlide, { yPercent: 100, duration: vsDuration, ease: "power2.out", onComplete: onDone });
             gsap.fromTo(toSlide, { scale: 1.07 }, { scale: 1, duration: vsDuration, ease: "power2.out" });
           }
         }
@@ -153,13 +153,13 @@
     var hltCfg = window.highltCore || {};
     var hltI18n = hltCfg.i18n || {};
     var loadingLabel = hltI18n.loading || "Loading…";
-    var errorLabel   = hltI18n.error   || "Failed to load. Please try again.";
+    var errorLabel = hltI18n.error || "Failed to load. Please try again.";
 
     function hltLoadingMarkup() {
       return (
         '<div class="portfolio-tab-loading" role="status" aria-live="polite">' +
-          '<span class="portfolio-tab-spinner" aria-hidden="true"></span>' +
-          '<span class="portfolio-tab-loading-text">' + loadingLabel + "</span>" +
+        '<span class="portfolio-tab-spinner" aria-hidden="true"></span>' +
+        '<span class="portfolio-tab-loading-text">' + loadingLabel + "</span>" +
         "</div>"
       );
     }
@@ -190,20 +190,22 @@
 
       var payload = $.extend({
         action: "highlt_portfolio_tab",
-        nonce:  hltCfg.nonce,
-        tab:    tab,
+        nonce: hltCfg.nonce,
+        tab: tab,
       }, settings || {});
 
       var xhr = $.ajax({
-        url:      hltCfg.ajax_url,
-        method:   "POST",
+        url: hltCfg.ajax_url,
+        method: "POST",
         dataType: "json",
-        data:     payload,
+        data: payload,
       })
         .done(function (response) {
           if (response && response.success && response.data && typeof response.data.html === "string") {
             $pane.html(response.data.html);
             $pane.data("hltLoaded", true);
+            hltInitFade($pane[0]);
+            hltInitGalleryFade($pane[0]);
           } else {
             var msg = response && response.data && response.data.message ? response.data.message : null;
             $pane.html(hltErrorMarkup(msg));
@@ -218,9 +220,9 @@
     }
 
     $(".portfolio-tab-area").each(function () {
-      var $area    = $(this);
+      var $area = $(this);
       var $buttons = $area.find(".tabs-nav .tab-btn");
-      var $panes   = $area.find(".content-area .tab-content");
+      var $panes = $area.find(".content-area .tab-content");
 
       if (!$buttons.length || !$panes.length) return;
 
@@ -259,6 +261,64 @@
     });
 
 
-    
+    // Hero sticky animation pin
+    const stickyHero = document.querySelector('.hero-sticky-animation');
+
+    if (stickyHero) {
+      ScrollTrigger.create({
+        trigger: stickyHero,
+        start: 'top top',
+        end: () => '+=' + stickyHero.nextElementSibling.offsetHeight, // pins for the height of the content below
+        pin: true,
+        pinSpacing: false,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      });
+    }
+
+    // Fade Animations on Scroll
+    function hltInitFade(scope) {
+      gsap.utils.toArray(".highlt-fade-animation", scope).forEach(function (el) {
+        gsap.from(el, {
+          opacity: 0,
+          y: 100,
+          duration: 1.5,
+          ease: "power3.out",
+          clearProps: "all",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 80%",
+            toggleActions: "play none none none",
+            markers: true,
+          },
+        });
+      });
+    }
+
+    hltInitFade(document);
+
+    // Gallery fade animation with stagger
+    function hltInitGalleryFade(scope) {
+      gsap.utils.toArray(".highlt-gallery-fade", scope).forEach(function (container) {
+        var children = container.querySelectorAll(":scope > div");
+        gsap.from(children, {
+          opacity: 0,
+          y: 15,
+          duration: 1,
+          ease: "power2.out",
+          stagger: 0.18,
+          scrollTrigger: {
+            trigger: container,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        });
+      });
+    }
+
+    hltInitGalleryFade(document);
+
+
+
   });
 })(jQuery);
