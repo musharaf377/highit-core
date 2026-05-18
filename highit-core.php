@@ -5,14 +5,14 @@ Plugin URI: https://highlt.agency
 Description: Plugin to contain short codes and custom post types of the Highlt theme.
 Author: Highlt
 Author URI: https://highlt.agency
-Version: 1.0.0
+Version: 1.0.1
 Text Domain: highlt-core
 */
 
 /**
  * If this file is called directly, abort.
  * @package highlt
- * @since 1.0.0
+ * @since 1.0.1
  */
 if (! defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
@@ -21,7 +21,7 @@ if (! defined('ABSPATH')) {
 /**
  * Plugin directory path
  * @package highlt
- * @since 1.0.0
+ * @since 1.0.1
  */
 define('HIGHLT_CORE_ROOT_PATH', plugin_dir_path(__FILE__));
 define('HIGHLT_CORE_ROOT_URL', plugin_dir_url(__FILE__));
@@ -43,7 +43,7 @@ define('HIGHLT_CORE_IMG', HIGHLT_CORE_ASSETS . 'img');
 /**
  * Load additional helpers functions
  * @package highlt
- * @since 1.0.0
+ * @since 1.0.1
  */
 if (!function_exists('highlt_core')) {
 	require_once HIGHLT_CORE_INC . '/theme-core-helper-functions.php';
