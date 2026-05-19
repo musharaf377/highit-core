@@ -219,16 +219,24 @@ class Highlt_Hero_Slider_Item_Widget extends Widget_Base
             [
                 'label' => esc_html__('Height', 'highlt-core'),
                 'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vh'],
                 'range' => [
                     'px' => [
-                        'min' => 200,
-                        'max' => 1000,
-                        'step' => 10,
+                        'min' => 0,
+                        'max' => 1200,
+                    ],
+                    '%' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ],
+                    'vh' => [
+                        'min' => 0,
+                        'max' => 100,
                     ]
                 ],
                 'default' => [
-                    'unit' => 'px',
-                    'size' => 600,
+                    'unit' => 'vh',
+                    'size' => 100,
                 ],
                 'selectors' => [
                     '{{WRAPPER}} .hero-slider' => 'height: {{SIZE}}{{UNIT}};',
