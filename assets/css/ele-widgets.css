@@ -160,6 +160,7 @@
   will-change: transform;
 }
 
+.highlt-overlay::after,
 .vertical-slider .vs-slide::after {
   position: absolute;
   content: "";
@@ -170,6 +171,10 @@
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
   z-index: 2;
   pointer-events: none;
+}
+
+.highlt-overlay {
+  position: relative;
 }
 
 .vertical-slider .vs-slide a {
