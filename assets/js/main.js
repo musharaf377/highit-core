@@ -116,11 +116,6 @@
           pin: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
-          snap: {
-            snapTo: 1 / (vsTotal - 1),
-            duration: { min: 0.15, max: 0.3 },
-            ease: "power2.inOut",
-          },
           onUpdate: function (self) {
             var targetIdx = Math.round(self.progress * (vsTotal - 1));
             if (targetIdx !== vsCurrent && !vsBusy) {
@@ -128,6 +123,31 @@
             }
           },
         });
+
+        // ── Wheel: exactly one slide per scroll ──────────────────────────────
+        var vsWheelBusy = false;
+
+        window.addEventListener("wheel", function (e) {
+          if (!vsST.isActive) return;
+
+          var goForward = e.deltaY > 0;
+
+          // At boundaries — don't intercept, let page scroll past the pin
+          if (goForward && vsCurrent >= vsTotal - 1) return;
+          if (!goForward && vsCurrent <= 0) return;
+
+          e.preventDefault();
+          if (vsWheelBusy || vsBusy) return;
+
+          vsWheelBusy = true;
+          var nextIdx = goForward ? vsCurrent + 1 : vsCurrent - 1;
+          var targetScroll = vsST.start + (nextIdx / (vsTotal - 1)) * (vsST.end - vsST.start);
+          window.scrollTo(0, targetScroll);
+
+          setTimeout(function () {
+            vsWheelBusy = false;
+          }, vsDuration * 1000 + 300);
+        }, { passive: false });
 
         // ── Pagination ──────────────────────────────────────────────────────
         if (vsPagEl) {
