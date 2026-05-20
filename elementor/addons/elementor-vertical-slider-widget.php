@@ -117,7 +117,7 @@ class Highlt_Vertical_Slider_Item_Widget extends Widget_Base
                     'px' => [ 'min' => 100, 'max' => 1200, 'step' => 10 ],
                     'vh' => [ 'min' => 10,  'max' => 100 ],
                 ],
-                'default'    => [ 'unit' => 'px', 'size' => 500 ],
+                'default'    => [ 'unit' => 'vh', 'size' => 100 ],
                 'selectors'  => [
                     '{{WRAPPER}} .vertical-slider' => 'height: {{SIZE}}{{UNIT}};',
                 ],

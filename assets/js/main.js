@@ -35,25 +35,23 @@
     }
 
     /* =====================
-        Vertical Slider area (GSAP ScrollTrigger pin)
-     ======================= */
+      Vertical Slider area
+    ======================= */
     var $vertSlider = $(".vertical-slider");
 
     if ($vertSlider.length) {
       var vsSettings = JSON.parse($vertSlider.attr("data-settings"));
-      var vsDuration = (parseInt(vsSettings.speed) || 800) / 1000;
+      var vsDuration = (parseInt(vsSettings.speed) || 300) / 1000;
 
-      var vsEl = $vertSlider[0];
-      var vsAreaEl = vsEl.closest(".vertical-slider-area") || vsEl.parentElement;
-      var vsSlides = Array.from(vsEl.querySelectorAll(".vs-track .vs-slide"));
-      var vsTotal = vsSlides.length;
+      var vsEl      = $vertSlider[0];
+      var vsAreaEl  = vsEl.closest(".vertical-slider-area") || vsEl.parentElement;
+      var vsSlides  = Array.from(vsEl.querySelectorAll(".vs-track .vs-slide"));
+      var vsTotal   = vsSlides.length;
       var vsCurrent = 0;
-      var vsBusy = false;
 
       if (vsTotal >= 2) {
         var vsPagEl = vsEl.querySelector(".vertical-pagination");
 
-        // ── Helpers ──────────────────────────────────────────────────────────
         function vsSync(idx) {
           if (!vsPagEl) return;
           vsPagEl.querySelectorAll(".swiper-pagination-bullet").forEach(function (b, i) {
@@ -61,65 +59,37 @@
           });
         }
 
-        function vsResetPositions(idx) {
-          vsSlides.forEach(function (s, i) {
-            gsap.set(s, { zIndex: i + 1, yPercent: i <= idx ? 0 : 100, scale: 1 });
-          });
-        }
-
-        // Initial stack: slide 0 visible, rest waiting below
+        // ── Initial positions: slide 0 on top, rest below by z-index ────────────
         vsSlides.forEach(function (s, i) {
-          gsap.set(s, { yPercent: i === 0 ? 0 : 100, scale: 1, zIndex: i + 1 });
+          gsap.set(s, { zIndex: vsTotal - i });
+          gsap.set(s.querySelector(".vertical-slider-content"), { height: "100%" });
         });
 
-        // ── Navigation ──────────────────────────────────────────────────────
-        function vsNavigate(direction, targetIndex) {
-          var next = targetIndex !== undefined
-            ? targetIndex
-            : direction === "forward" ? vsCurrent + 1 : vsCurrent - 1;
-
-          if (next >= vsTotal) next = vsTotal - 1;
-          if (next < 0) next = 0;
-          if (next === vsCurrent || vsBusy) return;
-
-          vsBusy = true;
-          var fromSlide = vsSlides[vsCurrent];
-          var toSlide = vsSlides[next];
-
-          vsSync(next);
-
-          function onDone() {
-            vsCurrent = next;
-            vsResetPositions(vsCurrent);
-            vsBusy = false;
-          }
-
-          if (direction === "forward") {
-            gsap.fromTo(toSlide,
-              { yPercent: 100, scale: 1.07, zIndex: vsTotal + 1 },
-              { yPercent: 0, scale: 1, duration: vsDuration, ease: "power2.out", onComplete: onDone }
-            );
-            gsap.to(fromSlide, { yPercent: -8, duration: vsDuration, ease: "power2.out" });
-          } else {
-            gsap.set(fromSlide, { zIndex: vsTotal + 1 });
-            gsap.set(toSlide, { yPercent: 0, zIndex: vsTotal });
-            gsap.to(fromSlide, { yPercent: 100, duration: vsDuration, ease: "power2.out", onComplete: onDone });
-            gsap.fromTo(toSlide, { scale: 1.07 }, { scale: 1, duration: vsDuration, ease: "power2.out" });
-          }
+        // ── Revealer timeline: current slide's content shrinks to reveal next ──
+        var vsTL = gsap.timeline();
+        for (var i = 0; i < vsTotal - 1; i++) {
+          vsTL.to(vsSlides[i].querySelector(".vertical-slider-content"), {
+            height: "0%",
+            duration: 1,
+            ease: "none",
+          }, i);
         }
 
-        // ── ScrollTrigger Pin ────────────────────────────────────────────────
+        // ── Pin + scrub ───────────────────────────────────────────────────────
         var vsST = ScrollTrigger.create({
-          trigger: vsAreaEl,
-          start: "top top",
-          end: "+=" + (vsTotal - 1) * window.innerHeight,
-          pin: true,
-          anticipatePin: 1,
+          trigger:             vsAreaEl,
+          start:               "top top",
+          end:                 "+=" + (vsTotal - 1) * window.innerHeight,
+          pin:                 true,
+          anticipatePin:       1,
           invalidateOnRefresh: true,
+          animation:           vsTL,
+          scrub:               vsDuration,
           onUpdate: function (self) {
-            var targetIdx = Math.round(self.progress * (vsTotal - 1));
-            if (targetIdx !== vsCurrent && !vsBusy) {
-              vsNavigate(targetIdx > vsCurrent ? "forward" : "backward", targetIdx);
+            var idx = Math.round(self.progress * (vsTotal - 1));
+            if (idx !== vsCurrent) {
+              vsCurrent = idx;
+              vsSync(idx);
             }
           },
         });
@@ -131,13 +101,11 @@
           if (!vsST.isActive) return;
 
           var goForward = e.deltaY > 0;
-
-          // At boundaries — don't intercept, let page scroll past the pin
           if (goForward && vsCurrent >= vsTotal - 1) return;
           if (!goForward && vsCurrent <= 0) return;
 
           e.preventDefault();
-          if (vsWheelBusy || vsBusy) return;
+          if (vsWheelBusy) return;
 
           vsWheelBusy = true;
           var nextIdx = goForward ? vsCurrent + 1 : vsCurrent - 1;
@@ -146,10 +114,10 @@
 
           setTimeout(function () {
             vsWheelBusy = false;
-          }, vsDuration * 1000 + 300);
+          }, vsDuration * 1000 + 100);
         }, { passive: false });
 
-        // ── Pagination ──────────────────────────────────────────────────────
+        // ── Pagination ────────────────────────────────────────────────────────
         if (vsPagEl) {
           vsSlides.forEach(function (_, i) {
             var b = document.createElement("span");
