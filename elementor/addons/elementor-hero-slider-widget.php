@@ -202,7 +202,26 @@ class Highlt_Hero_Slider_Item_Widget extends Widget_Base
                 ],
             ]
         );
-      
+
+        $this->add_control(
+            'delay',
+            [
+                'label' => esc_html__('Delay', 'highlt-core'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 10000,
+                        'step' => 500,
+                    ]
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 3000,
+                ],
+            ]
+        );
+
         $this->end_controls_section();
 
         // Slider Container Styles
@@ -576,6 +595,7 @@ class Highlt_Hero_Slider_Item_Widget extends Widget_Base
             "items" => esc_attr($settings['items'] ?? 1),
             "autoplay" => esc_attr($settings['autoplay']),
             "speed" => esc_attr($settings['speed']['size'] ?? 500),
+            "delay" => esc_attr($settings['delay']['size'] ?? 3000),
            
 
         ]

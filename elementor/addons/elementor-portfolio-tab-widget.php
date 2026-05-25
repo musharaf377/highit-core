@@ -316,6 +316,93 @@ class Highlt_Portfolio_Tab_Widget extends Widget_Base
         );
 
         $this->end_controls_section();
+
+        // Image Title style controls (hover overlay on image tab)
+        $this->start_controls_section(
+            'image_title_style_section',
+            [
+                'label' => esc_html__('Image Title', 'highlt-core'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name'     => 'image_title_background',
+                'label'    => esc_html__('Background', 'highlt-core'),
+                'types'    => ['classic', 'gradient'],
+                'selector' => '{{WRAPPER}} .portfolio-image-overlay',
+            ]
+        );
+
+        $this->add_control(
+            'image_title_color',
+            [
+                'label'     => esc_html__('Text Color', 'highlt-core'),
+                'type'      => Controls_Manager::COLOR,
+                'default'   => '#ffffff',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-image-title' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'image_title_typography',
+                'label'    => esc_html__('Typography', 'highlt-core'),
+                'selector' => '{{WRAPPER}} .portfolio-image-title',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'image_title_padding',
+            [
+                'label'      => esc_html__('Overlay Padding', 'highlt-core'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'default'    => [
+                    'top'    => 20,
+                    'right'  => 20,
+                    'bottom' => 20,
+                    'left'   => 20,
+                    'unit'   => 'px',
+                ],
+                'selectors'  => [
+                    '{{WRAPPER}} .portfolio-image-overlay' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'image_title_align',
+            [
+                'label'   => esc_html__('Alignment', 'highlt-core'),
+                'type'    => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left'   => [
+                        'title' => esc_html__('Left', 'highlt-core'),
+                        'icon'  => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'highlt-core'),
+                        'icon'  => 'eicon-text-align-center',
+                    ],
+                    'right'  => [
+                        'title' => esc_html__('Right', 'highlt-core'),
+                        'icon'  => 'eicon-text-align-right',
+                    ],
+                ],
+                'default'   => 'left',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-image-overlay' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
     }
 
 

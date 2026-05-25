@@ -28,6 +28,7 @@
         spaceBetween: 10,
         autoplay: autoplay,
         speed: speed,
+        
         thumbs: {
           swiper: thumb,
         },
