@@ -423,6 +423,267 @@ class Highlt_Portfolio_Tab_Widget extends Widget_Base
         );
 
         $this->end_controls_section();
+
+        // Load More Button style controls
+        $this->start_controls_section(
+            'load_more_style_section',
+            [
+                'label' => esc_html__('Load More Button', 'highlt-core'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'load_more_align',
+            [
+                'label'   => esc_html__('Alignment', 'highlt-core'),
+                'type'    => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left'   => [
+                        'title' => esc_html__('Left', 'highlt-core'),
+                        'icon'  => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'highlt-core'),
+                        'icon'  => 'eicon-text-align-center',
+                    ],
+                    'right'  => [
+                        'title' => esc_html__('Right', 'highlt-core'),
+                        'icon'  => 'eicon-text-align-right',
+                    ],
+                ],
+                'default'   => 'center',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-load-more-wrap' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'load_more_margin',
+            [
+                'label'      => esc_html__('Margin', 'highlt-core'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default'    => [
+                    'top'    => 30,
+                    'right'  => 0,
+                    'bottom' => 0,
+                    'left'   => 0,
+                    'unit'   => 'px',
+                ],
+                'selectors'  => [
+                    '{{WRAPPER}} .portfolio-load-more-wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'load_more_padding',
+            [
+                'label'      => esc_html__('Padding', 'highlt-core'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'default'    => [
+                    'top'    => 10,
+                    'right'  => 28,
+                    'bottom' => 10,
+                    'left'   => 28,
+                    'unit'   => 'px',
+                ],
+                'selectors'  => [
+                    '{{WRAPPER}} .portfolio-load-more' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'load_more_typography',
+                'label'    => esc_html__('Typography', 'highlt-core'),
+                'selector' => '{{WRAPPER}} .portfolio-load-more',
+            ]
+        );
+
+        $this->add_control(
+            'load_more_border_style',
+            [
+                'label'   => esc_html__('Border Style', 'highlt-core'),
+                'type'    => Controls_Manager::SELECT,
+                'default' => 'solid',
+                'options' => [
+                    'none'   => esc_html__('None', 'highlt-core'),
+                    'solid'  => esc_html__('Solid', 'highlt-core'),
+                    'dashed' => esc_html__('Dashed', 'highlt-core'),
+                    'dotted' => esc_html__('Dotted', 'highlt-core'),
+                    'double' => esc_html__('Double', 'highlt-core'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-load-more' => 'border-style: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'load_more_border_width',
+            [
+                'label'      => esc_html__('Border Width', 'highlt-core'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px'],
+                'default'    => [
+                    'top'    => 1,
+                    'right'  => 1,
+                    'bottom' => 1,
+                    'left'   => 1,
+                    'unit'   => 'px',
+                ],
+                'selectors'  => [
+                    '{{WRAPPER}} .portfolio-load-more' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'load_more_border_style!' => 'none',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'load_more_border_radius',
+            [
+                'label'      => esc_html__('Border Radius', 'highlt-core'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'default'    => [
+                    'top'    => 0,
+                    'right'  => 0,
+                    'bottom' => 0,
+                    'left'   => 0,
+                    'unit'   => 'px',
+                ],
+                'selectors'  => [
+                    '{{WRAPPER}} .portfolio-load-more' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->start_controls_tabs('load_more_state_tabs');
+
+        // Normal state
+        $this->start_controls_tab(
+            'load_more_normal_tab',
+            [
+                'label' => esc_html__('Normal', 'highlt-core'),
+            ]
+        );
+
+        $this->add_control(
+            'load_more_color',
+            [
+                'label'     => esc_html__('Text Color', 'highlt-core'),
+                'type'      => Controls_Manager::COLOR,
+                'default'   => '#ffffff',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-load-more' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'load_more_bg',
+            [
+                'label'     => esc_html__('Background Color', 'highlt-core'),
+                'type'      => Controls_Manager::COLOR,
+                'default'   => '',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-load-more' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'load_more_border_color',
+            [
+                'label'     => esc_html__('Border Color', 'highlt-core'),
+                'type'      => Controls_Manager::COLOR,
+                'default'   => '#FCFA13',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-load-more' => 'border-color: {{VALUE}};',
+                ],
+                'condition' => [
+                    'load_more_border_style!' => 'none',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        // Hover state
+        $this->start_controls_tab(
+            'load_more_hover_tab',
+            [
+                'label' => esc_html__('Hover', 'highlt-core'),
+            ]
+        );
+
+        $this->add_control(
+            'load_more_color_hover',
+            [
+                'label'     => esc_html__('Text Color', 'highlt-core'),
+                'type'      => Controls_Manager::COLOR,
+                'default'   => '#000000',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-load-more:hover' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'load_more_bg_hover',
+            [
+                'label'     => esc_html__('Background Color', 'highlt-core'),
+                'type'      => Controls_Manager::COLOR,
+                'default'   => '#FCFA13',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-load-more:hover' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'load_more_border_color_hover',
+            [
+                'label'     => esc_html__('Border Color', 'highlt-core'),
+                'type'      => Controls_Manager::COLOR,
+                'default'   => '#FCFA13',
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-load-more:hover' => 'border-color: {{VALUE}};',
+                ],
+                'condition' => [
+                    'load_more_border_style!' => 'none',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'load_more_transition',
+            [
+                'label'     => esc_html__('Transition Duration (s)', 'highlt-core'),
+                'type'      => Controls_Manager::NUMBER,
+                'min'       => 0,
+                'max'       => 3,
+                'step'      => 0.1,
+                'default'   => 0.3,
+                'selectors' => [
+                    '{{WRAPPER}} .portfolio-load-more' => 'transition: all {{VALUE}}s ease;',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+
+        $this->end_controls_section();
     }
 
 
