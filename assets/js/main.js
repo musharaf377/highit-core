@@ -12,9 +12,8 @@
 
       let loop = sliderSettings.loop === "yes";
       let speed = parseInt(sliderSettings.speed) || 500;
-      let autoplay =
-        sliderSettings.autoplay === "yes" ? { delay: speed } : false;
-
+      let delay = parseInt(sliderSettings.delay) || 3000;
+    
       var thumb = new Swiper(".hero-slider-thumb", {
         loop: loop,
         spaceBetween: 10,
@@ -26,8 +25,12 @@
       var heroSlider = new Swiper(".hero-slider", {
         loop: loop,
         spaceBetween: 10,
-        autoplay: autoplay,
+        autoplay:{
+          delay: delay,
+          disableOnInteraction: false,
+        },
         speed: speed,
+        
         
         thumbs: {
           swiper: thumb,

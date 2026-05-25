@@ -172,12 +172,18 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
                     </div>
                     <?php if ($has_more) : ?>
                         <div class="portfolio-load-more-wrap">
-                            <button type="button" class="portfolio-load-more"
-                                data-category="<?php echo esc_attr($term->term_id); ?>"
-                                data-tab="<?php echo esc_attr($tab); ?>"
-                                data-offset="<?php echo esc_attr(count($initial)); ?>">
-                                <span class="portfolio-load-more-label"><?php echo esc_html($load_more_label); ?></span>
-                            </button>
+                            <div class="load-more-wrap">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <button type="button" class="portfolio-load-more"
+                                    data-category="<?php echo esc_attr($term->term_id); ?>"
+                                    data-tab="<?php echo esc_attr($tab); ?>"
+                                    data-offset="<?php echo esc_attr(count($initial)); ?>">
+                                    <span class="portfolio-load-more-label"><?php echo esc_html($load_more_label); ?></span>
+                                </button>
+                            </div>
                         </div>
                     <?php endif; ?>
                 </div>

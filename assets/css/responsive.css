@@ -17,6 +17,10 @@
     .slider-nav-wrapper {
         top: -60px;
     }
+
+    .hlt-lightbox-close {
+        top: 103px;
+    }
 }
 
 @media (max-width: 480px) {
