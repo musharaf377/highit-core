@@ -85,7 +85,10 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
                     if ($tab === 'image') {
                         if (!self::meta_flag_is_on($meta, 'option_image', 'image')) continue;
                         if (!has_post_thumbnail($post_id)) continue;
-                        $payload = array('id' => $post_id);
+                        $attachment_id = get_post_thumbnail_id($post_id);
+                        $full          = wp_get_attachment_image_src($attachment_id, 'full');
+                        $src           = ($full && !empty($full[0])) ? $full[0] : '';
+                        $payload = array('id' => $post_id, 'src' => $src);
                     } else {
                         if (!self::meta_flag_is_on($meta, 'option_video', 'video')) continue;
                         $url   = !empty($meta['portfolio_video_url'])   ? trim($meta['portfolio_video_url'])   : '';
@@ -133,8 +136,11 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
                     <h2 class="section-title highlt-fade-animation"><?php echo esc_html($term->name); ?></h2>
                     <?php if ($tab === 'image') : ?>
                         <div class="portfolio-image-item-wrap highlt-gallery-fade">
-                            <?php foreach ($bucket['items'] as $item) : ?>
-                                <div class="portfolio-item">
+                            <?php foreach ($bucket['items'] as $idx => $item) : ?>
+                                <div class="portfolio-item"
+                                     data-gallery-src="<?php echo esc_url($item['src']); ?>"
+                                     data-gallery-index="<?php echo (int) $idx; ?>"
+                                     data-gallery-group="gallery-<?php echo esc_attr($term->term_id); ?>">
                                     <div>
                                         <?php echo get_the_post_thumbnail($item['id'], 'large', array('alt' => esc_attr(get_the_title($item['id'])))); ?>
                                     </div>

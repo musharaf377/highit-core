@@ -136,6 +136,71 @@
     }
 
     /* =====================
+       Image Lightbox
+     ======================= */
+    var hltLightbox = (function () {
+      var $lb = null, $img = null, gallery = [], current = 0;
+
+      function showImage(idx) {
+        current = (idx + gallery.length) % gallery.length;
+        $img.attr({ src: gallery[current].src, alt: gallery[current].alt });
+      }
+
+      function close() {
+        $lb.removeClass('is-open');
+        $('body').removeClass('hlt-lightbox-open');
+        setTimeout(function () { $img.attr('src', ''); }, 320);
+      }
+
+      function init() {
+        if ($lb) return;
+        $('body').append(
+          '<div id="hlt-lightbox" class="hlt-lightbox" role="dialog" aria-modal="true" aria-label="Image gallery">' +
+            '<button class="hlt-lightbox-close" aria-label="Close">&times;</button>' +
+            '<button class="hlt-lightbox-prev" aria-label="Previous image">&#8249;</button>' +
+            '<button class="hlt-lightbox-next" aria-label="Next image">&#8250;</button>' +
+            '<div class="hlt-lightbox-inner"><img class="hlt-lightbox-img" src="" alt="" /></div>' +
+          '</div>'
+        );
+        $lb  = $('#hlt-lightbox');
+        $img = $lb.find('.hlt-lightbox-img');
+
+        $lb.find('.hlt-lightbox-close').on('click', close);
+        $lb.on('click', function (e) { if ($(e.target).is($lb)) close(); });
+        $lb.find('.hlt-lightbox-prev').on('click', function () { showImage(current - 1); });
+        $lb.find('.hlt-lightbox-next').on('click', function () { showImage(current + 1); });
+
+        $(document).on('keydown.hltLightbox', function (e) {
+          if (!$lb || !$lb.hasClass('is-open')) return;
+          if (e.key === 'Escape')     close();
+          if (e.key === 'ArrowLeft')  showImage(current - 1);
+          if (e.key === 'ArrowRight') showImage(current + 1);
+        });
+      }
+
+      return {
+        open: function (items, startIdx) {
+          init();
+          gallery = items;
+          showImage(startIdx);
+          $lb.find('.hlt-lightbox-prev, .hlt-lightbox-next').toggle(gallery.length > 1);
+          $lb.addClass('is-open');
+          $('body').addClass('hlt-lightbox-open');
+        }
+      };
+    }());
+
+    $(document).on('click', '.portfolio-item[data-gallery-src]', function () {
+      var $item  = $(this);
+      var group  = $item.data('gallery-group');
+      var $group = $('[data-gallery-group="' + group + '"]');
+      var items  = $group.map(function () {
+        return { src: $(this).data('gallery-src'), alt: $(this).find('img').attr('alt') || '' };
+      }).get();
+      hltLightbox.open(items, $group.index($item));
+    });
+
+    /* =====================
         Portfolio Tab Widget (AJAX)
      ======================= */
     var hltCfg = window.highltCore || {};
