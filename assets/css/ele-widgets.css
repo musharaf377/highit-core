@@ -438,6 +438,38 @@
   text-align: center;
 }
 
+/* Load More button (per category) */
+.portfolio-load-more-wrap {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.portfolio-load-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 28px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #FCFA13;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.portfolio-load-more:hover {
+  background: #FCFA13;
+  color: #000;
+}
+
+.portfolio-load-more.is-loading,
+.portfolio-load-more[disabled] {
+  opacity: 0.7;
+  cursor: wait;
+}
+
 
 /* Video Specific Styles */
 .portfolio-video-item-wrap {

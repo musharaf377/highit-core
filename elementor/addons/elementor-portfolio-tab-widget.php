@@ -75,6 +75,26 @@ class Highlt_Portfolio_Tab_Widget extends Widget_Base
         );
 
         $this->add_control(
+            'items_per_category',
+            [
+                'label'       => esc_html__('Items Per Category', 'highlt-core'),
+                'type'        => Controls_Manager::NUMBER,
+                'default'     => 6,
+                'min'         => 1,
+                'description' => esc_html__('Initial items shown per category. Remaining items load via the Load More button.', 'highlt-core'),
+            ]
+        );
+
+        $this->add_control(
+            'load_more_label',
+            [
+                'label'   => esc_html__('Load More Label', 'highlt-core'),
+                'type'    => Controls_Manager::TEXT,
+                'default' => esc_html__('Load More', 'highlt-core'),
+            ]
+        );
+
+        $this->add_control(
             'orderby',
             [
                 'label'   => esc_html__('Order By', 'highlt-core'),
@@ -418,9 +438,11 @@ class Highlt_Portfolio_Tab_Widget extends Widget_Base
         $video_tab_label = !empty($settings['video_tab_label']) ? $settings['video_tab_label'] : esc_html__('Videos', 'highlt-core');
 
         $data_settings = array(
-            'posts_per_page' => isset($settings['posts_per_page']) && $settings['posts_per_page'] !== '' ? (int) $settings['posts_per_page'] : -1,
-            'orderby'        => !empty($settings['orderby']) ? sanitize_key($settings['orderby']) : 'date',
-            'order'          => (!empty($settings['order']) && strtoupper($settings['order']) === 'ASC') ? 'ASC' : 'DESC',
+            'posts_per_page'     => isset($settings['posts_per_page']) && $settings['posts_per_page'] !== '' ? (int) $settings['posts_per_page'] : -1,
+            'orderby'            => !empty($settings['orderby']) ? sanitize_key($settings['orderby']) : 'date',
+            'order'              => (!empty($settings['order']) && strtoupper($settings['order']) === 'ASC') ? 'ASC' : 'DESC',
+            'items_per_category' => isset($settings['items_per_category']) && $settings['items_per_category'] !== '' ? max(1, (int) $settings['items_per_category']) : 6,
+            'load_more_label'    => !empty($settings['load_more_label']) ? $settings['load_more_label'] : esc_html__('Load More', 'highlt-core'),
         );
 
 ?>

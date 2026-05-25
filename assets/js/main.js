@@ -312,6 +312,67 @@
 
         hltLoadTab($area, $next, settings);
       });
+
+      // Load more per category.
+      $area.on("click", ".portfolio-load-more", function () {
+        var $btn = $(this);
+        if ($btn.prop("disabled")) return;
+
+        var $section = $btn.closest(".tab-single-section");
+        var $wrap    = $section.find(".portfolio-image-item-wrap, .portfolio-video-item-wrap").first();
+        var $label   = $btn.find(".portfolio-load-more-label");
+        var origText = $label.length ? $label.text() : $btn.text();
+
+        var category = parseInt($btn.attr("data-category"), 10) || 0;
+        var tab      = $btn.attr("data-tab") || "";
+        var offset   = parseInt($btn.attr("data-offset"), 10) || 0;
+
+        if (!category || !tab || !hltCfg.ajax_url || !hltCfg.nonce) return;
+
+        $btn.prop("disabled", true).addClass("is-loading");
+        if ($label.length) $label.text(loadingLabel); else $btn.text(loadingLabel);
+
+        var payload = $.extend({}, settings, {
+          action:    "highlt_portfolio_tab",
+          nonce:     hltCfg.nonce,
+          tab:       tab,
+          category:  category,
+          offset:    offset,
+          load_more: 1,
+        });
+
+        $.ajax({
+          url:      hltCfg.ajax_url,
+          method:   "POST",
+          dataType: "json",
+          data:     payload,
+        })
+          .done(function (response) {
+            if (response && response.success && response.data && typeof response.data.html === "string") {
+              var $new = $($.parseHTML(response.data.html));
+              var added = parseInt(response.data.added, 10);
+              if (!added || added < 0) {
+                added = $new.filter(".portfolio-item").length;
+              }
+              $wrap.append($new);
+              $btn.attr("data-offset", offset + added);
+
+              if (response.data.has_more) {
+                $btn.prop("disabled", false).removeClass("is-loading");
+                if ($label.length) $label.text(origText); else $btn.text(origText);
+              } else {
+                $btn.closest(".portfolio-load-more-wrap").remove();
+              }
+            } else {
+              $btn.prop("disabled", false).removeClass("is-loading");
+              if ($label.length) $label.text(origText); else $btn.text(origText);
+            }
+          })
+          .fail(function () {
+            $btn.prop("disabled", false).removeClass("is-loading");
+            if ($label.length) $label.text(origText); else $btn.text(origText);
+          });
+      });
     });
 
 

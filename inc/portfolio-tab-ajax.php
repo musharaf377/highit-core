@@ -42,13 +42,22 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
                 wp_send_json_error(array('message' => __('Invalid tab.', 'highlt-core')), 400);
             }
 
-            $category       = isset($_POST['category']) ? absint($_POST['category']) : 0;
-            $posts_per_page = isset($_POST['posts_per_page']) ? (int) $_POST['posts_per_page'] : -1;
+            $load_more          = !empty($_POST['load_more']);
+            $category           = isset($_POST['category']) ? absint($_POST['category']) : 0;
+            $offset             = isset($_POST['offset']) ? max(0, (int) $_POST['offset']) : 0;
+            $items_per_category = isset($_POST['items_per_category']) ? max(1, (int) $_POST['items_per_category']) : 6;
+            $load_more_label    = isset($_POST['load_more_label']) ? sanitize_text_field(wp_unslash($_POST['load_more_label'])) : __('Load More', 'highlt-core');
+            $posts_per_page     = isset($_POST['posts_per_page']) ? (int) $_POST['posts_per_page'] : -1;
 
             $orderby_in = isset($_POST['orderby']) ? sanitize_key($_POST['orderby']) : 'date';
             $orderby    = in_array($orderby_in, array('date', 'title', 'menu_order', 'rand'), true) ? $orderby_in : 'date';
 
             $order = (isset($_POST['order']) && strtoupper($_POST['order']) === 'ASC') ? 'ASC' : 'DESC';
+
+            // Load-more mode requires a specific category.
+            if ($load_more && $category <= 0) {
+                wp_send_json_error(array('message' => __('Missing category.', 'highlt-core')), 400);
+            }
 
             $query_args = array(
                 'post_type'      => 'portfolio',
@@ -69,10 +78,37 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
                 );
             }
 
-            $query = new WP_Query($query_args);
+            $query   = new WP_Query($query_args);
+            $buckets = self::collect_buckets($query, $tab, $category);
 
-            // Bucket posts by category for the requested tab.
-            // Structure: [ term_id => [ 'term' => WP_Term, 'items' => [...] ] ]
+            // Load-more: return next slice of items for one category.
+            if ($load_more) {
+                if (!isset($buckets[$category])) {
+                    wp_send_json_success(array('html' => '', 'has_more' => false, 'added' => 0));
+                }
+                $items    = $buckets[$category]['items'];
+                $slice    = array_slice($items, $offset, $items_per_category);
+                $has_more = ($offset + count($slice)) < count($items);
+                wp_send_json_success(array(
+                    'html'     => self::render_items($tab, $slice),
+                    'has_more' => $has_more,
+                    'added'    => count($slice),
+                ));
+            }
+
+            // Initial mode: full structure with first batch per category + load-more buttons.
+            $html = $this->render_buckets($tab, $buckets, $items_per_category, $load_more_label);
+
+            wp_send_json_success(array(
+                'html'  => $html,
+                'count' => array_sum(array_map(function ($b) {
+                    return count($b['items']);
+                }, $buckets)),
+            ));
+        }
+
+        private static function collect_buckets($query, $tab, $category)
+        {
             $buckets = array();
 
             if ($query->have_posts()) {
@@ -112,17 +148,10 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
                 wp_reset_postdata();
             }
 
-            $html = $this->render_buckets($tab, $buckets);
-
-            wp_send_json_success(array(
-                'html'  => $html,
-                'count' => array_sum(array_map(function ($b) {
-                    return count($b['items']);
-                }, $buckets)),
-            ));
+            return $buckets;
         }
 
-        private function render_buckets($tab, $buckets)
+        private function render_buckets($tab, $buckets, $items_per_category, $load_more_label)
         {
             if (empty($buckets)) {
                 return '<p class="portfolio-empty">' . esc_html__('No portfolio items found.', 'highlt-core') . '</p>';
@@ -130,55 +159,76 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
 
             ob_start();
             foreach ($buckets as $bucket) :
-                $term = $bucket['term'];
+                $term     = $bucket['term'];
+                $total    = count($bucket['items']);
+                $initial  = array_slice($bucket['items'], 0, $items_per_category);
+                $has_more = $total > count($initial);
+                $wrap_cls = ($tab === 'image') ? 'portfolio-image-item-wrap highlt-gallery-fade' : 'portfolio-video-item-wrap';
                 ?>
                 <div class="tab-single-section" data-category="<?php echo esc_attr($term->term_id); ?>">
                     <h2 class="section-title highlt-fade-animation"><?php echo esc_html($term->name); ?></h2>
-                    <?php if ($tab === 'image') : ?>
-                        <div class="portfolio-image-item-wrap highlt-gallery-fade">
-                            <?php foreach ($bucket['items'] as $item) :
-                                $item_title = get_the_title($item['id']);
-                                ?>
-                                <div class="portfolio-item"
-                                     data-gallery-src="<?php echo esc_url($item['src']); ?>">
-                                    <div class="portfolio-image-thumb">
-                                        <?php echo get_the_post_thumbnail($item['id'], 'large', array('alt' => esc_attr($item_title))); ?>
-                                    </div>
-                                    <?php if (!empty($item_title)) : ?>
-                                        <div class="portfolio-image-overlay">
-                                            <h3 class="portfolio-image-title"><?php echo esc_html($item_title); ?></h3>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php else : ?>
-                        <div class="portfolio-video-item-wrap">
-                            <?php foreach ($bucket['items'] as $item) : ?>
-                                <div class="portfolio-item">
-                                    <?php if (self::is_youtube_url($item['url'])) : ?>
-                                        <iframe
-                                            src="<?php echo esc_url(self::get_youtube_embed_url($item['url'])); ?>"
-                                            frameborder="0"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                            allowfullscreen
-                                            loading="lazy"
-                                        ></iframe>
-                                    <?php else : ?>
-                                        <video controls muted playsinline preload="metadata">
-                                            <source src="<?php echo esc_url($item['url']); ?>" type="<?php echo esc_attr(self::guess_video_mime($item['url'])); ?>">
-                                            <?php esc_html_e('Your browser does not support the video tag.', 'highlt-core'); ?>
-                                        </video>
-                                    <?php endif; ?>
-                                    <?php if (!empty($item['title'])) : ?>
-                                        <h3 class="portfolio-video-title"><?php echo esc_html($item['title']); ?></h3>
-                                    <?php endif; ?>
-                                </div>
-                            <?php endforeach; ?>
+                    <div class="<?php echo esc_attr($wrap_cls); ?>">
+                        <?php echo self::render_items($tab, $initial); ?>
+                    </div>
+                    <?php if ($has_more) : ?>
+                        <div class="portfolio-load-more-wrap">
+                            <button type="button" class="portfolio-load-more"
+                                data-category="<?php echo esc_attr($term->term_id); ?>"
+                                data-tab="<?php echo esc_attr($tab); ?>"
+                                data-offset="<?php echo esc_attr(count($initial)); ?>">
+                                <span class="portfolio-load-more-label"><?php echo esc_html($load_more_label); ?></span>
+                            </button>
                         </div>
                     <?php endif; ?>
                 </div>
             <?php endforeach;
+            return ob_get_clean();
+        }
+
+        private static function render_items($tab, $items)
+        {
+            if (empty($items)) return '';
+
+            ob_start();
+            if ($tab === 'image') :
+                foreach ($items as $item) :
+                    $item_title = get_the_title($item['id']);
+                    ?>
+                    <div class="portfolio-item"
+                         data-gallery-src="<?php echo esc_url($item['src']); ?>">
+                        <div class="portfolio-image-thumb">
+                            <?php echo get_the_post_thumbnail($item['id'], 'large', array('alt' => esc_attr($item_title))); ?>
+                        </div>
+                        <?php if (!empty($item_title)) : ?>
+                            <div class="portfolio-image-overlay">
+                                <h3 class="portfolio-image-title"><?php echo esc_html($item_title); ?></h3>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach;
+            else :
+                foreach ($items as $item) : ?>
+                    <div class="portfolio-item">
+                        <?php if (self::is_youtube_url($item['url'])) : ?>
+                            <iframe
+                                src="<?php echo esc_url(self::get_youtube_embed_url($item['url'])); ?>"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                                loading="lazy"
+                            ></iframe>
+                        <?php else : ?>
+                            <video controls muted playsinline preload="metadata">
+                                <source src="<?php echo esc_url($item['url']); ?>" type="<?php echo esc_attr(self::guess_video_mime($item['url'])); ?>">
+                                <?php esc_html_e('Your browser does not support the video tag.', 'highlt-core'); ?>
+                            </video>
+                        <?php endif; ?>
+                        <?php if (!empty($item['title'])) : ?>
+                            <h3 class="portfolio-video-title"><?php echo esc_html($item['title']); ?></h3>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach;
+            endif;
             return ob_get_clean();
         }
 
