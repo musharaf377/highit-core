@@ -192,12 +192,12 @@
 
     $(document).on('click', '.portfolio-item[data-gallery-src]', function () {
       var $item  = $(this);
-      var group  = $item.data('gallery-group');
-      var $group = $('[data-gallery-group="' + group + '"]');
-      var items  = $group.map(function () {
+      var $pane  = $item.closest('.tab-content');
+      var $all   = ($pane.length ? $pane : $(document)).find('.portfolio-item[data-gallery-src]');
+      var items  = $all.map(function () {
         return { src: $(this).data('gallery-src'), alt: $(this).find('img').attr('alt') || '' };
       }).get();
-      hltLightbox.open(items, $group.index($item));
+      hltLightbox.open(items, $all.index($item));
     });
 
     /* =====================
