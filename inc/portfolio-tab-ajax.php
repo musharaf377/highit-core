@@ -136,12 +136,19 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
                     <h2 class="section-title highlt-fade-animation"><?php echo esc_html($term->name); ?></h2>
                     <?php if ($tab === 'image') : ?>
                         <div class="portfolio-image-item-wrap highlt-gallery-fade">
-                            <?php foreach ($bucket['items'] as $item) : ?>
+                            <?php foreach ($bucket['items'] as $item) :
+                                $item_title = get_the_title($item['id']);
+                                ?>
                                 <div class="portfolio-item"
                                      data-gallery-src="<?php echo esc_url($item['src']); ?>">
-                                    <div>
-                                        <?php echo get_the_post_thumbnail($item['id'], 'large', array('alt' => esc_attr(get_the_title($item['id'])))); ?>
+                                    <div class="portfolio-image-thumb">
+                                        <?php echo get_the_post_thumbnail($item['id'], 'large', array('alt' => esc_attr($item_title))); ?>
                                     </div>
+                                    <?php if (!empty($item_title)) : ?>
+                                        <div class="portfolio-image-overlay">
+                                            <h3 class="portfolio-image-title"><?php echo esc_html($item_title); ?></h3>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             <?php endforeach; ?>
                         </div>
