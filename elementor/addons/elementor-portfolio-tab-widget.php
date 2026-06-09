@@ -124,6 +124,47 @@ class Highlt_Portfolio_Tab_Widget extends Widget_Base
 
         $this->end_controls_section();
 
+        // Per-category title visibility controls
+        $this->start_controls_section(
+            'title_visibility_section',
+            [
+                'label' => esc_html__('Item Title Visibility', 'highlt-core'),
+                'tab'   => Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        $portfolio_cats = get_terms([
+            'taxonomy'   => 'portfolio_cat',
+            'hide_empty' => false,
+        ]);
+
+        if (!empty($portfolio_cats) && !is_wp_error($portfolio_cats)) {
+            foreach ($portfolio_cats as $cat) {
+                $this->add_control(
+                    'show_title_cat_' . $cat->term_id,
+                    [
+                        /* translators: %s: portfolio category name */
+                        'label'        => sprintf(esc_html__('Show Title — %s', 'highlt-core'), $cat->name),
+                        'type'         => Controls_Manager::SWITCHER,
+                        'label_on'     => esc_html__('Show', 'highlt-core'),
+                        'label_off'    => esc_html__('Hide', 'highlt-core'),
+                        'return_value' => 'yes',
+                        'default'      => 'yes',
+                    ]
+                );
+            }
+        } else {
+            $this->add_control(
+                'title_visibility_empty_notice',
+                [
+                    'type' => Controls_Manager::RAW_HTML,
+                    'raw'  => esc_html__('No portfolio categories found.', 'highlt-core'),
+                ]
+            );
+        }
+
+        $this->end_controls_section();
+
         // Style controls
         $this->start_controls_section(
             'style_section',
@@ -698,12 +739,26 @@ class Highlt_Portfolio_Tab_Widget extends Widget_Base
         $image_tab_label = !empty($settings['image_tab_label']) ? $settings['image_tab_label'] : esc_html__('Images', 'highlt-core');
         $video_tab_label = !empty($settings['video_tab_label']) ? $settings['video_tab_label'] : esc_html__('Videos', 'highlt-core');
 
+        // Build per-category title visibility map: term_id => 1|0 (show|hide).
+        $title_visibility = array();
+        $portfolio_cats   = get_terms([
+            'taxonomy'   => 'portfolio_cat',
+            'hide_empty' => false,
+        ]);
+        if (!empty($portfolio_cats) && !is_wp_error($portfolio_cats)) {
+            foreach ($portfolio_cats as $cat) {
+                $key = 'show_title_cat_' . $cat->term_id;
+                $title_visibility[$cat->term_id] = (!isset($settings[$key]) || $settings[$key] === 'yes') ? 1 : 0;
+            }
+        }
+
         $data_settings = array(
             'posts_per_page'     => isset($settings['posts_per_page']) && $settings['posts_per_page'] !== '' ? (int) $settings['posts_per_page'] : -1,
             'orderby'            => !empty($settings['orderby']) ? sanitize_key($settings['orderby']) : 'date',
             'order'              => (!empty($settings['order']) && strtoupper($settings['order']) === 'ASC') ? 'ASC' : 'DESC',
             'items_per_category' => isset($settings['items_per_category']) && $settings['items_per_category'] !== '' ? max(1, (int) $settings['items_per_category']) : 6,
             'load_more_label'    => !empty($settings['load_more_label']) ? $settings['load_more_label'] : esc_html__('Load More', 'highlt-core'),
+            'title_visibility'   => $title_visibility,
         );
 
 ?>

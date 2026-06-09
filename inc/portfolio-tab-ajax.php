@@ -54,6 +54,14 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
 
             $order = (isset($_POST['order']) && strtoupper($_POST['order']) === 'ASC') ? 'ASC' : 'DESC';
 
+            // Per-category title visibility map: term_id => 1|0 (show|hide).
+            $title_visibility = array();
+            if (isset($_POST['title_visibility']) && is_array($_POST['title_visibility'])) {
+                foreach ($_POST['title_visibility'] as $cat_id => $val) {
+                    $title_visibility[absint($cat_id)] = (!empty($val) && $val !== '0') ? 1 : 0;
+                }
+            }
+
             // Load-more mode requires a specific category.
             if ($load_more && $category <= 0) {
                 wp_send_json_error(array('message' => __('Missing category.', 'highlt-core')), 400);
@@ -86,18 +94,19 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
                 if (!isset($buckets[$category])) {
                     wp_send_json_success(array('html' => '', 'has_more' => false, 'added' => 0));
                 }
-                $items    = $buckets[$category]['items'];
-                $slice    = array_slice($items, $offset, $items_per_category);
-                $has_more = ($offset + count($slice)) < count($items);
+                $items      = $buckets[$category]['items'];
+                $slice      = array_slice($items, $offset, $items_per_category);
+                $has_more   = ($offset + count($slice)) < count($items);
+                $show_title = self::should_show_title($title_visibility, $category);
                 wp_send_json_success(array(
-                    'html'     => self::render_items($tab, $slice),
+                    'html'     => self::render_items($tab, $slice, $show_title),
                     'has_more' => $has_more,
                     'added'    => count($slice),
                 ));
             }
 
             // Initial mode: full structure with first batch per category + load-more buttons.
-            $html = $this->render_buckets($tab, $buckets, $items_per_category, $load_more_label);
+            $html = $this->render_buckets($tab, $buckets, $items_per_category, $load_more_label, $title_visibility);
 
             wp_send_json_success(array(
                 'html'  => $html,
@@ -151,7 +160,7 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
             return $buckets;
         }
 
-        private function render_buckets($tab, $buckets, $items_per_category, $load_more_label)
+        private function render_buckets($tab, $buckets, $items_per_category, $load_more_label, $title_visibility = array())
         {
             if (empty($buckets)) {
                 return '<p class="portfolio-empty">' . esc_html__('No portfolio items found.', 'highlt-core') . '</p>';
@@ -159,16 +168,17 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
 
             ob_start();
             foreach ($buckets as $bucket) :
-                $term     = $bucket['term'];
-                $total    = count($bucket['items']);
-                $initial  = array_slice($bucket['items'], 0, $items_per_category);
-                $has_more = $total > count($initial);
-                $wrap_cls = ($tab === 'image') ? 'portfolio-image-item-wrap highlt-gallery-fade' : 'portfolio-video-item-wrap';
+                $term       = $bucket['term'];
+                $total      = count($bucket['items']);
+                $initial    = array_slice($bucket['items'], 0, $items_per_category);
+                $has_more   = $total > count($initial);
+                $show_title = self::should_show_title($title_visibility, $term->term_id);
+                $wrap_cls   = ($tab === 'image') ? 'portfolio-image-item-wrap highlt-gallery-fade' : 'portfolio-video-item-wrap';
                 ?>
                 <div class="tab-single-section" data-category="<?php echo esc_attr($term->term_id); ?>">
                     <h2 class="section-title highlt-fade-animation"><?php echo esc_html($term->name); ?></h2>
                     <div class="<?php echo esc_attr($wrap_cls); ?>">
-                        <?php echo self::render_items($tab, $initial); ?>
+                        <?php echo self::render_items($tab, $initial, $show_title); ?>
                     </div>
                     <?php if ($has_more) : ?>
                         <div class="portfolio-load-more-wrap">
@@ -191,7 +201,7 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
             return ob_get_clean();
         }
 
-        private static function render_items($tab, $items)
+        private static function render_items($tab, $items, $show_title = true)
         {
             if (empty($items)) return '';
 
@@ -205,7 +215,7 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
                         <div class="portfolio-image-thumb">
                             <?php echo get_the_post_thumbnail($item['id'], 'large', array('alt' => esc_attr($item_title))); ?>
                         </div>
-                        <?php if (!empty($item_title)) : ?>
+                        <?php if ($show_title && !empty($item_title)) : ?>
                             <div class="portfolio-image-overlay">
                                 <h3 class="portfolio-image-title"><?php echo esc_html($item_title); ?></h3>
                             </div>
@@ -229,13 +239,26 @@ if (!class_exists('Highlt_Portfolio_Tab_Ajax')) {
                                 <?php esc_html_e('Your browser does not support the video tag.', 'highlt-core'); ?>
                             </video>
                         <?php endif; ?>
-                        <?php if (!empty($item['title'])) : ?>
+                        <?php if ($show_title && !empty($item['title'])) : ?>
                             <h3 class="portfolio-video-title"><?php echo esc_html($item['title']); ?></h3>
                         <?php endif; ?>
                     </div>
                 <?php endforeach;
             endif;
             return ob_get_clean();
+        }
+
+        /**
+         * Resolve whether item titles should show for a category.
+         * Defaults to true when the category has no explicit setting.
+         */
+        private static function should_show_title($map, $category)
+        {
+            $category = (int) $category;
+            if (!isset($map[$category])) {
+                return true;
+            }
+            return !empty($map[$category]);
         }
 
         private static function meta_flag_is_on($meta, $field_id, $option_key)
